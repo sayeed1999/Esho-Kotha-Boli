@@ -7,7 +7,7 @@
         <mat-icon style="color:green; font-size: 16px;">{{ editMode === false ? 'edit' : 'cancel' }}</mat-icon>
     </button>
 </div>
-<p *ngIf="!editMode">{{ comment.body }}</p>
+<p *ngIf="!editMode" [innerHTML]="comment.body | newline"></p>
 <div *ngIf="editMode" style="display: flex;">
     <input mat-input class="example-form" [(ngModel)]="editedComment" name="editedComment"/>
     <button mat-flat-button style="margin-left: 10px;" (click)="saveEdited()">Save</button>

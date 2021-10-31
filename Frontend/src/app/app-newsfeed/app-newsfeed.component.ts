@@ -39,6 +39,7 @@ export class AppNewsfeedComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.postService.getAllPostsSummary().subscribe((res: Post[]) => {
       this.posts = res;
+      console.log(this.posts);
       this.isLoading = false;
     }, (error: HttpErrorResponse) => {
       if(error.status === 0) this.sb.open("Network Error. Please check your internet connection!", 'Okay');

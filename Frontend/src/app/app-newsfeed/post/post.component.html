@@ -10,9 +10,9 @@
         </button>
     </div>
     <div>
-        <p *ngIf="!editMode">{{ post.body }}</p>
+        <p *ngIf="!editMode" [innerHTML]="post.body | newline"></p>
         <div *ngIf="editMode" style="display: flex;">
-            <input mat-input class="example-form" [(ngModel)]="editedPost" name="editedPost"/>
+            <textarea mat-input class="example-form" [(ngModel)]="editedPost" name="editedPost"></textarea>
             <button mat-flat-button style="margin-left: 10px;" (click)="saveEdited()">Save</button>
         </div>
         <em>{{ post.dateTime | date:'medium' }}</em>

@@ -7,6 +7,7 @@ import { AngularMaterialModule } from '../angular-material/angular-material.modu
 import { ProjectAMessageComponent } from './project-a-message/project-a-message.component';
 import { RaiseButtonDirective } from './directives/raise-button.directive';
 import { ProjectAContentComponent } from './project-a-content/project-a-content.component';
+import { NewlinePipe } from './custom-pipes/newline.pipe';
 
 
 
@@ -17,6 +18,7 @@ import { ProjectAContentComponent } from './project-a-content/project-a-content.
     ProjectAMessageComponent,
     RaiseButtonDirective,
     ProjectAContentComponent,
+    NewlinePipe,
   ],
   imports: [
     CommonModule,
@@ -27,6 +29,7 @@ import { ProjectAContentComponent } from './project-a-content/project-a-content.
     DynamicFormComponent,
     ProjectAMessageComponent,
     ProjectAContentComponent,
+    NewlinePipe,
   ]
 })
 export class SharedModule { }

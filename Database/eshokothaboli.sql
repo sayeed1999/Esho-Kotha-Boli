@@ -36,6 +36,8 @@ begin
 end
 go
 
+-- testing
+
 exec spGetAllPostSummary 3
 go
 

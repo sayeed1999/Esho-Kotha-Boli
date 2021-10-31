@@ -36,7 +36,7 @@ export class PostService extends RepositoryService {
 
   getAllPostsSummary(): Observable<Post[]> {
     return this.http.get<any>(
-      `${this.url}/all-summary?page=${1}`
+      `${this.url}/all-summary?page=${this.page}`
     );
   }
 
