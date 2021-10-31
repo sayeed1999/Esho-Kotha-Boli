@@ -1,0 +1,26 @@
+<div class="example-form" [formGroup]="form">
+
+    <div [ngSwitch]="question.controlType">
+
+        <mat-form-field *ngSwitchCase="'textbox'" class="example-full-width" appearance='legacy'>
+            <mat-label [attr.for]="question.key"> {{ question.label }} </mat-label>
+            <input type="{{question.type}}" matInput placeholder="{{question.placeholder}}" [formControlName]="question.key">
+            <mat-error *ngIf="!isValid && (isTouched || isDirty)">{{ question.label }} is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngSwitchCase="'textarea'" class="example-full-width" appearance="fill">
+            <mat-label [attr.for]="question.key">{{ question.label }}</mat-label>
+            <textarea matInput placeholder="{{question.placeholder}}" [formControlName]="question.key"></textarea>
+            <mat-error *ngIf="!isValid && (isTouched || isDirty)"> {{ question.label }} is required </mat-error>
+        </mat-form-field>
+
+        <div *ngSwitchCase="'radiogroup'" class="example-full-width">
+            <label> {{ question.label }} </label> <br>
+            <mat-radio-group [formControlName]="question.key">
+                <mat-radio-button style="display: block;" *ngFor="let option of question.options" [value]="option.value" class="p-2"> {{ option.name }} </mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+    </div>
+
+</div>

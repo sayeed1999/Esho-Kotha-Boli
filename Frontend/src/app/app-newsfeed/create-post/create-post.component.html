@@ -1,0 +1,5 @@
+<dynamic-form *ngIf="!rerendering" [questions]="questions" [buttonName]="'Post'" (result)="received($event)"></dynamic-form>
+
+<project-a-message [hidden]="!messageDialogActive" (emitter)="messageDialogActive = $event">
+    Hey, Post body cannot be empty or white spaces!!!
+</project-a-message>

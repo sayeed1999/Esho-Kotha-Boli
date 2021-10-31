@@ -1,0 +1,15 @@
+<div style="display: flex; align-items: center;">
+    <div style="font-weight: 500;"> UserName </div>
+    <button mat-icon-button style="margin-left: auto;" (click)="delete()">
+        <mat-icon style="color:brown; font-size: 14px;">delete</mat-icon>
+    </button>
+    <button mat-icon-button (click)="edit()">
+        <mat-icon style="color:green; font-size: 14px;">{{ editMode === false ? 'edit' : 'cancel' }}</mat-icon>
+    </button>
+</div>
+<p *ngIf="!editMode">{{ reply.body }}</p>
+<div *ngIf="editMode" style="display: flex;">
+    <input mat-input class="example-form" [(ngModel)]="editedReply" name="editedReply"/>
+    <button mat-flat-button style="margin-left: 10px;" (click)="saveEdited()">Save</button>
+</div>
+<em> {{ reply.dateTime | date:'medium' }} </em>

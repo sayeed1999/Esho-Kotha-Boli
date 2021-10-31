@@ -1,0 +1,20 @@
+<create-post></create-post>
+
+<div *ngIf="isLoading">
+<em style="font-size: large;"> Getting posts from server... </em>
+</div>
+
+<div class="col-12 col-sm-11 col-md-7 mb-4" *ngFor="let post of posts">
+    <mat-card>
+    <button mat-button color="warn"> <i style="font-weight: 400;" (click)="getPostById(post.id)">View full post</i> </button>
+    <post [post]=post></post>
+    </mat-card>
+</div>
+
+<div *ngIf="posts.length % 5 == 0 && posts.length > 0" class="d-flex justify-content-center mb-4">
+    <button mat-raised-button (click)="loadMore()"> Load more </button>
+</div>
+
+<project-a-content *ngIf="projectedPost !== null" (emitter)="projectedPost = null">
+    <post [post]="projectedPost"></post>
+</project-a-content>

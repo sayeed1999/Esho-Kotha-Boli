@@ -1,0 +1,29 @@
+<div style="background-color: #fff;">
+
+  <mat-toolbar color="primary" style="position: fixed; z-index: 1;">
+    <span style="cursor: pointer;" routerLink="/newsfeed">Esho Kotha Boli</span>
+    <span class="shift-to-right"></span>
+    <h5 style="font-weight: 400; font-size: 90%; padding-right: 4px;"> <i> Hello, {{userName}} </i> </h5>
+    <button mat-icon-button>
+      <mat-icon>messenger</mat-icon>
+    </button>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item *ngIf="authenticated" routerLink="profile/sayeed_1999">Profile</button>
+      <button mat-menu-item *ngIf="!authenticated" routerLink="/account/login" routerLinkActive="active">Login</button>
+      <button mat-menu-item *ngIf="!authenticated" routerLink="/account/register" routerLinkActive="active">Register</button>
+      <button mat-menu-item *ngIf="authenticated">Settings</button>
+      <button mat-menu-item *ngIf="authenticated" (click)="logout()">Logout</button>
+    </mat-menu>
+  </mat-toolbar>
+  <div style="height:16vh;"></div>
+  
+  <div style="width: 100vw; height: 84vh; overflow-y: auto;">
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+</div>

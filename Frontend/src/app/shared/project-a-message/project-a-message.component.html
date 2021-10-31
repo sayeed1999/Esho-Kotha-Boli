@@ -1,0 +1,9 @@
+<!-- This is a single-slot content projection -->
+<div class="wrapper-div" (click)="okay()">
+</div>
+<div class="content">
+    <ng-content></ng-content>
+    <div class="button-group">
+        <button mat-flat-button color="warn" (click)="okay()">Okay</button>
+    </div>
+</div>

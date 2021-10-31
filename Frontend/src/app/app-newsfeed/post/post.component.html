@@ -1,0 +1,29 @@
+<div class="example-post">
+    <div style="display: flex; align-items: center;;">
+        <mat-icon style="margin-right: 5px">computer</mat-icon>
+        <div style="font-weight: 500;">UserName</div>
+        <button mat-icon-button style="margin-left: auto;" (click)="delete()">
+            <mat-icon style="color:brown; font-size: 16px;">delete</mat-icon>
+        </button>
+        <button mat-icon-button (click)="edit()">
+            <mat-icon style="color:green; font-size: 16px;"> {{ editMode === false ? 'edit' : 'cancel' }} </mat-icon>
+        </button>
+    </div>
+    <div>
+        <p *ngIf="!editMode">{{ post.body }}</p>
+        <div *ngIf="editMode" style="display: flex;">
+            <input mat-input class="example-form" [(ngModel)]="editedPost" name="editedPost"/>
+            <button mat-flat-button style="margin-left: 10px;" (click)="saveEdited()">Save</button>
+        </div>
+        <em>{{ post.dateTime | date:'medium' }}</em>
+        <div style="padding-left: 20px;" *ngIf="post.comments !== null">
+            <p>Comments</p>
+
+            <dynamic-form [questions]="questions" [buttonName]="'Send'" (result)=received($event)></dynamic-form>
+
+            <div *ngFor="let c of post.comments">
+                <comment [postId]="post.id" [comment]="c"></comment>
+            </div>
+        </div>
+    </div>
+</div>

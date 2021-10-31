@@ -1,0 +1,53 @@
+/* You can add global styles to this file, and also import other style files */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* to push object at the right */
+.shift-to-right { margin-right: auto; } 
+.push-right { margin-left: auto; }
+
+/* css for angular material form */
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+.example-full-width {
+    width: 100%;
+}
+
+.user-form {
+  max-width: 385px;
+}
+
+.example-post {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+    padding: 15px;
+    margin-top: 3px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    background-color: rgb(240, 240, 157);
+    font-size: 12px;
+}
+
+em {
+  color: #717171;
+  font-size: xx-small;
+}
+
+button.active {
+  background-color: burlywood;
+  font-weight: 500;
+  font-size: 110%;
+  color: cadetblue;
+  text-shadow: 0.5px 0.5px white;
+}

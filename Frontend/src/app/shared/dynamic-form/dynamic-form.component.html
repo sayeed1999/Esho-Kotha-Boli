@@ -1,0 +1,15 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="form">
+
+    <div *ngFor="let question of questions">
+        <dynamic-form-question [question]="question" [form]="form"></dynamic-form-question>
+    </div>
+    
+    <div>
+        <button mat-flat-button raise-button class="mt-2 mb-4" type="submit" [disabled]="!this.form.valid"> {{ buttonName }} </button>
+    </div>
+
+    <!-- <div *ngIf="payload">
+        <strong>Saved the following values</strong> <br> {{ payload }}
+    </div> -->
+
+</form>

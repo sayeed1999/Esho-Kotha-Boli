@@ -1,0 +1,23 @@
+<div style="display: flex; align-items: center;">
+    <div style="font-weight: 500;"> UserName </div>
+    <button mat-icon-button style="margin-left: auto;" (click)="delete()">
+        <mat-icon style="color:brown; font-size: 16px;">delete</mat-icon>
+    </button>
+    <button mat-icon-button (click)="edit()">
+        <mat-icon style="color:green; font-size: 16px;">{{ editMode === false ? 'edit' : 'cancel' }}</mat-icon>
+    </button>
+</div>
+<p *ngIf="!editMode">{{ comment.body }}</p>
+<div *ngIf="editMode" style="display: flex;">
+    <input mat-input class="example-form" [(ngModel)]="editedComment" name="editedComment"/>
+    <button mat-flat-button style="margin-left: 10px;" (click)="saveEdited()">Save</button>
+</div>
+<em> {{ comment.dateTime | date:'medium' }} </em>
+
+<div style="padding-left: 30px;">
+    <p>Replies</p>
+    <dynamic-form [questions]="questions" [buttonName]="'Send'" (result)="received($event)"></dynamic-form>
+    <div *ngFor="let r of comment.replies">
+        <reply [reply]="r"></reply>
+    </div>
+</div>

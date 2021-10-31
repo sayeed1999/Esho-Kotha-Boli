@@ -1,0 +1,5 @@
+<h2> {{ title }} </h2>
+
+<div class="user-form" *ngIf="questions.length > 0">
+    <dynamic-form *ngIf="!rerendering" [questions]="questions" [buttonName]="'Register'" (result)="received($event)"></dynamic-form>
+</div>
