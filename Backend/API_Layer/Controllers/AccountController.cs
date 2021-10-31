@@ -8,6 +8,7 @@ using API_Layer.Helpers;
 using Entity_Layer;
 using Entity_Layer.Dtos;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -15,28 +16,48 @@ using Microsoft.IdentityModel.Tokens;
 namespace API_Layer.Controllers
 {
     [ApiController]
-    [AllowAnonymous]
     [Route("[controller]")]
     public class AccountController : ControllerBase
     {
         private Util<User> _util { get; init; }
         private UserManager<User> _userManager { get; init; }
         private JwtHandler _jwtHandler { get; init; }
+        public IHttpContextAccessor _httpContextAccessor { get; }
 
-        public AccountController(Util<User> util, UserManager<User> userManager, JwtHandler jwtHandler)
+        public AccountController(Util<User> util, UserManager<User> userManager, JwtHandler jwtHandler, IHttpContextAccessor httpContextAccessor)
         {
             _util = util;
             _userManager = userManager;
             _jwtHandler = jwtHandler;
+            _httpContextAccessor = httpContextAccessor;
         }
 
-        [HttpGet("user")]
+        [HttpGet("current-user")]
         public async Task<IActionResult> GetCurrentUser()
         {
-            User user = await _userManager.GetUserAsync(HttpContext.User);
-            return user != null ? Ok(user) : NotFound(user);
+            User user = await _userManager.FindByEmailAsync(
+                _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value);
+
+            if (user == null)
+                return NotFound(user);
+
+            ViewUser viewUser = new()
+            {
+                UserName = user.UserName,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                DateOfBirth = user.DateOfBirth,
+                SexId = (byte)user.Sex,
+                Sex = user.Sex.ToString(),
+                RelationshipStatusId = (byte)user.RelationshipStatus,
+                RelationshipStatus = Enum.GetName(typeof(RelationshipStatus), user.RelationshipStatus),
+            };
+            
+            return Ok(viewUser);
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<AuthResponse>> LoginUserAsync(LoginUser loginUser)
         {
@@ -58,6 +79,7 @@ namespace API_Layer.Controllers
             return Ok(new AuthResponse { UserName = user.UserName, IsAuthSuccessful = true, Token = generatedToken, ErrorMessage = null });
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> RegisterUserAsync(RegisterUser registerUser)
         {
@@ -116,6 +138,7 @@ namespace API_Layer.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet("relationship-status")]
         public ActionResult<List<object>> GetAllRelationshipStatus()
         {
@@ -129,6 +152,7 @@ namespace API_Layer.Controllers
             return collection;
         }
 
+        [AllowAnonymous]
         [HttpGet("sex")]
         public ActionResult<List<object>> GetAllSex()
      {

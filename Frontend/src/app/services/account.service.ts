@@ -5,6 +5,7 @@ import { tap } from 'rxjs/operators';
 import { AuthResponse } from '../models/authResponse';
 import { LoginUser } from '../models/loginUser';
 import { RegisterUser } from '../models/registerUser';
+import { ViewUser } from '../models/viewUser';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,10 @@ export class AccountService {
     private http: HttpClient
   ) {
     this.userName = localStorage.getItem('userName') || this.defaultUserName;
+  }
+
+  get getCurrentUser(): Observable<ViewUser> {
+    return this.http.get<ViewUser>(`${this.url}/current-user`);
   }
 
   get isTokenExpired(): boolean {

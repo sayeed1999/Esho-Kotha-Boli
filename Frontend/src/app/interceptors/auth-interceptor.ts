@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
-import { catchError } from "rxjs/operators";
+import { catchError, tap } from "rxjs/operators";
 import { AccountService } from "../services/account.service";
 
 @Injectable()
@@ -36,6 +36,9 @@ export class AuthInterceptor implements HttpInterceptor {
 
             // pass cloned req with header to the next handler
             return next.handle(authReq).pipe(
+                // tap(res => {
+                //     console.log(res);
+                // }),
                 // intercepting the response to check whether the jwt is expired!
                 catchError((err: HttpErrorResponse) => {
                     if(err.status === 401) {

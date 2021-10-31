@@ -6,6 +6,7 @@ import { RegisterComponent } from './account/register/register.component';
 import { AppNewsfeedComponent } from './app-newsfeed/app-newsfeed.component';
 import { LoggedInGuard } from './guards/logged-in.guard';
 import { ProfileComponent } from './profile/profile.component';
+import { UserResolver } from './route-resolvers/user-resolver';
 
 
 const routes: Routes = [
@@ -16,7 +17,7 @@ const routes: Routes = [
       { path: 'register', component: RegisterComponent },
     ]
   },
-  { path: 'profile/:username', component: ProfileComponent },
+  { path: 'profile/:username', component: ProfileComponent, resolve: { routeResolver: UserResolver } },
   { path: '', pathMatch: 'full', redirectTo: 'account/login' },
   { path: '**', redirectTo: 'account/login' }
 ];

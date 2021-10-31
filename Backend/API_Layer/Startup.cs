@@ -147,6 +147,9 @@ namespace API_Layer
                 op.Filters.Add(new AuthorizeFilter(policy));
             });
             // Global Authorize() filter ends...
+
+            // Register IHttpContextAccessor
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
