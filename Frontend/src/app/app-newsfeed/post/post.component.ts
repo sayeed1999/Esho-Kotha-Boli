@@ -16,11 +16,13 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit, OnDestroy {
+  @Input() postIsASummary = true;
   @Input() post!: Post;
   questions!: QuestionBase<string>[];
   editMode = false;
   editedPost = '';
   subscription!: Subscription;
+  renderingComment = false;
 
   constructor(
     private postService: PostService,
@@ -79,7 +81,7 @@ export class PostComponent implements OnInit, OnDestroy {
     const comment = Comment_.newComment(e.body, this.post.id);
     this.commentService.add(comment).subscribe(
       res => {
-        // this.reloadPage();
+        this.rerender();
         this.postService.dataChanged.next(true);
         this.sb.open('Commenting done.', 'Okay');
       },
@@ -93,7 +95,6 @@ export class PostComponent implements OnInit, OnDestroy {
   delete() {
     this.postService.delete(this.post.id).subscribe(
       res => {
-        // this.reloadPage();
         this.postService.dataChanged.next(true);
         this.sb.open('Post deleted successfully', 'Good!');
       },
@@ -131,8 +132,9 @@ export class PostComponent implements OnInit, OnDestroy {
     );
   }
 
-  // reloadPage() {
-  //   window.location.reload();
-  // }
+  rerender() {
+    this.renderingComment = true;
+    setTimeout(() => this.renderingComment = false, 20);
+  }
 
 }

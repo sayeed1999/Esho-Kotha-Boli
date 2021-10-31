@@ -10,7 +10,8 @@ import { AccountService } from "../services/account.service";
 export class AuthInterceptor implements HttpInterceptor {
     constructor(
         private acc: AccountService,
-        private router: Router
+        private router: Router,
+        private sb: MatSnackBar,
     ) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler):
@@ -40,9 +41,9 @@ export class AuthInterceptor implements HttpInterceptor {
                     if(err.status === 401) {
                         // unauthorized(401): not valid authentication
                         this.acc.logout();
+                        this.sb.open(`You cannot navigate to ${this.router.url} before loging in.`);
                         this.router.navigate(['account', 'login']);
-                        throw new Error('Request cannot be proccessed in an unauthenticate state.');
-
+                        throw new Error(`You cannot navigate to ${this.router.url} before loging in.`);
                     }
                     throw err;
                 })

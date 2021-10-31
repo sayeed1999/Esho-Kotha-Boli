@@ -2,10 +2,10 @@
     <div style="display: flex; align-items: center;;">
         <mat-icon style="margin-right: 5px">computer</mat-icon>
         <div style="font-weight: 500;">UserName</div>
-        <button mat-icon-button style="margin-left: auto;" (click)="delete()">
+        <button *ngIf="!postIsASummary" mat-icon-button style="margin-left: auto;" (click)="delete()">
             <mat-icon style="color:brown; font-size: 16px;">delete</mat-icon>
         </button>
-        <button mat-icon-button (click)="edit()">
+        <button *ngIf="!postIsASummary" mat-icon-button (click)="edit()">
             <mat-icon style="color:green; font-size: 16px;"> {{ editMode === false ? 'edit' : 'cancel' }} </mat-icon>
         </button>
     </div>
@@ -19,7 +19,7 @@
         <div style="padding-left: 20px;" *ngIf="post.comments !== null">
             <p>Comments</p>
 
-            <dynamic-form [questions]="questions" [buttonName]="'Send'" (result)=received($event)></dynamic-form>
+            <dynamic-form *ngIf="!renderingComment" [questions]="questions" [buttonName]="'Send'" (result)=received($event)></dynamic-form>
 
             <div *ngFor="let c of post.comments">
                 <comment [postId]="post.id" [comment]="c"></comment>

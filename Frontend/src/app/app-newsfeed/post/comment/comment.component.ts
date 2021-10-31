@@ -20,6 +20,7 @@ export class CommentComponent implements OnInit {
   questions!: QuestionBase<string>[];
   editMode = false;
   editedComment = '';
+  renderingReply = false;
 
   constructor(
     private postService: PostService,
@@ -56,7 +57,7 @@ export class CommentComponent implements OnInit {
   delete() {
     this.commentService.delete(this.comment.id).subscribe(
       res => {
-        // this.pageReload();
+        this.rerender();
         this.postService.dataChanged.next(true);
         this.sb.open('Comment deleted', 'Thanks');
       },
@@ -94,8 +95,9 @@ export class CommentComponent implements OnInit {
     );
   }
 
-  // pageReload() {
-  //   window.location.reload();
-  // }
+  rerender() {
+    this.renderingReply = true;
+    setTimeout(() => this.renderingReply = false, 20);
+  }
 
 }

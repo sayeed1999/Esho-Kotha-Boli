@@ -7,7 +7,7 @@
 <div class="col-12 col-sm-11 col-md-7 mb-4" *ngFor="let post of posts">
     <mat-card>
     <button mat-button color="warn"> <i style="font-weight: 400;" (click)="getPostById(post.id)">View full post</i> </button>
-    <post [post]=post></post>
+    <post [post]=post [postIsASummary]="true"></post>
     </mat-card>
 </div>
 
@@ -16,5 +16,5 @@
 </div>
 
 <project-a-content *ngIf="projectedPost !== null" (emitter)="projectedPost = null">
-    <post [post]="projectedPost"></post>
+    <post [post]="projectedPost" [postIsASummary]="false"></post>
 </project-a-content>

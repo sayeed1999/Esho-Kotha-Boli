@@ -16,7 +16,7 @@
 
 <div style="padding-left: 30px;">
     <p>Replies</p>
-    <dynamic-form [questions]="questions" [buttonName]="'Send'" (result)="received($event)"></dynamic-form>
+    <dynamic-form *ngIf="!renderingReply" [questions]="questions" [buttonName]="'Send'" (result)="received($event)"></dynamic-form>
     <div *ngFor="let r of comment.replies">
         <reply [reply]="r"></reply>
     </div>
