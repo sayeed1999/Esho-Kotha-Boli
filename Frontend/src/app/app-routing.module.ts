@@ -1,15 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppNewsfeedComponent } from './app-newsfeed-module/app-newsfeed.component';
 import { LoggedInGuard } from './utility/guards/logged-in.guard';
-import { ProfileComponent } from './profile-module/profile.component';
-import { UserResolver } from './route-resolvers/user-resolver';
 
 
 const routes: Routes = [
   { 
-    path: 'newsfeed', 
-    component: AppNewsfeedComponent 
+    path: 'newsfeed',
+    loadChildren: () => import('./app-newsfeed-module/routing.module').then(n => n.NewsfeedRoutingModule)
   },
   {
     path: 'account', 
@@ -17,9 +14,8 @@ const routes: Routes = [
     loadChildren: () => import('./account-module/account-routing.module').then(m => m.AccountRoutingModule)
   },
   { 
-    path: 'profile/:username', 
-    component: ProfileComponent, 
-    resolve: { routeResolver: UserResolver } 
+    path: 'profile',
+    loadChildren: () => import('./profile-module/routing.module').then(p => p.RoutingModule)
   },
   { 
     path: '', 
