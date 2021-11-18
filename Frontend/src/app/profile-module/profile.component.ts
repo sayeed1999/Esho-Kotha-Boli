@@ -20,7 +20,7 @@ export class ProfileComponent implements OnInit {
     //   console.log(data)
     // })
 
-    // Can access route resolver data with the ActivatedRoute service!
+    // Can access route resolver data (which is resolved!) with the ActivatedRoute service!
     this.route.data.subscribe((data: any) => {
       console.log('Checking route resolver data...');
       console.log(data);

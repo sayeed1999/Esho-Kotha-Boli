@@ -13,12 +13,19 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .shift-to-right { margin-right: auto; } 
 .push-right { margin-left: auto; }
 
+/* global container */
+.newsfeed-container {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
 /* css for angular material form */
 .example-form {
     min-width: 150px;
     max-width: 500px;
     width: 100%;
-  }
+}
 .example-full-width {
     width: 100%;
 }
@@ -28,11 +35,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .example-post {
-    min-width: 150px;
-    max-width: 500px;
     width: 100%;
     padding: 15px;
-    margin-top: 3px;
     border: 1px solid gray;
     border-radius: 5px;
     background-color: rgb(240, 240, 157);

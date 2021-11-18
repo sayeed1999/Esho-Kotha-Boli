@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { QuestionBase } from '../models/question-base';
+import { QuestionBase } from '../../models/question-base';
 
 @Injectable({
   providedIn: 'root'

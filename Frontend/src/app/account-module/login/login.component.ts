@@ -7,7 +7,7 @@ import { AuthResponse } from 'src/app/models/authResponse';
 import { LoginUser } from 'src/app/models/loginUser';
 import { QuestionBase } from 'src/app/models/question-base';
 import { TextBox } from 'src/app/models/question-textbox';
-import { AccountService } from 'src/app/services/account.service';
+import { AccountService } from 'src/app/utility/services/account.service';
 
 @Component({
   selector: 'login',

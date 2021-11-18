@@ -5,9 +5,9 @@ import { Comment_ } from 'src/app/models/comment';
 import { QuestionBase } from 'src/app/models/question-base';
 import { TextBox } from 'src/app/models/question-textbox';
 import { Reply } from 'src/app/models/reply';
-import { CommentService } from 'src/app/services/comment.service';
-import { PostService } from 'src/app/services/post.service';
-import { ReplyService } from 'src/app/services/reply.service';
+import { CommentService } from 'src/app/utility/services/comment.service';
+import { PostService } from 'src/app/utility/services/post.service';
+import { ReplyService } from 'src/app/utility/services/reply.service';
 
 @Component({
   selector: 'comment',

@@ -4,8 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Post } from 'src/app/models/Post';
 import { QuestionBase } from 'src/app/models/question-base';
 import { TextArea } from 'src/app/models/question-textarea';
-import { PostService } from 'src/app/services/post.service';
-import { ProjectAMessageComponent } from 'src/app/shared/project-a-message/project-a-message.component';
+import { PostService } from 'src/app/utility/services/post.service';
+import { ProjectAMessageComponent } from 'src/app/shared-module/project-a-message/project-a-message.component';
 
 @Component({
   selector: 'create-post',

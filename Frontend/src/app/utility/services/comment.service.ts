@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { Comment_ } from '../models/comment';
+import { Comment_ } from '../../models/comment';
 import { RepositoryService } from './repository.service';
 
 @Injectable({

@@ -2,8 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Reply } from 'src/app/models/reply';
-import { PostService } from 'src/app/services/post.service';
-import { ReplyService } from 'src/app/services/reply.service';
+import { PostService } from 'src/app/utility/services/post.service';
+import { ReplyService } from 'src/app/utility/services/reply.service';
 
 @Component({
   selector: 'reply',

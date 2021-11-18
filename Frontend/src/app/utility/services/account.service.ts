@@ -2,10 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { AuthResponse } from '../models/authResponse';
-import { LoginUser } from '../models/loginUser';
-import { RegisterUser } from '../models/registerUser';
-import { ViewUser } from '../models/viewUser';
+import { AuthResponse } from '../../models/authResponse';
+import { LoginUser } from '../../models/loginUser';
+import { RegisterUser } from '../../models/registerUser';
+import { ViewUser } from '../../models/viewUser';
 
 @Injectable({
   providedIn: 'root'

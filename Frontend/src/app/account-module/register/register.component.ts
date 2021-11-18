@@ -7,7 +7,7 @@ import { QuestionBase } from 'src/app/models/question-base';
 import { RadioGroup } from 'src/app/models/question-radiogroup';
 import { TextBox } from 'src/app/models/question-textbox';
 import { RegisterUser } from 'src/app/models/registerUser';
-import { AccountService } from 'src/app/services/account.service';
+import { AccountService } from 'src/app/utility/services/account.service';
 
 @Component({
   selector: 'register',

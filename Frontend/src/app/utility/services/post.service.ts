@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { Comment_ } from '../models/comment';
-import { Post } from '../models/Post';
-import { Reply } from '../models/reply';
+import { Comment_ } from '../../models/comment';
+import { Post } from '../../models/Post';
+import { Reply } from '../../models/reply';
 import { RepositoryService } from './repository.service';
 
 @Injectable({

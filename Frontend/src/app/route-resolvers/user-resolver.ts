@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
 import { empty, Observable, of } from "rxjs";
 import { catchError } from "rxjs/operators";
-import { AccountService } from "../services/account.service";
+import { AccountService } from "../utility/services/account.service";
 
 @Injectable({ providedIn: "root" })
 export class UserResolver implements Resolve<any> {
