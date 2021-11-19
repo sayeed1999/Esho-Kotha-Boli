@@ -8,6 +8,7 @@ import { LoginUser } from 'src/app/models/loginUser';
 import { QuestionBase } from 'src/app/models/question-base';
 import { TextBox } from 'src/app/models/question-textbox';
 import { AccountService } from 'src/app/utility/services/account.service';
+// import { SweetAlertService } from 'src/app/utility/services/sweet-alert.service';
 
 @Component({
   selector: 'login',
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private acc: AccountService,
     private sb: MatSnackBar,
+    // private sweetalert: SweetAlertService,
     private router: Router,
   ) { }
 
@@ -52,7 +54,7 @@ export class LoginComponent implements OnInit {
     this.acc.login(e).subscribe(
       res => {
         // alert('jwt token generated!\n' + res.token);
-        this.sb.open('You have successfully logged in to your account. :)', 'Dismiss');
+        // this.sb.open('You have successfully logged in to your account. :)', 'Dismiss');
         this.router.navigate(['newsfeed']);
       },
       (error: HttpErrorResponse) => {
