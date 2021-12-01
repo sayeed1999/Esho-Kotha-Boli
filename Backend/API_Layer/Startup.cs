@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using Repository_Layer.DerivedRepositories.PostRepository;
+using Repository_Layer.DerivedRepositories.PostSummaryRepository;
 using Repository_Layer.DerivedRepositories.CommentRepository;
 using Repository_Layer.DerivedRepositories.ReplyRepository;
 using Repository_Layer.GenericRepository;
@@ -92,6 +93,7 @@ namespace API_Layer
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             // DerivedRepositories
             services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<IPostSummaryRepository, PostSummaryRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IReplyRepository, ReplyRepository>();
             // Services

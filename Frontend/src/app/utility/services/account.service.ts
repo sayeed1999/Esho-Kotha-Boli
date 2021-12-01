@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthResponse } from '../../models/authResponse';
 import { LoginUser } from '../../models/loginUser';
 import { RegisterUser } from '../../models/registerUser';
 import { ViewUser } from '../../models/viewUser';
+import { SweetAlertService } from './sweet-alert.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,9 @@ export class AccountService {
   private url: string = 'https://localhost:44345/account';
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private sweetalert: SweetAlertService,
+    private router: Router,
   ) {
     this.userName = localStorage.getItem('userName') || this.defaultUserName;
   }
@@ -42,11 +46,22 @@ export class AccountService {
     return localStorage.getItem('token') || '';
   }
 
-  logout() {
+  logoutWithoutConfirmation() {
     localStorage.removeItem('token');
     this.userName = this.defaultUserName;
     localStorage.removeItem('userName');
     this.authenticationStateChanged.next(false);
+    this.sweetalert.textNIcon("You have successfully logged out of your account", "success");
+    this.router.navigate(['account', 'login']);
+  }
+
+  logout() {
+    this.sweetalert.confirm(
+      "Are you sure?",
+      () => {
+        this.logoutWithoutConfirmation();
+      }
+    );
   }
 
   login(user: LoginUser): Observable<AuthResponse> {

@@ -1,4 +1,5 @@
 import { Comment_ } from "./comment";
+import { User } from "./user";
 
 export class Reply
 {
@@ -6,14 +7,16 @@ export class Reply
     (
         public id: number,
         public body: string,
-        public dateTime: Date,
+        public dateCreated: Date,
         public commentId: number,
-        public comment?: Comment_
+        public userId: string,
+        public comment?: Comment_,
+        public user?: User
     )
     {}
 
     static newReply(body: string, commentId: number): Reply {
-        return new Reply(0, body, new Date(), commentId);
+        return new Reply(0, body, new Date(), commentId, '');
     }
 
 }

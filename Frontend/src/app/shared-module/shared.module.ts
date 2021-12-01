@@ -8,6 +8,7 @@ import { ProjectAMessageComponent } from './project-a-message/project-a-message.
 import { RaiseButtonDirective } from './directives/raise-button.directive';
 import { ProjectAContentComponent } from './project-a-content/project-a-content.component';
 import { NewlinePipe } from './custom-pipes/newline.pipe';
+import { FocusItemDirective } from './directives/focus-item.directive';
 
 
 
@@ -19,6 +20,7 @@ import { NewlinePipe } from './custom-pipes/newline.pipe';
     RaiseButtonDirective,
     ProjectAContentComponent,
     NewlinePipe,
+    FocusItemDirective,
   ],
   imports: [
     CommonModule,
@@ -30,6 +32,8 @@ import { NewlinePipe } from './custom-pipes/newline.pipe';
     ProjectAMessageComponent,
     ProjectAContentComponent,
     NewlinePipe,
+    RaiseButtonDirective,
+    FocusItemDirective,
   ]
 })
 export class SharedModule { }

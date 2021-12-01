@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
 
   logout() { 
     this.acc.logout();
-    this.sb.open('You are logged out of your account!', 'Dismiss');
-    this.router.navigateByUrl('/account/login');
+    // this.sb.open('You are loggeds out of your account!', 'Dismiss');
+    // this.router.navigateByUrl('/account/login');
   }
 }

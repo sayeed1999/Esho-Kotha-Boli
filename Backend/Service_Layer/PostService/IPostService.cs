@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Entity_Layer;
+using Entity_Layer.Dtos;
 
 namespace Service_Layer.PostService
 {
@@ -13,7 +14,7 @@ namespace Service_Layer.PostService
         Task<Response<Post>> CreatePost(Post post);
 
         // Read
-        public Task<Response<IEnumerable<Post>>> GetAllSummaryAsync(int page);
+        public Task<Response<IEnumerable<PostSummary>>> GetAllSummaryAsync(int page);
         Task<Response<IEnumerable<Post>>> GetPostsWithCommentsAndReplies(int page, int number);
         Task<Response<IEnumerable<Post>>> GetPosts();
         public Task<Response<Post>> GetPostWithCommentsAndReplies(long id);

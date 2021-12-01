@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API_Layer.Helpers;
 using AutoMapper;
 using Entity_Layer;
+using Entity_Layer.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,14 +25,6 @@ namespace API_Layer.Controllers
         {
             Util = util;
             PostService = postService;
-        }
-
-
-        [HttpGet("all-summary")]
-        public async Task<IActionResult> GetAllSummary(int? page = 1)
-        {
-            Response<IEnumerable<Post>> response = await PostService.GetAllSummaryAsync((int)page);
-            return Util.GetResult(response);
         }
 
 

@@ -15,7 +15,7 @@
             <textarea mat-input class="example-form" [(ngModel)]="editedPost" name="editedPost"></textarea>
             <button mat-flat-button style="margin-left: 10px;" (click)="saveEdited()">Save</button>
         </div>
-        <em>{{ post.dateTime | date:'medium' }}</em>
+        <em>{{ post.dateCreated | date:'medium' }}</em>
         <div style="padding-left: 20px;" *ngIf="post.comments !== null">
             <p>Comments</p>
 

@@ -14,12 +14,12 @@ export class SweetAlertService {
   }
 
   // confirm ? yes or no
-  confirm(message: string) {
-    swal(message)
+  confirm(message: string, callback: any) {
+    swal({ text: message, icon: 'warning' })
     .then((yes: boolean) => {
       !!yes
-      ? swal('Confirmed!')
-      : swal({ text: 'Rejected!', icon: 'error' });
+      ? callback()
+      : swal({ text: 'Terminated', icon: 'error' });
     });
   }
 
@@ -28,14 +28,30 @@ export class SweetAlertService {
     swal(title, text);
   }
 
+  // title, icon
+  textNIcon(text: string, icon: 'warning'|'error'|'success'|'info') {
+    swal({
+      text: text,
+      icon: icon
+    });
+  }
+
   // title, text, alert icon
-  titleNTextNAlertIcon(title: string, text: string, alert: string) {
-    swal(title, text, alert); // alert icon: warning, error, success, info
+  titleNTextNAlertIcon(title: string, text: string, icon: 'warning'|'error'|'success'|'info') {
+    swal(title, text, icon);
   }
 
   // title, text, alert icon, one button
-  titleNTextNAlertIconNButton(title: string, text: string, alert: string, button: string) {
-    swal(title, text, alert, button);
+  titleNTextNAlertIconNButton(title: string, text: string, icon: 'warning'|'error'|'success'|'info', button: string) {
+    swal(title, text, icon, button);
   }
 
 }
+
+// How to work with enums ??
+// enum AlertType {
+//   warning,
+//   error,
+//   success,
+//   info
+// }

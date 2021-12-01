@@ -12,7 +12,7 @@
     <input mat-input class="example-form" [(ngModel)]="editedComment" name="editedComment"/>
     <button mat-flat-button style="margin-left: 10px;" (click)="saveEdited()">Save</button>
 </div>
-<em> {{ comment.dateTime | date:'medium' }} </em>
+<em> {{ comment.dateCreated | date:'medium' }} </em>
 
 <div style="padding-left: 30px;">
     <p>Replies</p>

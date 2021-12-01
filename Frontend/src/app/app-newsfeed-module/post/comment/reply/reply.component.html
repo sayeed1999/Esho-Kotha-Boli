@@ -12,4 +12,4 @@
     <input mat-input class="example-form" [(ngModel)]="editedReply" name="editedReply"/>
     <button mat-flat-button style="margin-left: 10px;" (click)="saveEdited()">Save</button>
 </div>
-<em> {{ reply.dateTime | date:'medium' }} </em>
+<em> {{ reply.dateCreated | date:'medium' }} </em>

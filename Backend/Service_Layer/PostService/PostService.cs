@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Entity_Layer;
+using Entity_Layer.Dtos;
 using Microsoft.EntityFrameworkCore;
 using Repository_Layer.UnitOfWork;
 
@@ -17,9 +18,9 @@ namespace Service_Layer.PostService
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Response<IEnumerable<Post>>> GetAllSummaryAsync(int page)
+        public async Task<Response<IEnumerable<PostSummary>>> GetAllSummaryAsync(int page)
         {
-            return await this._unitOfWork.PostRepository.GetAllPostSummary(page);
+            return await this._unitOfWork.PostSummaryRepository.GetAllPostSummary(page);
         }
 
         public async Task<Response<Post>> CreatePost(Post post)

@@ -7,15 +7,13 @@ using System.Threading.Tasks;
 
 namespace Entity_Layer
 {
-    public class Comment
+    public class Comment : Parent
     {
-        public long Id { get; set; }
         [Required]
         [MinLength(1)]
         public string Body { get; set; }
-        public DateTime DateTime { get; set; }
-        public Post Post { get; set; }
         public long PostId { get; set; }
+        public Post Post { get; set; }
         public IEnumerable<Reply> Replies { get; set; }
     }
 }
