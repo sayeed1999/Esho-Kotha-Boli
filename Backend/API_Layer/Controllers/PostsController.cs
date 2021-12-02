@@ -87,9 +87,7 @@ namespace API_Layer.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync(Post post)
         {
-            //i can't get userid like this :( i can't set a claim that will give me userId;
-            User user = await UserManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
-            post.UserId = user.Id;
+            post.UserId = (await UserManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email))).Id;
             Response<Post> response = await PostService.CreatePost(post);
             return Util.GetResult(response, "/posts");
         }
@@ -97,16 +95,37 @@ namespace API_Layer.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(long id, Post post)
         {
-            Response<Post> response = await PostService.UpdatePost(id, post);
+            User user = await UserManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+            string currentUserId = user.Id;
+            Response<Post> response = await PostService.GetPost(id);
+            if (response.Data is not null && response.Data.UserId != currentUserId)
+            {
+                response.Message = "[x] You can't modify others post!";
+                response.StatusCode = HttpStatusCode.Forbidden;
+            }
+            else
+            {
+                response = await PostService.UpdatePost(id, post);
+            }
             return Util.GetResult(response);
         }
        
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(long id)
         {
-            Response<Post> response = await PostService.DeletePost(id);
+            User user = await UserManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+            string currentUserId = user.Id;
+            Response<Post> response = await PostService.GetPost(id);
+            if(response.Data is not null && response.Data.UserId != currentUserId)
+            {
+                response.Message = "[x] You can't delete others post!";
+                response.StatusCode = HttpStatusCode.Forbidden;
+            }
+            else
+            {
+                response = await PostService.DeletePost(id);
+            }
             return Util.GetResult(response);
         }
-
     }
 }

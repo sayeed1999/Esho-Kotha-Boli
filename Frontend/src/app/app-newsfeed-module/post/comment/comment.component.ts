@@ -9,6 +9,7 @@ import { ViewComment } from 'src/app/models/viewComment';
 import { CommentService } from 'src/app/utility/services/comment.service';
 import { PostService } from 'src/app/utility/services/post.service';
 import { ReplyService } from 'src/app/utility/services/reply.service';
+import { SweetAlertService } from 'src/app/utility/services/sweet-alert.service';
 
 @Component({
   selector: 'comment',
@@ -27,6 +28,7 @@ export class CommentComponent implements OnInit {
     private commentService: CommentService,
     private replyService: ReplyService,
     private sb: MatSnackBar,
+    private sl: SweetAlertService,
   ) { }
 
   ngOnInit(): void {
@@ -43,13 +45,13 @@ export class CommentComponent implements OnInit {
     const reply = Reply.newReply(e.body, this.comment.id);
     this.replyService.add(reply).subscribe(
       res => {
-        // this.pageReload();
         this.postService.dataChanged.next(true);
         this.sb.open('Reply given', 'Okay');
       },
       (error: HttpErrorResponse) => {
         if(error.status === 0) this.sb.open('Network error. Please check your internet connection!', 'So Bad');
-        else this.sb.open(error.error, 'Okay');
+        // else this.sb.open(error.error, 'Okay');
+        else this.sl.textNIcon(error.error, 'error');
       }
     );
   }
@@ -63,7 +65,8 @@ export class CommentComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         if(error.status === 0) this.sb.open('Network error. Please check your internet connection!', 'My Bad');
-        else this.sb.open(error.error, 'Okay');
+        // else this.sb.open(error.error, 'Okay');
+        else this.sl.textNIcon(error.error, 'error');
       }
     );
   }
@@ -90,7 +93,8 @@ export class CommentComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         if(error.status === 0) this.sb.open('Network error. Please check your internet connection!', 'So Bad');
-        else this.sb.open(error.error, 'Okay');
+        // else this.sb.open(error.error, 'Okay');
+        else this.sl.textNIcon(error.error, 'error');
       }
     );
   }

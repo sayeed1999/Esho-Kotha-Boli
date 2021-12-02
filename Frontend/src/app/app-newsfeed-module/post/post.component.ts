@@ -7,6 +7,7 @@ import { CommentService } from 'src/app/utility/services/comment.service';
 import { PostService } from 'src/app/utility/services/post.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewPost } from 'src/app/models/viewPost';
+import { SweetAlertService } from 'src/app/utility/services/sweet-alert.service';
 
 @Component({
   selector: 'post',
@@ -23,7 +24,8 @@ export class PostComponent implements OnInit {
   constructor(
     private postService: PostService,
     private commentService: CommentService,
-    private sb: MatSnackBar
+    private sb: MatSnackBar,
+    private sl: SweetAlertService,
   ) { }
 
   ngOnInit(): void {
@@ -46,7 +48,8 @@ export class PostComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         if(error.status === 0) alert('Network error. Please check your internet connection!');
-        else this.sb.open(error.error, 'Okay');
+        // else this.sb.open(error.error, 'Okay');
+        else this.sl.textNIcon(error.error, 'error');
       }
     );
   }
@@ -59,7 +62,8 @@ export class PostComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         if(error.status === 0) this.sb.open('Network error. Please check your internet connection!', 'My Bad');
-        else this.sb.open(error.error, 'Okay');
+        // else this.sb.open(error.error, 'Okay');
+        else this.sl.textNIcon(error.error, 'error');
       }
     );
   }
@@ -86,7 +90,8 @@ export class PostComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         if(error.status === 0) this.sb.open('Network error. Please check your internet connection!', 'So Bad');
-        else this.sb.open(error.error, 'Okay');
+        // else this.sb.open(error.error, 'Okay');
+        else this.sl.textNIcon(error.error, 'error');
       }
     );
   }

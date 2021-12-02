@@ -53,14 +53,36 @@ namespace API_Layer.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(long id, Comment comment)
         {
-            Response<Comment> response = await CommentService.UpdateComment(id, comment);
+            User user = await UserManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+            string currentUserId = user.Id;
+            Response<Comment> response = await CommentService.GetComment(id);
+            if (response.Data is not null && response.Data.UserId != currentUserId)
+            {
+                response.Message = "[x] You can't modify others comment!";
+                response.StatusCode = HttpStatusCode.Forbidden;
+            }
+            else
+            {
+                response = await CommentService.UpdateComment(id, comment);
+            }
             return Util.GetResult(response);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(long id)
         {
-            Response<Comment> response = await CommentService.DeleteComment(id);
+            User user = await UserManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+            string currentUserId = user.Id;
+            Response<Comment> response = await CommentService.GetComment(id);
+            if (response.Data is not null && response.Data.UserId != currentUserId)
+            {
+                response.Message = "[x] You can't delete others comment!";
+                response.StatusCode = HttpStatusCode.Forbidden;
+            }
+            else
+            {
+                response = await CommentService.DeleteComment(id);
+            }
             return Util.GetResult(response);
         }
     }

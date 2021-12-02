@@ -5,6 +5,7 @@ import { Reply } from 'src/app/models/reply';
 import { ViewReply } from 'src/app/models/viewReply';
 import { PostService } from 'src/app/utility/services/post.service';
 import { ReplyService } from 'src/app/utility/services/reply.service';
+import { SweetAlertService } from 'src/app/utility/services/sweet-alert.service';
 
 @Component({
   selector: 'reply',
@@ -20,6 +21,7 @@ export class ReplyComponent implements OnInit {
     private postService: PostService,
     private replyService: ReplyService,
     private sb: MatSnackBar,
+    private sl: SweetAlertService,
   ) { }
 
   ngOnInit(): void {
@@ -33,7 +35,8 @@ export class ReplyComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         if(error.status === 0) this.sb.open('Network error. Please check your internet connection!', 'So Bad');
-        else this.sb.open(error.error, 'Okay');
+        // else this.sb.open(error.error, 'Okay');
+        else this.sl.textNIcon(error.error, 'error');
       }
     );
   }
@@ -60,7 +63,8 @@ export class ReplyComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         if(error.status === 0) this.sb.open('Network error. Please check your internet connection!', 'So Bad');
-        else this.sb.open(error.error, 'Okay');
+        // else this.sb.open(error.error, 'Okay');
+        else this.sl.textNIcon(error.error, 'error');
       }
     );
   }
