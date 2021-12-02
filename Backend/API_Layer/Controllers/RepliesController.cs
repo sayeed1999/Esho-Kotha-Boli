@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using API_Layer.Helpers;
 using Entity_Layer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Service_Layer.ReplyService;
 
@@ -13,13 +15,15 @@ namespace API_Layer.Controllers
     [Route("[controller]")]
     public class RepliesController : ControllerBase
     {
+        public UserManager<User> UserManager { get; }
         public Util<Reply> Util { get; }
         public IReplyService ReplyService { get; }
 
-        public RepliesController(Util<Reply> util, IReplyService replyService)
+        public RepliesController(Util<Reply> util, IReplyService replyService, UserManager<User> userManager)
         {
             Util = util;
             ReplyService = replyService;
+            UserManager = userManager;
         }
 
         [HttpGet("Post/{id}")]
@@ -39,6 +43,7 @@ namespace API_Layer.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync(Reply reply)
         {
+            reply.UserId = (await UserManager.FindByEmailAsync(HttpContext.User.FindFirstValue(ClaimTypes.Email))).Id;
             Response<Reply> response = await ReplyService.CreateReply(reply);
             return Util.GetResult(response);
         }

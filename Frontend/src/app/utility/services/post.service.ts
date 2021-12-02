@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
+import { PostSummary } from 'src/app/models/postSummaryt';
 import { Comment_ } from '../../models/comment';
 import { Post } from '../../models/Post';
 import { Reply } from '../../models/reply';
@@ -34,7 +35,7 @@ export class PostService extends RepositoryService {
     this.page++;
   }
 
-  getAllPostsSummary(): Observable<Post[]> {
+  getAllPostsSummary(): Observable<PostSummary[]> {
     return this.http.get<any>(
       `${this.url}/all-summary?page=${this.page}`
     );

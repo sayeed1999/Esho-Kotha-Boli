@@ -32,6 +32,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace API_Layer
 {
@@ -74,6 +76,14 @@ namespace API_Layer
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 // Reference cycle loop resolved
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.Configure<IdentityOptions>(options => 
+            {
+                // this setup is needed to retrieve userId from User.Identity when the project is running!
+                options.ClaimsIdentity.UserIdClaimType = ClaimTypes.NameIdentifier;
             });
 
             // Disable automatic 400 response

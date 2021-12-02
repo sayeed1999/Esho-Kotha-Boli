@@ -101,9 +101,12 @@ namespace Service_Layer.PostService
             {
                 Post post = await _unitOfWork.PostRepository.GetFirstOrDefaultAsync(
                                                             x => x.Id == id,
-                                                            include: src => src.Include(x => x.Comments)
-                                                                               .ThenInclude(x => x.Replies),
-                                                            orderBy: src => src.OrderBy(x => x.Body)
+                                                            src => src.Include(x => x.User),
+                                                            src => src.Include(x => x.Comments)
+                                                                      .ThenInclude(x => x.User),
+                                                            src => src.Include(x => x.Comments)
+                                                                      .ThenInclude(x => x.Replies)
+                                                                      .ThenInclude(x => x.User)
                                                        );
                 response.Data = post;
             }

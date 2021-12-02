@@ -1,5 +1,5 @@
 <div style="display: flex; align-items: center;">
-    <div style="font-weight: 500;"> UserName </div>
+    <div style="font-weight: 500;"> {{ comment.userName }} </div>
     <button mat-icon-button style="margin-left: auto;" (click)="delete()">
         <mat-icon style="color:brown; font-size: 16px;">delete</mat-icon>
     </button>
@@ -9,7 +9,7 @@
 </div>
 <p *ngIf="!editMode" [innerHTML]="comment.body | newline"></p>
 <div *ngIf="editMode" style="display: flex;">
-    <input mat-input class="example-form" [(ngModel)]="editedComment" name="editedComment"/>
+    <input mat-input class="example-form" [(ngModel)]="editedComment" name="editedComment" />
     <button mat-flat-button style="margin-left: 10px;" (click)="saveEdited()">Save</button>
 </div>
 <em> {{ comment.dateCreated | date:'medium' }} </em>

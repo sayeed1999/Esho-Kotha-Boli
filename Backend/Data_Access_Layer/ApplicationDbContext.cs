@@ -19,7 +19,7 @@ namespace Data_Access_Layer
         }
 
         public DbSet<Post> Posts { get; set; }
-        public DbSet<PostSummary> PostSummaries { get; set; }
+        public DbSet<PostSummary> PostSummaries { get; set; } // only for sp, not for db table
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Reply> Replies { get; set; }
     }

@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Comment_ } from 'src/app/models/comment';
-import { Post } from 'src/app/models/Post';
 import { QuestionBase } from 'src/app/models/question-base';
 import { TextBox } from 'src/app/models/question-textbox';
 import { CommentService } from 'src/app/utility/services/comment.service';
@@ -9,19 +8,18 @@ import { PostService } from 'src/app/utility/services/post.service';
 import * as signalR from '@microsoft/signalr';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
+import { ViewPost } from 'src/app/models/viewPost';
 
 @Component({
   selector: 'post',
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
 })
-export class PostComponent implements OnInit, OnDestroy {
-  @Input() postIsASummary = true;
-  @Input() post!: Post;
+export class PostComponent implements OnInit {
+  @Input() post!: ViewPost;
   questions!: QuestionBase<string>[];
   editMode = false;
   editedPost = '';
-  subscription!: Subscription;
   renderingComment = false;
 
   constructor(
@@ -29,10 +27,6 @@ export class PostComponent implements OnInit, OnDestroy {
     private commentService: CommentService,
     private sb: MatSnackBar
   ) { }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
 
   ngOnInit(): void {
     this.questions = [
@@ -42,7 +36,7 @@ export class PostComponent implements OnInit, OnDestroy {
         placeholder: 'write a comment here'
       })
     ];
-    this.fetchCommentsByPost();
+    
     // Problem: it is getting disconnected!
 
     // const connection = new signalR.HubConnectionBuilder()
@@ -62,19 +56,6 @@ export class PostComponent implements OnInit, OnDestroy {
     //     console.log(this.post)
     //   }
     // });
-  }
-
-  fetchCommentsByPost() {
-    this.subscription = this.commentService.dataChanged.subscribe(b => {
-      this.commentService.getCommentsByPost(this.post.id).subscribe((res: Comment_[]) => {
-        this.post.comments = res;
-        // this.isLoading = false;
-      }, (error: HttpErrorResponse) => {
-        if(error.status === 0) this.sb.open("Network Error. Please check your internet connection!", 'Okay');
-        else this.sb.open(error.error ?? error.message, 'Okay');
-        // this.isLoading = false;
-      });
-    });
   }
 
   received(e: { body: string }) {

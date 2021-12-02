@@ -8,6 +8,7 @@ namespace Entity_Layer.Dtos
 {
     public class ViewUser
     {
+        public string Id { get; set; }
         public string UserName { get; set; }
         
         public string Email { get; set; }

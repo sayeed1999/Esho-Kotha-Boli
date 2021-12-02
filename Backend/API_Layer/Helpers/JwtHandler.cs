@@ -34,6 +34,7 @@ namespace API_Layer.Helpers
         {
             List<Claim> claims = new()
             {
+                // i dont understand any!
                 new(ClaimTypes.Email, user.Email) // new Claim()
             };
             return claims;

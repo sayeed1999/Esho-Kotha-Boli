@@ -212,6 +212,25 @@ namespace Repository_Layer.GenericRepository
             return result;
         }
 
+        public async Task<T> GetFirstOrDefaultAsync(
+            Expression<Func<T, bool>> predicate,
+            params Func<IQueryable<T>, IIncludableQueryable<T, object>>[] includes
+        )
+        {
+            IQueryable<T> query = _dbSet; // implicit casting
+
+            // tracking disabled!
+            query = query.AsNoTracking();
+
+            foreach(Func<IQueryable<T>, IIncludableQueryable<T, object>> include in includes)
+            {
+                query = include(query);
+            }
+
+            T result = await query.FirstOrDefaultAsync(predicate);
+            return result;
+        }
+
         public async Task<IEnumerable<T>> GetWhereToListAsync(
             Expression<Func<T, bool>> predicate,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,

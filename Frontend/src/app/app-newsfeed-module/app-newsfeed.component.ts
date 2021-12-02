@@ -4,6 +4,8 @@ import { PostService } from '../utility/services/post.service';
 import { Post } from '../models/Post';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PostSummary } from '../models/postSummaryt';
+import { ViewPost } from '../models/viewPost';
 
 @Component({
   selector: 'app-newsfeed',
@@ -12,8 +14,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AppNewsfeedComponent implements OnInit, OnDestroy {
 
-  projectedPost: Post | null = null;
-  posts: Post[] = [];
+  projectedPost: ViewPost | null = null;
+  posts: PostSummary[] = [];
   // spinner
   isLoading = false;
   subscription!: Subscription;
@@ -37,7 +39,7 @@ export class AppNewsfeedComponent implements OnInit, OnDestroy {
 
   fetchPosts() {
     this.isLoading = true;
-    this.postService.getAllPostsSummary().subscribe((res: Post[]) => {
+    this.postService.getAllPostsSummary().subscribe((res: PostSummary[]) => {
       this.posts = res;
       console.log(this.posts);
       this.isLoading = false;
@@ -51,7 +53,7 @@ export class AppNewsfeedComponent implements OnInit, OnDestroy {
 
   getPostById(id: number) {
     // console.log(id); // debug purpose
-    this.postService.getById(id).subscribe((res: Post) => {
+    this.postService.getById(id).subscribe((res: ViewPost) => {
       this.projectedPost = res;
     }, (error: HttpErrorResponse) => {
       if(error.status === 0) this.sb.open("Network Error. Please check your internet connection!", 'Okay');

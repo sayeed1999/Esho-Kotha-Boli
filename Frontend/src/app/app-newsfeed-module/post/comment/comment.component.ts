@@ -5,6 +5,7 @@ import { Comment_ } from 'src/app/models/comment';
 import { QuestionBase } from 'src/app/models/question-base';
 import { TextBox } from 'src/app/models/question-textbox';
 import { Reply } from 'src/app/models/reply';
+import { ViewComment } from 'src/app/models/viewComment';
 import { CommentService } from 'src/app/utility/services/comment.service';
 import { PostService } from 'src/app/utility/services/post.service';
 import { ReplyService } from 'src/app/utility/services/reply.service';
@@ -15,8 +16,7 @@ import { ReplyService } from 'src/app/utility/services/reply.service';
   styleUrls: ['./comment.component.css']
 })
 export class CommentComponent implements OnInit {
-  @Input() postId!: number;
-  @Input() comment!: Comment_;
+  @Input() comment!: ViewComment;
   questions!: QuestionBase<string>[];
   editMode = false;
   editedComment = '';

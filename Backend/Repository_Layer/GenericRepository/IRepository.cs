@@ -29,6 +29,10 @@ namespace Repository_Layer.GenericRepository
             Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
             bool disableTracking = true
         );
+        public Task<T> GetFirstOrDefaultAsync(
+            Expression<Func<T, bool>> predicate,
+            params Func<IQueryable<T>, IIncludableQueryable<T, object>>[] includes
+        );
         public Task<IEnumerable<T>> GetWhereToListAsync(
             Expression<Func<T, bool>> predicate,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,

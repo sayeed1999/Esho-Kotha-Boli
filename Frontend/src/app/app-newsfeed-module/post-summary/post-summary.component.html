@@ -1,0 +1,17 @@
+<div class="example-post">
+    <div style="display: flex; align-items: center;;">
+        <mat-icon style="margin-right: 5px">computer</mat-icon>
+        <div style="font-weight: 500;"> {{ postSummary.userName }} </div>
+    </div>
+    <div>
+        <p> {{ postSummary.body }} </p>
+
+        <mat-icon style="color: cornflowerblue; font-size: 24px">comment</mat-icon>
+        <i> {{ postSummary.commentsCount }} Comments.. </i>
+
+        <mat-icon style="color: blue; font-size: 20px;">reply</mat-icon>
+        <i> {{ postSummary.repliesCount }} Replies.. </i>
+
+        <br> <em>{{ postSummary.dateCreated | date:'medium' }}</em>
+    </div>
+</div>

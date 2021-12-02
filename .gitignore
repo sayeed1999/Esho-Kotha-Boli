@@ -1,4 +1,5 @@
 .vs/
+*/.angular
 */bin/
 */obj/
 */node_modules/

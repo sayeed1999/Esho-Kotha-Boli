@@ -30,8 +30,8 @@ begin
 		,(select dbo.funcShortenBody(p.Body)) [Body]
 		,[p].[DateCreated] [DateCreated]
 		,[u].[FirstName] + ' ' + [u].[LastName] [UserName]
-		,CAST(COUNT([c].[CommentId]) as bigint) [CommentsCount]
-		,CAST(SUM([c].[RepliesCount]) as bigint) [RepliesCount]
+		,CAST(ISNULL(COUNT([c].[CommentId]), 0) as bigint) [CommentsCount]
+		,CAST(ISNULL(SUM([c].[RepliesCount]), 0) as bigint) [RepliesCount]
 
 	from [dbo].[Posts] as p
 	inner join [dbo].[AspNetUsers] as u
@@ -39,7 +39,7 @@ begin
 	outer apply (
 		select
 			t.Id [CommentId]
-			,count(r.Id) [RepliesCount]
+			,isnull(count(r.Id), 0) [RepliesCount]
 		from [dbo].[Comments] t
 		left join [dbo].[Replies] r on t.Id = r.CommentId
 		where p.Id = t.PostId
@@ -88,7 +88,7 @@ insert into Replies (Body, DateCreated, CommentId, UserId) values
 ,('Dummy replies', SYSDATETIME(), 81, '82394a08-8824-4d13-a127-639126febbfd')
 
 
-
+select * from dbo.Posts
 
 
 -- debug that it works.
@@ -104,3 +104,29 @@ BEGIN
 END;
 
 select dbo.debug(2, 3);
+
+
+
+-- R&D on inner join vs left join please check :)
+declare @A as table (
+	id int,
+	name nvarchar(max)
+)
+declare @B as table (
+	id int,
+	Aid int
+)
+declare @C as table (
+	id int,
+	Bid int
+)
+insert into @A values (1, 'A'),(2, 'B'),(3, 'C'),(4, 'D'),(5, 'E');
+insert into @B values (1,1),(2,2),(3,3),(4,4);
+insert into @C values (1,2),(2,3),(3,4),(4,5),(5,6);
+select
+	a.id as aa
+	,b.Aid as b
+	,c.Bid as cc
+from @A a
+left join @B b on a.id = b.Aid
+left join @C c on a.id = c.Bid

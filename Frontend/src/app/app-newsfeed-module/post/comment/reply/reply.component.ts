@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Reply } from 'src/app/models/reply';
+import { ViewReply } from 'src/app/models/viewReply';
 import { PostService } from 'src/app/utility/services/post.service';
 import { ReplyService } from 'src/app/utility/services/reply.service';
 
@@ -11,7 +12,7 @@ import { ReplyService } from 'src/app/utility/services/reply.service';
   styleUrls: ['./reply.component.css']
 })
 export class ReplyComponent implements OnInit {
-  @Input() reply!: Reply;
+  @Input() reply!: ViewReply;
   editMode = false;
   editedReply = '';
 

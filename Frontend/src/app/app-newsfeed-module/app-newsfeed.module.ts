@@ -9,6 +9,7 @@ import { ReplyComponent } from './post/comment/reply/reply.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared-module/shared.module';
 import { NewsfeedRoutingModule } from './routing.module';
+import { PostSummaryComponent } from './post-summary/post-summary.component';
 
 
 
@@ -19,6 +20,7 @@ import { NewsfeedRoutingModule } from './routing.module';
     PostComponent,
     CommentComponent,
     ReplyComponent,
+    PostSummaryComponent,
   ],
   imports: [
     CommonModule,

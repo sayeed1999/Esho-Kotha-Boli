@@ -1,5 +1,5 @@
 <div style="display: flex; align-items: center;">
-    <div style="font-weight: 500;"> UserName </div>
+    <div style="font-weight: 500;"> {{ reply.userName }} </div>
     <button mat-icon-button style="margin-left: auto;" (click)="delete()">
         <mat-icon style="color:brown; font-size: 14px;">delete</mat-icon>
     </button>
@@ -9,7 +9,7 @@
 </div>
 <p *ngIf="!editMode" [innerHTML]="reply.body | newline"></p>
 <div *ngIf="editMode" style="display: flex;">
-    <input mat-input class="example-form" [(ngModel)]="editedReply" name="editedReply"/>
+    <input mat-input class="example-form" [(ngModel)]="editedReply" name="editedReply" />
     <button mat-flat-button style="margin-left: 10px;" (click)="saveEdited()">Save</button>
 </div>
 <em> {{ reply.dateCreated | date:'medium' }} </em>

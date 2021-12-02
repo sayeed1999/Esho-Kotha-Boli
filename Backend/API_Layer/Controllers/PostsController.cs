@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using API_Layer.Helpers;
 using AutoMapper;
@@ -8,6 +9,7 @@ using Entity_Layer;
 using Entity_Layer.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Service_Layer.PostService;
@@ -19,12 +21,16 @@ namespace API_Layer.Controllers
     public class PostsController : ControllerBase
     {
         public Util<Post> Util { get; }
+        public Util<ViewPost> UtilViewPost { get; }
         public IPostService PostService { get; }
+        public UserManager<User> UserManager { get; }
 
-        public PostsController(Util<Post> util, IPostService postService)
+        public PostsController(Util<Post> util, Util<ViewPost> utilViewPost, IPostService postService, UserManager<User> userManager)
         {
             Util = util;
+            UtilViewPost = utilViewPost;
             PostService = postService;
+            UserManager = userManager;
         }
 
 
@@ -32,6 +38,48 @@ namespace API_Layer.Controllers
         public async Task<IActionResult> GetPostById(long id)
         {
             Response<Post> response = await PostService.GetPostWithCommentsAndReplies(id);
+            // mapping from original Post to ViewPost so that user secret information dont get exposed!
+            Response<ViewPost> newResponse = new();
+            newResponse.Message = response.Message;
+            newResponse.StatusCode = response.StatusCode;
+            if(response.Data is Post)
+            {
+                ViewPost viewPost = new();
+                viewPost.Body = response.Data.Body;
+                viewPost.DateCreated = response.Data.DateCreated;
+                viewPost.Comments = new();
+                viewPost.Id = response.Data.Id;
+                viewPost.UserId = response.Data.UserId;
+                viewPost.UserName = response.Data.User.FirstName + ' ' + response.Data.User.LastName;
+                // setting viewComments
+                foreach(Comment comment in response.Data.Comments)
+                {
+                    ViewComment temp = new();
+                    temp.Body = comment.Body;
+                    temp.DateCreated = comment.DateCreated;
+                    temp.Id = comment.Id;
+                    temp.PostId = response.Data.Id;
+                    temp.Replies = new();
+                    temp.UserId = comment.UserId;
+                    temp.UserName = comment.User.FirstName + ' ' + comment.User.LastName;
+                    // setting viewReplies
+                    foreach(Reply reply in comment.Replies)
+                    {
+                        ViewReply temp2 = new();
+                        temp2.Body = reply.Body;
+                        temp2.CommentId = reply.CommentId;
+                        temp2.DateCreated = reply.DateCreated;
+                        temp2.Id = reply.Id;
+                        temp2.UserId = reply.UserId;
+                        temp2.UserName = reply.User.FirstName + ' ' + reply.User.LastName;
+                        temp.Replies.Add(temp2);
+                    }
+                    viewPost.Comments.Add(temp);
+                }
+                newResponse.Data = viewPost;
+                return UtilViewPost.GetResult(newResponse);
+            }
+            //mapping ends..
             return Util.GetResult(response);
         }
 
@@ -39,6 +87,9 @@ namespace API_Layer.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync(Post post)
         {
+            //i can't get userid like this :( i can't set a claim that will give me userId;
+            User user = await UserManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+            post.UserId = user.Id;
             Response<Post> response = await PostService.CreatePost(post);
             return Util.GetResult(response, "/posts");
         }

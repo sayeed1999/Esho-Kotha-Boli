@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using API_Layer.Helpers;
 using AutoMapper;
 using Entity_Layer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Service_Layer.CommentService;
@@ -18,12 +20,14 @@ namespace API_Layer.Controllers
         private readonly IHubContext<MessageHub> _hubContext;
         public Util<Comment> Util { get; }
         public ICommentService CommentService { get; }
+        public UserManager<User> UserManager { get; }
 
-        public CommentsController(IHubContext<MessageHub> hubContext, Util<Comment> util, ICommentService commentService)
+        public CommentsController(IHubContext<MessageHub> hubContext, Util<Comment> util, ICommentService commentService, UserManager<User> userManager)
         {
             this._hubContext = hubContext;
             Util = util;
             CommentService = commentService;
+            UserManager = userManager;
         }
 
         [HttpGet("Post/{id}")]
@@ -43,6 +47,7 @@ namespace API_Layer.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync(Comment comment)
         {
+            comment.UserId = (await UserManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email))).Id;
             Response<Comment> response = await CommentService.CreateComment(comment);
             if (response.StatusCode == HttpStatusCode.NotFound || response.StatusCode == HttpStatusCode.Created)
             {
