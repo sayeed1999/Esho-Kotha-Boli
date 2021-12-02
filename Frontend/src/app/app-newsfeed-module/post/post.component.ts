@@ -5,9 +5,7 @@ import { QuestionBase } from 'src/app/models/question-base';
 import { TextBox } from 'src/app/models/question-textbox';
 import { CommentService } from 'src/app/utility/services/comment.service';
 import { PostService } from 'src/app/utility/services/post.service';
-import * as signalR from '@microsoft/signalr';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Subscription } from 'rxjs';
 import { ViewPost } from 'src/app/models/viewPost';
 
 @Component({
@@ -36,26 +34,6 @@ export class PostComponent implements OnInit {
         placeholder: 'write a comment here'
       })
     ];
-    
-    // Problem: it is getting disconnected!
-
-    // const connection = new signalR.HubConnectionBuilder()
-    // .configureLogging(signalR.LogLevel.Information)
-    // .withUrl('https://localhost:44345/notify')
-    // .build();
-
-    // connection.start()
-    //   .then(() => console.log('SignalR connected!'))
-    //   .catch(err => alert(err));
-
-    // connection.on("NewComment", (comment: Comment_) => {
-    //   console.log(comment.postId + ' ' + this.post.id)
-    //   if(comment.postId == this.post.id) {
-    //     this.post.comments = [ comment, ...this.post.comments ];
-    //     this.post = { ...this.post };
-    //     console.log(this.post)
-    //   }
-    // });
   }
 
   received(e: { body: string }) {
