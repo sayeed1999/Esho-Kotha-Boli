@@ -186,11 +186,6 @@ namespace API_Layer
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<MessageHub>("/notify");
-            });
-
-            app.UseEndpoints(endpoints =>
-            {
                 endpoints.MapControllers();
             });
 

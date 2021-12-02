@@ -17,14 +17,12 @@ namespace API_Layer.Controllers
     [Route("[controller]")]
     public class CommentsController : ControllerBase
     {
-        private readonly IHubContext<MessageHub> _hubContext;
         public Util<Comment> Util { get; }
         public ICommentService CommentService { get; }
         public UserManager<User> UserManager { get; }
 
-        public CommentsController(IHubContext<MessageHub> hubContext, Util<Comment> util, ICommentService commentService, UserManager<User> userManager)
+        public CommentsController(Util<Comment> util, ICommentService commentService, UserManager<User> userManager)
         {
-            this._hubContext = hubContext;
             Util = util;
             CommentService = commentService;
             UserManager = userManager;
@@ -49,10 +47,6 @@ namespace API_Layer.Controllers
         {
             comment.UserId = (await UserManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email))).Id;
             Response<Comment> response = await CommentService.CreateComment(comment);
-            if (response.StatusCode == HttpStatusCode.NotFound || response.StatusCode == HttpStatusCode.Created)
-            {
-                await _hubContext.Clients.All.SendAsync("NewComment", comment);
-            }
             return Util.GetResult(response);
         }
 
