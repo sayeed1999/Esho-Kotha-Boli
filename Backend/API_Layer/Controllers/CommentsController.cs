@@ -4,7 +4,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using API_Layer.Helpers;
-using AutoMapper;
 using Entity_Layer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
