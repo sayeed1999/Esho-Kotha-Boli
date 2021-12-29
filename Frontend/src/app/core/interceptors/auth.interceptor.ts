@@ -6,7 +6,9 @@ import { Observable } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
 import { AccountService } from "../services/account.service";
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AuthInterceptor implements HttpInterceptor {
     constructor(
         private acc: AccountService,

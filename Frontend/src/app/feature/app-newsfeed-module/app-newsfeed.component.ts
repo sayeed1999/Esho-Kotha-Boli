@@ -16,8 +16,6 @@ export class AppNewsfeedComponent implements OnInit, OnDestroy {
 
   projectedPost: ViewPost | null = null;
   posts: PostSummary[] = [];
-  // spinner
-  isLoading = false;
   subscription!: Subscription;
 
   constructor(
@@ -38,16 +36,10 @@ export class AppNewsfeedComponent implements OnInit, OnDestroy {
   }
 
   fetchPosts() {
-    this.isLoading = true;
     this.postService.getAllPostsSummary().subscribe((res: PostSummary[]) => {
       this.posts = res;
-      console.log(this.posts);
-      this.isLoading = false;
     }, (error: HttpErrorResponse) => {
-      console.log(error)
-      if(error.status === 0) this.sb.open("Network Error. Please check your internet connection!", 'Okay');
-      else this.sb.open(error.error ?? error.message, 'Okay');
-      this.isLoading = false;
+      this.sb.open(error.error, 'Okay');
     });
   }
 
@@ -56,8 +48,7 @@ export class AppNewsfeedComponent implements OnInit, OnDestroy {
     this.postService.getById(id).subscribe((res: ViewPost) => {
       this.projectedPost = res;
     }, (error: HttpErrorResponse) => {
-      if(error.status === 0) this.sb.open("Network Error. Please check your internet connection!", 'Okay');
-      else this.sb.open(error.error ?? error.message, 'Okay');
+      this.sb.open(error.error, 'Okay');
     });
   }
 

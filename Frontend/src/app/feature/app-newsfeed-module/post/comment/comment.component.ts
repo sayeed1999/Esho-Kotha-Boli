@@ -49,9 +49,7 @@ export class CommentComponent implements OnInit {
         this.sb.open('Reply given', 'Okay');
       },
       (error: HttpErrorResponse) => {
-        if(error.status === 0) this.sb.open('Network error. Please check your internet connection!', 'So Bad');
-        // else this.sb.open(error.error, 'Okay');
-        else this.sl.textNIcon(error.error, 'error');
+        this.sl.textNIcon(error.error, 'error');
       }
     );
   }
@@ -64,9 +62,7 @@ export class CommentComponent implements OnInit {
         this.sb.open('Comment deleted', 'Thanks');
       },
       (error: HttpErrorResponse) => {
-        if(error.status === 0) this.sb.open('Network error. Please check your internet connection!', 'My Bad');
-        // else this.sb.open(error.error, 'Okay');
-        else this.sl.textNIcon(error.error, 'error');
+        this.sl.textNIcon(error.error, 'error');
       }
     );
   }
@@ -92,9 +88,7 @@ export class CommentComponent implements OnInit {
         this.sb.open('Comment updated', 'Okay');
       },
       (error: HttpErrorResponse) => {
-        if(error.status === 0) this.sb.open('Network error. Please check your internet connection!', 'So Bad');
-        // else this.sb.open(error.error, 'Okay');
-        else this.sl.textNIcon(error.error, 'error');
+        this.sl.textNIcon(error.error, 'error');
       }
     );
   }

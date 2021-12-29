@@ -30,7 +30,6 @@ export class RegisterComponent implements OnInit {
       ];
   sexesFetched = false;
   relationshipStatusesFetched = false;
-  rerendering = false;
 
   constructor(
     private accountService: AccountService,
@@ -147,8 +146,7 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['..', 'login']);
       },
       (error: HttpErrorResponse) => {
-        if(error.status === 0) this.sb.open('Network error. Please check your internet connection!', 'So Bad');
-        else this.sb.open(error.error, 'Okay');
+        this.sb.open(error.error, 'Okay');
       }
     );
   }

@@ -47,9 +47,7 @@ export class PostComponent implements OnInit {
         this.sb.open('Commenting done.', 'Okay');
       },
       (error: HttpErrorResponse) => {
-        if(error.status === 0) alert('Network error. Please check your internet connection!');
-        // else this.sb.open(error.error, 'Okay');
-        else this.sl.textNIcon(error.error, 'error');
+        this.sl.textNIcon(error.error, 'error');
       }
     );
   }
@@ -61,9 +59,7 @@ export class PostComponent implements OnInit {
         this.sb.open('Post deleted successfully', 'Good!');
       },
       (error: HttpErrorResponse) => {
-        if(error.status === 0) this.sb.open('Network error. Please check your internet connection!', 'My Bad');
-        // else this.sb.open(error.error, 'Okay');
-        else this.sl.textNIcon(error.error, 'error');
+        this.sl.textNIcon(error.error, 'error');
       }
     );
   }
@@ -89,9 +85,7 @@ export class PostComponent implements OnInit {
         this.sb.open('Post updated', 'Very Nice');
       },
       (error: HttpErrorResponse) => {
-        if(error.status === 0) this.sb.open('Network error. Please check your internet connection!', 'So Bad');
-        // else this.sb.open(error.error, 'Okay');
-        else this.sl.textNIcon(error.error, 'error');
+        this.sl.textNIcon(error.error, 'error');
       }
     );
   }

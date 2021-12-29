@@ -7,7 +7,7 @@ import { ViewUser } from '../../core/models/viewUser';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit { // bug present! component not loading on UI :(
   viewUser!: ViewUser;
 
   constructor(

@@ -34,9 +34,7 @@ export class ReplyComponent implements OnInit {
         this.sb.open('Reply deleted successfully', 'Okay!');
       },
       (error: HttpErrorResponse) => {
-        if(error.status === 0) this.sb.open('Network error. Please check your internet connection!', 'So Bad');
-        // else this.sb.open(error.error, 'Okay');
-        else this.sl.textNIcon(error.error, 'error');
+        this.sl.textNIcon(error.error, 'error');
       }
     );
   }
@@ -62,9 +60,7 @@ export class ReplyComponent implements OnInit {
         this.sb.open('Reply edited successfully', 'Nice!');
       },
       (error: HttpErrorResponse) => {
-        if(error.status === 0) this.sb.open('Network error. Please check your internet connection!', 'So Bad');
-        // else this.sb.open(error.error, 'Okay');
-        else this.sl.textNIcon(error.error, 'error');
+        this.sl.textNIcon(error.error, 'error');
       }
     );
   }

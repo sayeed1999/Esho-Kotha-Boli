@@ -1,3 +1,6 @@
+<!-- the loader should load before all components -->
+<universal-loader *ngIf="!!isLoading"></universal-loader>
+
 <div style="background-color: #fff; height: 100vh; width: 100vw; position: fixed;">
 
     <mat-toolbar style="z-index: 3; background-color: chartreuse; height: 10vh; box-shadow: 0px 5px 5px #888888;">

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AccountService } from '../../services/account.service';
+import { HttpService } from '../../services/http.service';
 
 @Component({
   selector: 'app-shell',
@@ -10,11 +11,13 @@ import { AccountService } from '../../services/account.service';
 })
 export class AppShellComponent implements OnInit {
 
+  isLoading: boolean = false;
   title = 'EshoKothaBoli';
   authenticated = false;
   userName!: string;
 
   constructor(
+    private httpService: HttpService,
     private acc: AccountService,
     private sb: MatSnackBar,
     private router: Router
@@ -29,6 +32,12 @@ export class AppShellComponent implements OnInit {
       this.authenticated = this.acc.isAuthenticated;
       this.userName = this.acc.userName;
     });
+
+    this.httpService.subject.subscribe(
+      (res: boolean) => {
+        this.isLoading = res;
+      }
+    )
   }
 
   logout() { 

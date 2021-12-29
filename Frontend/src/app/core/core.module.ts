@@ -4,9 +4,14 @@ import { AppShellComponent } from './components/app-shell/app-shell.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoaderInterceptor } from './interceptors/loader.interceptor';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
-
+export const interceptorProviders = [
+  { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+];
 
 @NgModule({
   declarations: [
@@ -21,6 +26,9 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   exports: [
     AppShellComponent,
+  ],
+  providers: [
+    interceptorProviders // A -> B -> C -> C -> B -> A
   ]
 })
 export class CoreModule { }
