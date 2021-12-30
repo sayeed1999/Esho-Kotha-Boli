@@ -111,4 +111,8 @@ export class PostComponent implements OnInit {
     setTimeout(() => this.renderingComment = false, 20);
   }
 
+  commentDeleted(id: number) {
+    this.post.comments = this.post.comments.filter(x => x.id !== id);
+  }
+
 }

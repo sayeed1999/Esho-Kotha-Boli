@@ -22,7 +22,7 @@
             <dynamic-form *ngIf="!renderingComment" [questions]="questions" [buttonName]="'Send'" (result)=received($event)></dynamic-form>
 
             <div *ngFor="let c of post.comments">
-                <comment [comment]="c"></comment>
+                <comment [comment]="c" (deleteEvent)="commentDeleted($event)"></comment>
             </div>
         </div>
     </div>

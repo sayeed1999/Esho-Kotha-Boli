@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using API_Layer.Helpers;
 using Entity_Layer;
+using Entity_Layer.Dtos;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Service_Layer.ReplyService;
@@ -17,11 +18,13 @@ namespace API_Layer.Controllers
     {
         public UserManager<User> UserManager { get; }
         public Util<Reply> Util { get; }
+        public Util<ViewReply> ViewUtil { get; }
         public IReplyService ReplyService { get; }
 
-        public RepliesController(Util<Reply> util, IReplyService replyService, UserManager<User> userManager)
+        public RepliesController(Util<Reply> util, Util<ViewReply> viewUtil, IReplyService replyService, UserManager<User> userManager)
         {
             Util = util;
+            ViewUtil = viewUtil;
             ReplyService = replyService;
             UserManager = userManager;
         }
@@ -45,6 +48,20 @@ namespace API_Layer.Controllers
         {
             reply.UserId = (await UserManager.FindByEmailAsync(HttpContext.User.FindFirstValue(ClaimTypes.Email))).Id;
             Response<Reply> response = await ReplyService.CreateReply(reply);
+            if(response.Data is Reply)
+            {
+                ViewReply temp2 = new();
+                temp2.Body = reply.Body;
+                temp2.CommentId = reply.CommentId;
+                temp2.DateCreated = reply.DateCreated;
+                temp2.Id = reply.Id;
+                temp2.UserId = reply.UserId;
+                temp2.UserName = reply.User.FirstName + ' ' + reply.User.LastName;
+
+                Response<ViewReply> vrResponse = new();
+                vrResponse.Data = temp2;
+                return ViewUtil.GetResult(vrResponse);
+            }
             return Util.GetResult(response);
         }
 
