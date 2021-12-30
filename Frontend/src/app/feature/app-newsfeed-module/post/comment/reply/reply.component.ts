@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Reply } from 'src/app/core/models/reply';
 import { ViewReply } from 'src/app/core/models/viewReply';
@@ -14,6 +14,7 @@ import { SweetAlertService } from 'src/app/core/services/sweet-alert.service';
 })
 export class ReplyComponent implements OnInit {
   @Input() reply!: ViewReply;
+  @Output() deleteEvent = new EventEmitter<number>(); // emits deleted reply Id;
   editMode = false;
   editedReply = '';
 
@@ -27,10 +28,11 @@ export class ReplyComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // when a reply is deleted
   delete() {
     this.replyService.delete(this.reply.id).subscribe(
       res => {
-        this.postService.dataChanged.next(true);
+        this.deleteEvent.emit(this.reply.id);
         this.sb.open('Reply deleted successfully', 'Okay!');
       },
       (error: HttpErrorResponse) => {
@@ -51,12 +53,13 @@ export class ReplyComponent implements OnInit {
     }
   }
 
+  // when a reply is edited
   saveEdited() {
     this.reply.body = this.editedReply;
     this.replyService.update(this.reply.id, this.reply).subscribe(
       (res: any) => {
+        this.reply.body = this.editedReply;
         this.editMode = false;
-        this.postService.dataChanged.next(true);
         this.sb.open('Reply edited successfully', 'Nice!');
       },
       (error: HttpErrorResponse) => {

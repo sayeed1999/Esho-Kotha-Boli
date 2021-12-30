@@ -18,6 +18,6 @@
     <p>Replies</p>
     <dynamic-form *ngIf="!renderingReply" [questions]="questions" [buttonName]="'Send'" (result)="received($event)"></dynamic-form>
     <div *ngFor="let r of comment.replies">
-        <reply [reply]="r"></reply>
+        <reply [reply]="r" (deleteEvent)="replyDeleted($event)"></reply>
     </div>
 </div>

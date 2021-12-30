@@ -103,4 +103,8 @@ export class CommentComponent implements OnInit {
     setTimeout(() => this.renderingReply = false, 20);
   }
 
+  replyDeleted(id: number) {
+    this.comment.replies = this.comment.replies.filter(x => x.id !== id);
+  }
+
 }
