@@ -2,13 +2,9 @@
 
     <create-post></create-post>
 
-    <!-- <div *ngIf="isLoading">
-        <em style="font-size: large;"> Getting posts from server... </em>
-    </div> -->
-
     <div *ngFor="let post of posts" style="margin: 20px 0">
         <mat-card>
-            <button mat-button color="warn"> <i style="font-weight: 400;" (click)="getPostById(post.id)">View full post</i> </button>
+            <button mat-button routerLink="post/{{post.id}}"> <i style="font-weight: 400;">See post</i> </button>
             <post-summary [post]=post></post-summary>
         </mat-card>
     </div>
@@ -21,7 +17,3 @@
 
 <hr>
 <h5 style="text-align-last: center; padding: 10px 0 20px;"> Developed by - @Md. Sayeed Rahman </h5>
-
-<project-a-content *ngIf="projectedPost !== null" (emitter)="projectedPost = null">
-    <post [post]="projectedPost"></post>
-</project-a-content>

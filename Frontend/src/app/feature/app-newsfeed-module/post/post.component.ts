@@ -8,6 +8,7 @@ import { PostService } from 'src/app/core/services/post.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewPost } from 'src/app/core/models/viewPost';
 import { SweetAlertService } from 'src/app/core/services/sweet-alert.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'post',
@@ -15,7 +16,8 @@ import { SweetAlertService } from 'src/app/core/services/sweet-alert.service';
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit {
-  @Input() post!: ViewPost;
+  post!: ViewPost;
+  postId!: number;
   questions!: QuestionBase<string>[];
   editMode = false;
   editedPost = '';
@@ -26,9 +28,18 @@ export class PostComponent implements OnInit {
     private commentService: CommentService,
     private sb: MatSnackBar,
     private sl: SweetAlertService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe(data => {
+      this.postId = +data.id; // e.g. { id: '107' }
+    })
+
+    this.route.data.subscribe((data: any) => {
+      this.post = data.routeResolver;
+    })
+
     this.questions = [
       new TextBox({
         key: 'body',
