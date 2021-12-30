@@ -11,8 +11,10 @@ export class ProfileComponent implements OnInit { // bug present! component not 
   viewUser!: ViewUser;
 
   constructor(
-    private route: ActivatedRoute
-  ) { }
+    private activatedRoute: ActivatedRoute
+  ) {
+    console.log("profile component")
+  }
 
   ngOnInit(): void {
     // this params is the route parameters only! e.g. user/1, user/2, user/3
@@ -21,7 +23,7 @@ export class ProfileComponent implements OnInit { // bug present! component not 
     // })
 
     // Can access route resolver data (which is resolved!) with the ActivatedRoute service!
-    this.route.data.subscribe((data: any) => {
+    this.activatedRoute.data.subscribe((data: any) => {
       console.log('Checking route resolver data...');
       console.log(data);
       this.viewUser = data.routeResolver;

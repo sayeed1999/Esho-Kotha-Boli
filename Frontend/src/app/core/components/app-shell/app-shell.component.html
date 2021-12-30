@@ -14,7 +14,7 @@
         <mat-icon>menu</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item *ngIf="authenticated" routerLink="profile/{{userName}}">Profile</button>
+        <button mat-menu-item *ngIf="authenticated" routerLink="/profile/{{userName}}">Profile</button>
         <button mat-menu-item *ngIf="!authenticated" routerLink="/account/login" routerLinkActive="active">Login</button>
         <button mat-menu-item *ngIf="!authenticated" routerLink="/account/register" routerLinkActive="active">Register</button>
         <button mat-menu-item *ngIf="authenticated">Settings</button>
