@@ -8,7 +8,8 @@ import { PostService } from 'src/app/core/services/post.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewPost } from 'src/app/core/models/viewPost';
 import { SweetAlertService } from 'src/app/core/services/sweet-alert.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ViewComment } from 'src/app/core/models/viewComment';
 
 @Component({
   selector: 'post',
@@ -28,7 +29,8 @@ export class PostComponent implements OnInit {
     private commentService: CommentService,
     private sb: MatSnackBar,
     private sl: SweetAlertService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -49,12 +51,13 @@ export class PostComponent implements OnInit {
     ];
   }
 
+  // when a new comment is added
   received(e: { body: string }) {
     const comment = Comment_.newComment(e.body, this.post.id);
     this.commentService.add(comment).subscribe(
-      res => {
+      (res: ViewComment) => {
         this.rerender();
-        this.postService.dataChanged.next(true);
+        this.post.comments.push(res);
         this.sb.open('Commenting done.', 'Okay');
       },
       (error: HttpErrorResponse) => {
@@ -63,10 +66,11 @@ export class PostComponent implements OnInit {
     );
   }
 
+  // when the post is deleted
   delete() {
     this.postService.delete(this.post.id).subscribe(
       res => {
-        this.postService.dataChanged.next(true);
+        this.router.navigate(['../../'], { relativeTo: this.route });
         this.sb.open('Post deleted successfully', 'Good!');
       },
       (error: HttpErrorResponse) => {
@@ -87,13 +91,14 @@ export class PostComponent implements OnInit {
     }
   }
 
+  // when the post is edited
   saveEdited() {
     let tempPost = { ...this.post, body: this.editedPost }
     this.postService.update(this.post.id, tempPost).subscribe(
       (res: any) => {
+        this.post.body = this.editedPost; // no need to call the api since it is a success call!
         this.editMode = false;
-        this.postService.dataChanged.next(true);
-        this.sb.open('Post updated', 'Very Nice');
+        this.sb.open('Post updated', 'Okay');
       },
       (error: HttpErrorResponse) => {
         this.sl.textNIcon(error.error, 'error');

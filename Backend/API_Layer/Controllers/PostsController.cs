@@ -57,7 +57,7 @@ namespace API_Layer.Controllers
                     temp.Body = comment.Body;
                     temp.DateCreated = comment.DateCreated;
                     temp.Id = comment.Id;
-                    temp.PostId = response.Data.Id;
+                    temp.PostId = comment.PostId;
                     temp.Replies = new();
                     temp.UserId = comment.UserId;
                     temp.UserName = comment.User.FirstName + ' ' + comment.User.LastName;

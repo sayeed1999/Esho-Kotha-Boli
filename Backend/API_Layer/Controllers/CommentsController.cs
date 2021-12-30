@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using API_Layer.Helpers;
 using Entity_Layer;
+using Entity_Layer.Dtos;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -17,12 +18,14 @@ namespace API_Layer.Controllers
     public class CommentsController : ControllerBase
     {
         public Util<Comment> Util { get; }
+        public Util<ViewComment> ViewUtil { get; }
         public ICommentService CommentService { get; }
         public UserManager<User> UserManager { get; }
 
-        public CommentsController(Util<Comment> util, ICommentService commentService, UserManager<User> userManager)
+        public CommentsController(Util<Comment> util, Util<ViewComment> viewUtil, ICommentService commentService, UserManager<User> userManager)
         {
             Util = util;
+            ViewUtil = viewUtil;
             CommentService = commentService;
             UserManager = userManager;
         }
@@ -46,6 +49,34 @@ namespace API_Layer.Controllers
         {
             comment.UserId = (await UserManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email))).Id;
             Response<Comment> response = await CommentService.CreateComment(comment);
+            if (response.Data is Comment)
+            {
+                Comment _comment = response.Data;
+                // that means the http request is a success
+                ViewComment temp = new();
+                temp.Body = _comment.Body;
+                temp.DateCreated = _comment.DateCreated;
+                temp.Id = _comment.Id;
+                temp.PostId = _comment.PostId;
+                temp.Replies = new();
+                temp.UserId = _comment.UserId;
+                temp.UserName = _comment.User.FirstName + ' ' + _comment.User.LastName;
+                // setting viewReplies
+                foreach (Reply reply in comment.Replies)
+                {
+                    ViewReply temp2 = new();
+                    temp2.Body = reply.Body;
+                    temp2.CommentId = reply.CommentId;
+                    temp2.DateCreated = reply.DateCreated;
+                    temp2.Id = reply.Id;
+                    temp2.UserId = reply.UserId;
+                    temp2.UserName = reply.User.FirstName + ' ' + reply.User.LastName;
+                    temp.Replies.Add(temp2);
+                }
+                Response<ViewComment> vcResponse = new();
+                vcResponse.Data = temp;
+                return ViewUtil.GetResult(vcResponse);
+            }
             return Util.GetResult(response);
         }
 
