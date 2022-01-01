@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Post } from 'src/app/core/models/Post';
 import { QuestionBase } from 'src/app/core/models/question-base';
@@ -13,7 +13,7 @@ import { ProjectAMessageComponent } from 'src/app/shared/components/project-a-me
   styleUrls: ['./create-post.component.css']
 })
 export class CreatePostComponent implements OnInit {
-
+  @Output() newPostCreated = new EventEmitter<void>();
   questions!: QuestionBase<string>[];
   rerendering = false; // to render the child component
   messageDialogActive = false;
@@ -47,8 +47,8 @@ export class CreatePostComponent implements OnInit {
     }
     const post = Post.newPost(e.body);
     this.postService.add(post).subscribe(res => {
+      this.newPostCreated.emit();
       this.postService.resetCount(); // reset page count
-      this.postService.dataChanged.next(true);
       this.rerender();
       this.sb.open('Post shared successfully', 'Hurrah!');
     });

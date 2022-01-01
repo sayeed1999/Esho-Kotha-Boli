@@ -14,8 +14,8 @@ import { SweetAlertService } from './sweet-alert.service';
 })
 export class AccountService {
 
-  defaultUserName = 'guest';
-  userName = this.defaultUserName;
+  private authenticationState: 'authenticated'|'unauthenticated' = 'unauthenticated';
+  userName = 'guest user';
   authenticationStateChanged = new Subject<boolean>();
   private url: string = 'https://localhost:44345/account';
 
@@ -24,34 +24,45 @@ export class AccountService {
     private sweetalert: SweetAlertService,
     private router: Router,
   ) {
-    this.userName = localStorage.getItem('userName') || this.defaultUserName;
+    if(localStorage.getItem('token') !== null) {
+      this.authenticationState = 'authenticated';
+      this.userName = localStorage.getItem('userName') ?? '<bug>';
+    }
+    // this method is to it checks token expiry and then user logged out if expired!!
   }
 
   get getCurrentUser(): Observable<ViewUser> {
     return this.http.get<ViewUser>(`${this.url}/current-user`);
   }
 
-  get isTokenExpired(): boolean {
+  isTokenExpired(): boolean {
     const token = localStorage.getItem('token') || '';
-    if(token === '') return false;
-    const expiry = (JSON.parse(atob(token.split('.')[1]))).exp; // 'atob' stands for  'ASCII TO Binary'
-    return Math.floor( new Date().getTime() / 1000 ) >= expiry;
+    const expiry = (JSON.parse(window.atob(token.split('.')[1]))).exp; // 'atob' stands for  'ASCII TO Binary'
+    console.log((new Date()).getTime() / 1000, expiry);
+    const isExpired = Math.floor( (new Date()).getTime() / 1000 ) >= expiry;
+    isExpired === true ? this.logoutWithoutAlert() : null;
+    return isExpired;
   }
 
-  get isAuthenticated(): boolean {
-    return localStorage.getItem('token') !== null;
+  isAuthenticated(): boolean {
+    return this.authenticationState === 'authenticated';
   }
 
   get getAuthToken(): string {
     return localStorage.getItem('token') || '';
   }
 
-  logoutWithoutConfirmation() {
+  logoutWithoutAlert() {
+    this.authenticationState = 'unauthenticated';
     localStorage.removeItem('token');
-    this.userName = this.defaultUserName;
+    this.userName = 'guest-user';
     localStorage.removeItem('userName');
     this.authenticationStateChanged.next(false);
-    this.sweetalert.textNIcon("You have successfully logged out of your account", "success");
+  }
+
+  logoutWithoutConfirmation(message?: string) {
+    this.logoutWithoutAlert();
+    this.sweetalert.textNIcon(message ?? "You have successfully logged out of your account", "success");
     this.router.navigate(['account', 'login']);
   }
 
@@ -70,6 +81,7 @@ export class AccountService {
       user
     ).pipe(
       tap((res: AuthResponse) => {
+        this.authenticationState = 'authenticated';
         localStorage.setItem('token', res.token);
         this.userName = res.userName;
         localStorage.setItem('userName', res.userName);

@@ -56,3 +56,15 @@ button.active {
   color: cadetblue;
   text-shadow: 0.5px 0.5px white;
 }
+
+.link {
+  color: blue;
+  cursor: pointer;
+  font-weight: 400;
+}
+.link:hover {
+  color: white;
+  text-decoration: underline;
+  font-weight: 500;
+  transform: translate(-1px, -1px);
+}

@@ -19,17 +19,18 @@ export class AppShellComponent implements OnInit {
   constructor(
     private httpService: HttpService,
     private acc: AccountService,
-    private sb: MatSnackBar,
-    private router: Router
   ) {}
 
   ngOnInit(): void {
+      // the first time the app loads, the token expiry is checked and signed out
+      if(this.acc.isTokenExpired()) this.acc.logoutWithoutAlert();
+
     // we dont need to unsubscribe it, since it is on the root
     // level, this component never gets destroyed.
-    this.authenticated = this.acc.isAuthenticated;
+    this.authenticated = this.acc.isAuthenticated();
     this.userName = this.acc.userName;
     this.acc.authenticationStateChanged.subscribe(b => {
-      this.authenticated = this.acc.isAuthenticated;
+      this.authenticated = this.acc.isAuthenticated();
       this.userName = this.acc.userName;
     });
 
@@ -42,8 +43,6 @@ export class AppShellComponent implements OnInit {
 
   logout() { 
     this.acc.logout();
-    // this.sb.open('You are loggeds out of your account!', 'Dismiss');
-    // this.router.navigateByUrl('/account/login');
   }
 
 }

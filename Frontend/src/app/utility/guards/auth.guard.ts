@@ -27,7 +27,7 @@ import { AccountService } from "src/app/core/services/account.service";
     }
   
     getResult() {
-      if (!this.acc.isAuthenticated) {
+      if (!this.acc.isAuthenticated()) {
         this.router.navigate(['account', 'login']);
         return false;
       }

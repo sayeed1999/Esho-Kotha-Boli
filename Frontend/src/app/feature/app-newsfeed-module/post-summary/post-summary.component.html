@@ -1,7 +1,8 @@
 <div class="example-post">
-    <div style="display: flex; align-items: center;;">
+    <div style="display: flex; align-items: center;">
         <mat-icon style="margin-right: 5px">computer</mat-icon>
         <div style="font-weight: 500;"> {{ postSummary.userName }} </div>
+        <i class="link" routerLink="post/{{postSummary.id}}" style="margin-left: auto;">View Post</i>
     </div>
     <div>
         <p> {{ postSummary.body }} </p>
