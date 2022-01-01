@@ -10,6 +10,6 @@ namespace Repository_Layer.DerivedRepositories.PostSummaryRepository
 {
     public interface IPostSummaryRepository
     {
-        public Task<Response<IEnumerable<PostSummary>>> GetAllPostSummary(int page);
+        public Task<Response<IEnumerable<PostSummary>>> GetAllPostSummary(int page, int count);
     }
 }

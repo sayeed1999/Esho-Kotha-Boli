@@ -34,6 +34,7 @@ export class AppNewsfeedComponent implements OnInit {
 
   loadMore() {
     this.postService.increaseCount();
+    this.fetchPosts();
   }
 
   newPostShared = () => this.fetchPosts();

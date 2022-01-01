@@ -1,4 +1,4 @@
-use EshoKothaBoli;
+use EshoKothaBoli
 go
 
 -- User-defined function for shortening body
@@ -19,13 +19,15 @@ go
 
 -- Stored Procedure for GettingAllPostSummaries
 
+-- this sp will work from any page and post count
 alter proc spGetAllPostSummary (
-	@page int = 1
+	@page int = 1 -- default page number
+	,@count int = 5 -- default page capacity
 )
 as	
 begin
 	set nocount on
-	select top (@page*5) -- considering 5 is the capacity of each page. each time the user clicks load more, it will load more 5
+	select
 		[p].[Id] [Id]
 		,(select dbo.funcShortenBody(p.Body)) [Body]
 		,[p].[DateCreated] [DateCreated]
@@ -53,12 +55,16 @@ begin
 		,[u].[LastName]
 	order by
 		[p].[Id] desc
+	offset (@page - 1)*@count rows
+	fetch next @count rows only
 end
 go
 
 -- testing
-
-exec spGetAllPostSummary 3
+declare @page as int, @count as int
+set @page = 1
+set @count = 9
+exec spGetAllPostSummary @page, @count
 go
 
 insert into dbo.Posts (UserId, Body, DateCreated) values

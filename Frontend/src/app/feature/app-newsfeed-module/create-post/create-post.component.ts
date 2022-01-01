@@ -44,6 +44,7 @@ export class CreatePostComponent implements OnInit {
     if(!e.body) {
       // empty string
       this.messageDialogActive = true;
+      return;
     }
     const post = Post.newPost(e.body);
     this.postService.add(post).subscribe(res => {

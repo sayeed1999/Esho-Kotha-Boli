@@ -12,8 +12,8 @@ import { RepositoryService } from './repository.service';
 })
 export class PostService extends RepositoryService {
 
-  default = 5; // default
-  count: number = this.default;
+  private defaultCount = 5; // default
+  count: number = this.defaultCount;
   page = 1;
 
   constructor(
@@ -26,18 +26,18 @@ export class PostService extends RepositoryService {
   }
 
   resetCount() {
-    this.count = this.default;
+    this.count = this.defaultCount;
     this.page = 1;
   }
 
   increaseCount() {
     this.count += 5;
-    this.page++;
+    // this.page++; there is no page change. only each load more() will increase the post count by 5.
   }
 
   getAllPostsSummary(): Observable<PostSummary[]> {
     return this.http.get<any>(
-      `${this.url}/all-summary?page=${this.page}`
+      `${this.url}/all-summary?page=${this.page}&count=${this.count}`
     );
   }
 

@@ -18,9 +18,9 @@ namespace Service_Layer.PostService
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Response<IEnumerable<PostSummary>>> GetAllSummaryAsync(int page)
+        public async Task<Response<IEnumerable<PostSummary>>> GetAllSummaryAsync(int page, int count)
         {
-            return await this._unitOfWork.PostSummaryRepository.GetAllPostSummary(page);
+            return await this._unitOfWork.PostSummaryRepository.GetAllPostSummary(page, count);
         }
 
         public async Task<Response<Post>> CreatePost(Post post)
@@ -64,7 +64,7 @@ namespace Service_Layer.PostService
             return response;
         }
 
-        public async Task<Response<IEnumerable<Post>>> GetPostsWithCommentsAndReplies(int page, int number)
+        public async Task<Response<IEnumerable<Post>>> GetPostsWithCommentsAndReplies(int page, int count)
         {
             Response<IEnumerable<Post>> response = new Response<IEnumerable<Post>>();
             try
@@ -76,7 +76,7 @@ namespace Service_Layer.PostService
                                                                                .ThenInclude(x => x.Replies),
                                                             true,
                                                             page,
-                                                            number
+                                                            count
                                                        );
                 response.Data = posts;
             }

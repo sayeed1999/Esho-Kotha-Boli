@@ -1,5 +1,28 @@
-<i> username - <strong>{{ viewUser.userName }}</strong> </i> <br>
-<i> firstname - <strong>{{ viewUser.firstName }}</strong> </i> <br>
-<i> lastname - <strong>{{ viewUser.lastName }}</strong> </i> <br>
-<i> relationship status - <strong>{{ viewUser.relationshipStatus }}</strong> </i> <br>
-<i> sex - <strong>{{ viewUser.sex }}</strong> </i> <br>
+<hr>
+
+<div class="row" style="display: flex; align-items: center;">
+    <div class="col-4">
+        <mat-icon style="color: #999999; font-size: 160px;">person</mat-icon>
+    </div>
+    <div class="col-8">
+        <h2 style="font-size: 200%; font-weight: 400; color: #424242; font-style: italic;"> {{ viewUser.firstName }} {{ " " }} {{ viewUser.lastName }} </h2>
+    </div>
+</div>
+
+<hr>
+
+<div class="row">
+    <div class="col-12">
+        <mat-tab-group mat-align-tabs="center">
+            <mat-tab label="About">
+                User info lalala....................
+            </mat-tab>
+            <mat-tab label="Photos">
+                No photos available currently
+            </mat-tab>
+            <mat-tab label="Posts">
+                <timeline-posts></timeline-posts>
+            </mat-tab>
+        </mat-tab-group>
+    </div>    
+</div>

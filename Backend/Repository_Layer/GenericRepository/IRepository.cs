@@ -39,7 +39,7 @@ namespace Repository_Layer.GenericRepository
             Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
             bool disableTracking = true,
             int page = 1,
-            int number = 5
+            int count = 5
         );
         public IQueryable<T> FromSql(string rawsql, params SqlParameter[] parameters);
     }

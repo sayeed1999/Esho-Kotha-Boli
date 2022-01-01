@@ -25,12 +25,12 @@ namespace API_Layer.Controllers
 
 
         [HttpGet()]
-        public async Task<IActionResult> GetAllSummary(int? page = 1)
+        public async Task<IActionResult> GetAllSummary(int? page = 1, int? count = 5)
         {
             Response<IEnumerable<PostSummary>> response = new Response<IEnumerable<PostSummary>>();
             try
             {
-                response = await PostService.GetAllSummaryAsync((int)page);
+                response = await PostService.GetAllSummaryAsync((int)page, (int)count);
             }
             catch(Exception ex)
             {

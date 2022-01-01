@@ -24,8 +24,7 @@ export class ProfileComponent implements OnInit { // bug present! component not 
 
     // Can access route resolver data (which is resolved!) with the ActivatedRoute service!
     this.activatedRoute.data.subscribe((data: any) => {
-      console.log('Checking route resolver data...');
-      console.log(data);
+      console.log('Checking route resolver data...', data);
       this.viewUser = data.routeResolver;
     })
   }

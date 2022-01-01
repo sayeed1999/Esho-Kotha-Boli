@@ -237,7 +237,7 @@ namespace Repository_Layer.GenericRepository
             Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
             bool disableTracking = true,
             int page = 1,
-            int number = 5
+            int count = 5
 
         )
         {
@@ -254,8 +254,9 @@ namespace Repository_Layer.GenericRepository
             {
                 query = orderBy(query);
             }
-            const int defaultPageSize = 5;
-            IEnumerable<T> result = await query.Where(predicate).Skip(defaultPageSize * (page - 1)).Take(number).ToListAsync();
+            // this is for fetching the next page. we don't need to skip any, because we are only expanding the first page by capacity.
+            // IEnumerable<T> result = await query.Where(predicate).Skip(count * (page - 1)).Take(count).ToListAsync();
+            IEnumerable<T> result = await query.Where(predicate).Take(count).ToListAsync();
             return result;
         }
 
