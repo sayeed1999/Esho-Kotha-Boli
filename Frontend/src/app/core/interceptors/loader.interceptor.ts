@@ -34,7 +34,6 @@ export class LoaderInterceptor implements HttpInterceptor {
       next.handle(request).subscribe(
 
         (res: HttpEvent<any>) => { // continuing the HTTP cycle
-          this.httpService.responseReceived();
           observer.next(res);
         },
 
@@ -58,7 +57,7 @@ export class LoaderInterceptor implements HttpInterceptor {
         },
 
         () => { // complete
-          // if you want to do anything, you can!
+          this.httpService.responseReceived();
         }
 
         // when the http req-res is a success, complete executes, otherwise not.

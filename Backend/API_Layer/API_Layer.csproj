@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Released\**" />
+    <Content Remove="Released\**" />
+    <EmbeddedResource Remove="Released\**" />
+    <None Remove="Released\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
@@ -21,10 +28,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Service_Layer\Service_Layer.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Released\" />
   </ItemGroup>
 
 </Project>
