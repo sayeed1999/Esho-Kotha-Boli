@@ -22,6 +22,10 @@ export class AuthInterceptor implements HttpInterceptor {
         const path = window.location.pathname;
         let error: string|null = null;
 
+        // if the http action is from login/register page, then no need to modify header
+        if(path.includes('/account/login') || path.includes('/account/register'))
+            return next.handle(req);
+
         if(!this.acc.isAuthenticated()) { // unauthenticated
             error = 'Not an authenticated user!';
         }
