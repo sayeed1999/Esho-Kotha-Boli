@@ -18,6 +18,9 @@ export class AuthInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler):
         Observable<HttpEvent<any>> {
+
+            const path = window.location.pathname;
+
             if(window.location.pathname.includes('/account/login') || window.location.pathname.includes('/account/register'))
                 return next.handle(req);
             
@@ -38,17 +41,12 @@ export class AuthInterceptor implements HttpInterceptor {
 
             // pass cloned req with header to the next handler
             return next.handle(authReq).pipe(
-                // tap(res => {
-                //     console.log(res);
-                // }),
                 // intercepting the response to check whether the jwt is expired!
                 catchError((err: HttpErrorResponse) => {
                     if(err.status === 401) {
                         // unauthorized(401): not valid authentication
                         this.acc.logout();
-                        this.sb.open(`You cannot navigate to ${this.router.url} before loging in.`);
-                        this.router.navigate(['account', 'login']);
-                        throw new Error(`You cannot navigate to ${this.router.url} before loging in.`);
+                        throw new Error(`You cannot navigate to ${path} before loging in.`);
                     }
                     throw err;
                 })

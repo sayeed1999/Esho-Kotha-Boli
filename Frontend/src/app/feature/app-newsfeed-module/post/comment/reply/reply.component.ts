@@ -34,9 +34,6 @@ export class ReplyComponent implements OnInit {
       res => {
         this.deleteEvent.emit(this.reply.id);
         this.sb.open('Reply deleted successfully', 'Okay!');
-      },
-      (error: HttpErrorResponse) => {
-        this.sl.textNIcon(error.error, 'error');
       }
     );
   }
@@ -61,9 +58,6 @@ export class ReplyComponent implements OnInit {
         this.reply.body = this.editedReply;
         this.editMode = false;
         this.sb.open('Reply edited successfully', 'Nice!');
-      },
-      (error: HttpErrorResponse) => {
-        this.sl.textNIcon(error.error, 'error');
       }
     );
   }

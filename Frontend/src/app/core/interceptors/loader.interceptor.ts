@@ -33,28 +33,35 @@ export class LoaderInterceptor implements HttpInterceptor {
       // Subscribing to requests
       next.handle(request).subscribe(
 
-        (res: HttpEvent<any>) => { // should be an HttpResponse
-          // continuing the HTTP cycle
-          // console.log("success")
+        (res: HttpEvent<any>) => { // continuing the HTTP cycle
+          this.httpService.responseReceived();
           observer.next(res);
         },
-        (err: HttpErrorResponse) => {
-          // Handling Errors
-          // console.log(err)
+
+        (err: HttpErrorResponse) => { // Handling Errors
+          console.log(err)
+          
+          let message = '';
+
           if(err.status === 0) {
-            this.sweetAlertService.textNIcon('[x] Please try with proper connection.', "error");
+            message = '[x] Try with proper connection.';
           }
-          else {
-            let res: AuthResponse = err.error;
-            this.sweetAlertService.textNIcon(res.message, "error");
+          else if (err.error instanceof AuthResponse) {
+            message = err.error.message;
           }
+          else { // err.error instanceof string
+            message = err.error;
+          }
+
+          this.sweetAlertService.textNIcon(message, 'error');
           this.httpService.responseReceived();
         },
-        () => {
-          // res -> complete (when error occurs, chain don't reach here)
-          // console.log("complete")
-          this.httpService.responseReceived();
+
+        () => { // complete
+          // if you want to do anything, you can!
         }
+
+        // when the http req-res is a success, complete executes, otherwise not.
       );
     });
   }

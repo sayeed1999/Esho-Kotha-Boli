@@ -51,9 +51,6 @@ export class CommentComponent implements OnInit {
         this.comment.replies.push(res);
         this.rerender();
         this.sb.open('Reply given', 'Okay');
-      },
-      (error: HttpErrorResponse) => {
-        this.sl.textNIcon(error.error, 'error');
       }
     );
   }
@@ -64,9 +61,6 @@ export class CommentComponent implements OnInit {
       res => {
         this.deleteEvent.emit(this.comment.id);
         this.sb.open('Comment deleted', 'Thanks');
-      },
-      (error: HttpErrorResponse) => {
-        this.sl.textNIcon(error.error, 'error');
       }
     );
   }
@@ -91,9 +85,6 @@ export class CommentComponent implements OnInit {
         this.comment.body = this.editedComment;
         this.editMode = false;
         this.sb.open('Comment updated', 'Okay');
-      },
-      (error: HttpErrorResponse) => {
-        this.sl.textNIcon(error.error, 'error');
       }
     );
   }

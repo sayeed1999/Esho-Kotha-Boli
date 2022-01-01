@@ -49,9 +49,6 @@ export class RegisterComponent implements OnInit {
         this.sexesFetched = true;
         if(this.relationshipStatusesFetched) this.initializeForm();
       },
-      error => {
-        this.sb.open('Sex fetching failed', 'Okay');
-      }
     );
   }
 
@@ -62,9 +59,6 @@ export class RegisterComponent implements OnInit {
         this.relationshipStatusesFetched = true;
         if(this.sexesFetched) this.initializeForm();
       },
-      error => {
-        this.sb.open('Relationship status fetching failed', 'Okay');
-      }
     );
   }
 
@@ -145,9 +139,6 @@ export class RegisterComponent implements OnInit {
         this.sb.open('Account registered successfully', 'Hurrah!!!');
         this.router.navigate(['..', 'login']);
       },
-      (error: HttpErrorResponse) => {
-        this.sb.open(error.error, 'Okay');
-      }
     );
   }
 

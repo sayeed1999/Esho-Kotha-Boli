@@ -51,8 +51,6 @@ export class CreatePostComponent implements OnInit {
       this.postService.dataChanged.next(true);
       this.rerender();
       this.sb.open('Post shared successfully', 'Hurrah!');
-    }, (error: HttpErrorResponse) => {
-      this.sb.open(error.error, 'Okay');
     });
   }
 

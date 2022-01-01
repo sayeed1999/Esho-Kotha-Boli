@@ -16,11 +16,13 @@ import { AccountService } from "src/app/core/services/account.service";
     canActivate(
       route: ActivatedRouteSnapshot,
       state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+        console.log('canActivate() called from auth guard');
         return this.getResult();
     }
     canActivateChild(
       childRoute: ActivatedRouteSnapshot,
       state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+        console.log('canActivateChild() called from auth guard');
         return this.getResult();
     }
   

@@ -59,9 +59,6 @@ export class PostComponent implements OnInit {
         this.rerender();
         this.post.comments.push(res);
         this.sb.open('Commenting done.', 'Okay');
-      },
-      (error: HttpErrorResponse) => {
-        this.sl.textNIcon(error.error, 'error');
       }
     );
   }
@@ -72,9 +69,6 @@ export class PostComponent implements OnInit {
       res => {
         this.router.navigate(['../../'], { relativeTo: this.route });
         this.sb.open('Post deleted successfully', 'Good!');
-      },
-      (error: HttpErrorResponse) => {
-        this.sl.textNIcon(error.error, 'error');
       }
     );
   }
@@ -99,9 +93,6 @@ export class PostComponent implements OnInit {
         this.post.body = this.editedPost; // no need to call the api since it is a success call!
         this.editMode = false;
         this.sb.open('Post updated', 'Okay');
-      },
-      (error: HttpErrorResponse) => {
-        this.sl.textNIcon(error.error, 'error');
       }
     );
   }
