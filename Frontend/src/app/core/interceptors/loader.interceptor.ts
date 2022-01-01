@@ -46,7 +46,7 @@ export class LoaderInterceptor implements HttpInterceptor {
           }
           else {
             let res: AuthResponse = err.error;
-            this.sweetAlertService.textNIcon(res.errorMessage, "error");
+            this.sweetAlertService.textNIcon(res.message, "error");
           }
           this.httpService.responseReceived();
         },
