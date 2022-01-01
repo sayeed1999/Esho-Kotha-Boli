@@ -66,7 +66,7 @@ namespace API_Layer.Controllers
             if(user == null || !(await _userManager.CheckPasswordAsync(user, loginUser.Password)))
             {
                 // StatusCode: 401 (Unauthorized response)
-                return Unauthorized(new AuthResponse { ErrorMessage = "Invalid Authentication" });
+                return Unauthorized(new AuthResponse { Message = "Invalid Authentication" });
             }
 
             SigningCredentials signingCredentials = _jwtHandler.GetSigningCredentials();
@@ -76,7 +76,7 @@ namespace API_Layer.Controllers
             JwtSecurityTokenHandler tokenHandler = new();
             string generatedToken = tokenHandler.WriteToken(tokenOptions);
 
-            return Ok(new AuthResponse { UserName = user.UserName, IsAuthSuccessful = true, Token = generatedToken, ErrorMessage = null });
+            return Ok(new AuthResponse { UserName = user.UserName, IsAuthSuccessful = true, Token = generatedToken, Message = null });
         }
 
         [AllowAnonymous]
