@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AppShellComponent } from './components/app-shell/app-shell.component';
-import { LoaderComponent } from './components/loader/loader.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { AppShellComponent } from './components/app-shell/app-shell.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 export const interceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },

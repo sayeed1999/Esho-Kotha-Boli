@@ -11,5 +11,6 @@ namespace Repository_Layer.DerivedRepositories.PostSummaryRepository
     public interface IPostSummaryRepository
     {
         public Task<Response<IEnumerable<PostSummary>>> GetAllPostSummary(int page, int count);
+        public Task<Response<IEnumerable<PostSummary>>> GetAllPostSummaryByUser(string username, int page, int count);
     }
 }

@@ -2,8 +2,8 @@
 
     <create-post (newPostCreated)="newPostShared()"></create-post>
 
-    <div *ngFor="let post of posts" style="margin: 20px 0">
-        <mat-card>
+    <div *ngFor="let post of posts">
+        <mat-card class="m-3">
             <post-summary [post]=post></post-summary>
         </mat-card>
     </div>
@@ -13,6 +13,3 @@
     </div>
 
 </div>
-
-<hr>
-<h5 style="text-align-last: center; padding: 10px 0 20px;"> Developed by - @Md. Sayeed Rahman </h5>

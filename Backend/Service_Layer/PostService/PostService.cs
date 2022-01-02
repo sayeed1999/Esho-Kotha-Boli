@@ -22,6 +22,10 @@ namespace Service_Layer.PostService
         {
             return await this._unitOfWork.PostSummaryRepository.GetAllPostSummary(page, count);
         }
+        public async Task<Response<IEnumerable<PostSummary>>> GetAllSummaryByUserAsync(string username, int page, int count)
+        {
+            return await this._unitOfWork.PostSummaryRepository.GetAllPostSummaryByUser(username, page, count);
+        }
 
         public async Task<Response<Post>> CreatePost(Post post)
         {

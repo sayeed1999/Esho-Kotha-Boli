@@ -16,11 +16,11 @@ import { SharedModule } from 'src/app/shared/shared.module';
 @NgModule({
   declarations: [
     AppNewsfeedComponent,
-    CreatePostComponent,
+    // CreatePostComponent,
     PostComponent,
     CommentComponent,
     ReplyComponent,
-    PostSummaryComponent,
+    // PostSummaryComponent,
   ],
   imports: [
     NewsfeedRoutingModule,

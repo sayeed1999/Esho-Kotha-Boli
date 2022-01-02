@@ -60,6 +60,56 @@ begin
 end
 go
 
+-- Stored Procedure for GettingAllPostSummariesForAUser
+
+-- this sp will work from any page and post count
+create procedure spGetAllPostSummaryByUser (
+	@username nvarchar(max)
+	,@page int = 1 -- default page number
+	,@count int = 5 -- default page capacity
+)
+as	
+begin
+	set nocount on
+	select
+		[p].[Id] [Id]
+		,(select dbo.funcShortenBody(p.Body)) [Body]
+		,[p].[DateCreated] [DateCreated]
+		,[u].[FirstName] + ' ' + [u].[LastName] [UserName]
+		,CAST(ISNULL(COUNT([c].[CommentId]), 0) as bigint) [CommentsCount]
+		,CAST(ISNULL(SUM([c].[RepliesCount]), 0) as bigint) [RepliesCount]
+
+	from [dbo].[Posts] as p
+	inner join [dbo].[AspNetUsers] as u
+		on u.Id = p.UserId
+	outer apply (
+		select
+			t.Id [CommentId]
+			,isnull(count(r.Id), 0) [RepliesCount]
+		from [dbo].[Comments] t
+		left join [dbo].[Replies] r on t.Id = r.CommentId
+		where p.Id = t.PostId
+		group by t.Id
+	) c
+	where
+		[u].[UserName] = @username
+	group by
+		[p].[Id]
+		,[p].[Body]
+		,[p].[DateCreated]
+		,[u].[FirstName]
+		,[u].[LastName]
+	order by
+		[p].[Id] desc
+	offset (@page - 1)*@count rows
+	fetch next @count rows only
+end
+go
+
+
+
+
+
 -- testing
 declare @page as int, @count as int
 set @page = 1

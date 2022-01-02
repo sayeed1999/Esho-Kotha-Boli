@@ -15,7 +15,7 @@ import { SweetAlertService } from './sweet-alert.service';
 export class AccountService {
 
   private authenticationState: 'authenticated'|'unauthenticated' = 'unauthenticated';
-  userName = 'guest user';
+  private userName = 'guest user';
   authenticationStateChanged = new Subject<boolean>();
   private url: string = 'https://localhost:44345/account';
 
@@ -46,6 +46,10 @@ export class AccountService {
 
   isAuthenticated(): boolean {
     return this.authenticationState === 'authenticated';
+  }
+
+  getUserName(): string {
+    return this.userName;
   }
 
   get getAuthToken(): string {

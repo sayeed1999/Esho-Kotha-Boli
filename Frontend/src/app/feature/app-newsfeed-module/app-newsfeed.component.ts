@@ -14,7 +14,6 @@ import { ViewPost } from '../../core/models/viewPost';
 })
 export class AppNewsfeedComponent implements OnInit {
 
-  projectedPost: ViewPost | null = null;
   posts: PostSummary[] = [];
 
   constructor(

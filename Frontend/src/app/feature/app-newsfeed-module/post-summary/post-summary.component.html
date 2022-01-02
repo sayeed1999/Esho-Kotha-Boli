@@ -2,7 +2,7 @@
     <div style="display: flex; align-items: center;">
         <mat-icon style="margin-right: 5px">computer</mat-icon>
         <div style="font-weight: 500;"> {{ postSummary.userName }} </div>
-        <i class="link" routerLink="post/{{postSummary.id}}" style="margin-left: auto;">View Post</i>
+        <i class="link" routerLink="/newsfeed/post/{{postSummary.id}}" style="margin-left: auto;">View Post</i>
     </div>
     <div>
         <p> {{ postSummary.body }} </p>

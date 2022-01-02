@@ -5,6 +5,7 @@ import { PostSummary } from 'src/app/core/models/postSummaryt';
 import { Comment_ } from '../models/comment';
 import { Post } from '../models/Post';
 import { Reply } from '../models/reply';
+import { AccountService } from './account.service';
 import { RepositoryService } from './repository.service';
 
 @Injectable({
@@ -17,7 +18,8 @@ export class PostService extends RepositoryService {
   page = 1;
 
   constructor(
-    http: HttpClient
+    http: HttpClient,
+    private acc: AccountService,
   ) {
     super(http);
 
@@ -38,6 +40,13 @@ export class PostService extends RepositoryService {
   getAllPostsSummary(): Observable<PostSummary[]> {
     return this.http.get<any>(
       `${this.url}/all-summary?page=${this.page}&count=${this.count}`
+    );
+  }
+
+  
+  getAllPostsSummaryByUser(username?: string): Observable<PostSummary[]> {
+    return this.http.get<any>(
+      `${this.url}/all-summary/${username || this.acc.getUserName()}?page=${this.page}&count=${this.count}`
     );
   }
 

@@ -23,8 +23,7 @@ namespace API_Layer.Controllers
             PostService = postService;
         }
 
-
-        [HttpGet()]
+        [HttpGet]
         public async Task<IActionResult> GetAllSummary(int? page = 1, int? count = 5)
         {
             Response<IEnumerable<PostSummary>> response = new Response<IEnumerable<PostSummary>>();
@@ -33,6 +32,22 @@ namespace API_Layer.Controllers
                 response = await PostService.GetAllSummaryAsync((int)page, (int)count);
             }
             catch(Exception ex)
+            {
+                response.Message = ex.Message;
+                response.StatusCode = HttpStatusCode.BadRequest;
+            }
+            return Util.GetResult(response);
+        }
+
+        [HttpGet("{username}")]
+        public async Task<IActionResult> GetAllSummaryByUser(string username, int? page = 1, int? count = 5)
+        {
+            Response<IEnumerable<PostSummary>> response = new Response<IEnumerable<PostSummary>>();
+            try
+            {
+                response = await PostService.GetAllSummaryByUserAsync(username, (int)page, (int)count);
+            }
+            catch (Exception ex)
             {
                 response.Message = ex.Message;
                 response.StatusCode = HttpStatusCode.BadRequest;

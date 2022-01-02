@@ -28,5 +28,16 @@ namespace Repository_Layer.DerivedRepositories.PostSummaryRepository
             return response;
         }
 
+        public async Task<Response<IEnumerable<PostSummary>>> GetAllPostSummaryByUser(string username, int page, int count)
+        {
+            Response<IEnumerable<PostSummary>> response = new();
+            var param00 = new SqlParameter("@username", username);
+            var param01 = new SqlParameter("@page", page);
+            var param02 = new SqlParameter("@count", count);
+            IEnumerable<PostSummary> posts = await base.FromSql("execute dbo.spGetAllPostSummaryByUser @username, @page, @count", param00, param01, param02).ToListAsync();
+            response.Data = posts;
+            return response;
+        }
+
     }
 }

@@ -1,1 +1,15 @@
-<p>timeline-posts works!</p>
+<div class="newsfeed-container">
+
+    <create-post (newPostCreated)="newPostShared()"></create-post>
+
+    <div *ngFor="let post of posts" style="margin: 20px 0">
+        <mat-card>
+            <post-summary [post]=post></post-summary>
+        </mat-card>
+    </div>
+
+    <div *ngIf="posts.length % 5 == 0 && posts.length > 0" class="d-flex justify-content-center mb-4">
+        <button mat-raised-button (click)="loadMore()"> Load more </button>
+    </div>
+
+</div>

@@ -7,6 +7,9 @@ import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.com
 import { DynamicFormQuestionComponent } from './components/dynamic-form/dynamic-form-question/dynamic-form-question.component';
 import { ProjectAContentComponent } from './components/project-a-content/project-a-content.component';
 import { ProjectAMessageComponent } from './components/project-a-message/project-a-message.component';
+import { PostSummaryComponent } from '../feature/app-newsfeed-module/post-summary/post-summary.component';
+import { CreatePostComponent } from '../feature/app-newsfeed-module/create-post/create-post.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -16,9 +19,14 @@ import { ProjectAMessageComponent } from './components/project-a-message/project
     DynamicFormQuestionComponent,
     ProjectAContentComponent,
     ProjectAMessageComponent,
+    // components from profile module starts here
+    CreatePostComponent,
+    PostSummaryComponent,
+    // components from profile module ends here
   ],
   imports: [ // imports the modules first to export under this module in an organized manner!
     CommonModule,
+    RouterModule,
     FormsModule,
     ReactiveFormsModule,
     
@@ -31,6 +39,7 @@ import { ProjectAMessageComponent } from './components/project-a-message/project
     
     // all modules
     CommonModule,
+    RouterModule,
     FormsModule,
     ReactiveFormsModule,
     AngularMaterialModule,
@@ -41,6 +50,8 @@ import { ProjectAMessageComponent } from './components/project-a-message/project
     DynamicFormQuestionComponent,
     ProjectAContentComponent,
     ProjectAMessageComponent,
+    CreatePostComponent,
+    PostSummaryComponent,
   ]
 })
 export class SharedModule { }
