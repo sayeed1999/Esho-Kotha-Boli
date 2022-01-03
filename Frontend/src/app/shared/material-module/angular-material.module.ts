@@ -19,6 +19,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatBadgeModule } from '@angular/material/badge';
+
 
 const modules: any[] = [
   MatToolbarModule,
@@ -41,6 +43,7 @@ const modules: any[] = [
   MatRadioModule,
   MatCardModule,
   MatTabsModule,
+  MatBadgeModule,
 ];
 
 @NgModule({

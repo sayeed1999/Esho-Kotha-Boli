@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { ImageService } from 'src/app/core/services/image.service';
 import { ViewUser } from '../../core/models/viewUser';
+import { UpdateProfilePictureDialogComponent } from './update-profile-picture-dialog/update-profile-picture.component';
 
 @Component({
   selector: 'app-profile',
@@ -11,22 +14,30 @@ export class ProfileComponent implements OnInit { // bug present! component not 
   viewUser!: ViewUser;
 
   constructor(
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private imgService: ImageService,
+    public dialog: MatDialog,
   ) {
     console.log("profile component")
   }
 
   ngOnInit(): void {
-    // this params is the route parameters only! e.g. user/1, user/2, user/3
-    // this.route.params.subscribe(data => {
-    //   console.log(data)
-    // })
-
-    // Can access route resolver data (which is resolved!) with the ActivatedRoute service!
     this.activatedRoute.data.subscribe((data: any) => {
       console.log('Checking route resolver data...', data);
       this.viewUser = data.routeResolver;
     })
   }
 
+  editProfilePictureClicked() {
+    const dialogRef = this.dialog.open(UpdateProfilePictureDialogComponent, {
+      maxWidth: '600px',
+      minWidth: '400px',
+      height: '80vh',
+      data: {} // pass any data here you want to inject
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('dialog has been closed for the update profile picture component.', result);
+    });
+  }
 }

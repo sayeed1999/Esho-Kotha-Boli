@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Repository_Layer.DerivedRepositories.CommentRepository;
+﻿using Repository_Layer.DerivedRepositories.CommentRepository;
+using Repository_Layer.DerivedRepositories.ImageRepository;
 using Repository_Layer.DerivedRepositories.PostRepository;
 using Repository_Layer.DerivedRepositories.PostSummaryRepository;
+using Repository_Layer.DerivedRepositories.ProfilePictureRepository;
 using Repository_Layer.DerivedRepositories.ReplyRepository;
-using Repository_Layer.GenericRepository;
+using System.Threading.Tasks;
 
 namespace Repository_Layer.UnitOfWork
 {
@@ -19,6 +16,8 @@ namespace Repository_Layer.UnitOfWork
         IPostSummaryRepository PostSummaryRepository { get; }
         ICommentRepository CommentRepository { get; }
         IReplyRepository ReplyRepository { get; }
+        IImageRepository ImageRepository { get; }
+        IProfilePictureRepository ProfilePictureRepository { get; }
         Task CompleteAsync();
     }
 }

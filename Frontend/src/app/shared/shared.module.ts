@@ -11,8 +11,6 @@ import { PostSummaryComponent } from '../feature/app-newsfeed-module/post-summar
 import { CreatePostComponent } from '../feature/app-newsfeed-module/create-post/create-post.component';
 import { RouterModule } from '@angular/router';
 
-
-
 @NgModule({
   declarations: [
     DynamicFormComponent,
@@ -33,6 +31,8 @@ import { RouterModule } from '@angular/router';
     // my written ones
     AngularMaterialModule,
     UtilityModule,
+
+    // installed ones
   ],
   exports: [
     // basically export all components and modules because these are going to be shared!

@@ -1,16 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Data_Access_Layer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using Repository_Layer.DerivedRepositories.PostRepository;
@@ -33,6 +27,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using Repository_Layer.DerivedRepositories.ImageRepository;
+using Service_Layer.ImageService;
+using Repository_Layer.DerivedRepositories.ProfilePictureRepository;
+using Service_Layer.ProfilePictureService;
 
 namespace API_Layer
 {
@@ -96,19 +94,27 @@ namespace API_Layer
 
             // UnitOfWork
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             // ApplicationDbContext
             services.AddScoped<ApplicationDbContext>();
+
             // GenericRepository
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
             // DerivedRepositories
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IPostSummaryRepository, PostSummaryRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IReplyRepository, ReplyRepository>();
+            services.AddScoped<IImageRepository, ImageRepository>();
+            services.AddScoped<IProfilePictureRepository, ProfilePictureRepository>();
+
             // Services
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IReplyService, ReplyService>();
+            services.AddScoped<IImageService, ImageService>();
+            services.AddScoped<IProfilePictureService, ProfilePictureService>();
 
             // Registering Identity Services
             services.AddIdentity<User, IdentityRole>(options =>

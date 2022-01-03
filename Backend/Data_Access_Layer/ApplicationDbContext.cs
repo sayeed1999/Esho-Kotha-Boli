@@ -22,5 +22,7 @@ namespace Data_Access_Layer
         public DbSet<PostSummary> PostSummaries { get; set; } // only for sp, not for db table
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Reply> Replies { get; set; }
+        public DbSet<Image> Images { get; set; }
+        public DbSet<ProfilePicture> ProfilePictures { get; set; }
     }
 }

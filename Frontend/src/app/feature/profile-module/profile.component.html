@@ -3,6 +3,9 @@
 <div class="row" style="display: flex; align-items: center;">
     <div class="col-4">
         <mat-icon style="color: #999999; font-size: 160px;">person</mat-icon>
+        <button (click)="editProfilePictureClicked()" style="transform: translate(70px, -35px)" color="primary" mat-mini-fab>
+            <mat-icon>edit</mat-icon>
+        </button>
     </div>
     <div class="col-8">
         <h2 style="font-size: 200%; font-weight: 400; color: #424242; font-style: italic;"> {{ viewUser.firstName }} {{ " " }} {{ viewUser.lastName }} </h2>
