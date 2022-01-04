@@ -63,7 +63,7 @@ go
 -- Stored Procedure for GettingAllPostSummariesForAUser
 
 -- this sp will work from any page and post count
-create procedure spGetAllPostSummaryByUser (
+alter procedure spGetAllPostSummaryByUser (
 	@username nvarchar(max)
 	,@page int = 1 -- default page number
 	,@count int = 5 -- default page capacity
@@ -106,9 +106,20 @@ begin
 end
 go
 
+CREATE TRIGGER tr_AspNetUsers ON dbo.AspNetUsers
+AFTER INSERT
+AS
+BEGIN
+	declare @userid as nvarchar(max)
+	set @userid = (select i.Id from inserted i)
+	INSERT INTO 
+		dbo.ProfilePictures (UserId, ImageId, DateCreated)
+		VALUES (@userid, NULL, SYSDATETIME())
+END
+go
 
-
-
+select * from Images
+select * from ProfilePictures
 
 -- testing
 declare @page as int, @count as int
