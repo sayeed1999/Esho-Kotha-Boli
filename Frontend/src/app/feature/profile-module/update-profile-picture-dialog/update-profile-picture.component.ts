@@ -1,6 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ViewProfilePicture } from 'src/app/core/models/viewProfilePicture';
 import { ImageService } from 'src/app/core/services/image.service';
+import { ProfilePictureService } from 'src/app/core/services/profile-picture.service';
 import { SweetAlertService } from 'src/app/core/services/sweet-alert.service';
 
 @Component({
@@ -11,14 +13,17 @@ import { SweetAlertService } from 'src/app/core/services/sweet-alert.service';
 export class UpdateProfilePictureDialogComponent implements OnInit {
 
   image!: File;
+  base64!: string | null;
 
   constructor(
     public dialogRef: MatDialogRef<UpdateProfilePictureDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private imgService: ImageService,
+    private dpService: ProfilePictureService,
     private sl: SweetAlertService,
   ) {
-    // if you had injected any data to the dialog, it will be available here in 'data' variable..
+    // if you had injected any data to the dialog, it will be available here..
+    this.base64 = data.base64;
   }
 
   ngOnInit(): void {
@@ -30,8 +35,15 @@ export class UpdateProfilePictureDialogComponent implements OnInit {
 
   upload(): void {
     this.imgService.uploadProfilePicture(this.image).subscribe(
-      res => {
+      (res: ViewProfilePicture) => {
         this.sl.textNIcon("Uploaded successfully!!", "success");
+
+        this.dpService.dpUpdated.next();
+
+        this.base64 = res.byteArray;
+        if(!!this.base64) {
+          this.base64 = 'data:image/jpg;base64,' + this.base64; // this.base64 is a String
+        }
       }
     );
   }

@@ -1,2 +1,9 @@
-<input type="file" accept="image/*" [(ngModel)]="image" name="image" (change)="changed($event)"/>
-<button mat-button color="accent" (click)="upload()"> Upload </button>
+<div class="row">
+    <input type="file" accept="image/*" [(ngModel)]="image" name="image" (change)="changed($event)"/>
+    <button mat-button color="accent" (click)="upload()"> Upload </button>
+</div>
+
+<div class="row" style="height: 350x; background-color: #efefef;">
+    <img class="img-fluid img-thumbnail d-block" style="height: 100%; border-radius: 50%; width: 350px; height: 350px" [src]="base64" alt="profile-picture">
+    <p [hidden]="!!base64" style="text-align: center;"> No profile picture currently set. </p>
+</div>

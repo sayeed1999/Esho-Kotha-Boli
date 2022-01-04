@@ -1,4 +1,5 @@
 ﻿using Entity_Layer;
+using Microsoft.EntityFrameworkCore;
 using Repository_Layer.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,17 @@ namespace Service_Layer.ProfilePictureService
         public ProfilePictureService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
+        }
+
+        public async Task<Response<ProfilePicture>> GetProfilePictureAsync(string userId)
+        {
+            Response<ProfilePicture> response = new();
+            response.Data = await this.unitOfWork.ProfilePictureRepository.GetFirstOrDefaultAsync(
+                                                                            x => x.User.Id == userId,
+                                                                            src => src.Include(x => x.User),
+                                                                            src => src.Include(x => x.Image)
+                                                                        );
+            return response;
         }
 
         public async Task<Response<ProfilePicture>> SetProfilePictureAsync(string userId, long imageId)

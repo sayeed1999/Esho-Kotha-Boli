@@ -31,6 +31,8 @@ using Repository_Layer.DerivedRepositories.ImageRepository;
 using Service_Layer.ImageService;
 using Repository_Layer.DerivedRepositories.ProfilePictureRepository;
 using Service_Layer.ProfilePictureService;
+using Repository_Layer.DerivedRepositories.UserRepository;
+using Service_Layer.UserService;
 
 namespace API_Layer
 {
@@ -108,6 +110,7 @@ namespace API_Layer
             services.AddScoped<IReplyRepository, ReplyRepository>();
             services.AddScoped<IImageRepository, ImageRepository>();
             services.AddScoped<IProfilePictureRepository, ProfilePictureRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             // Services
             services.AddScoped<IPostService, PostService>();
@@ -115,6 +118,7 @@ namespace API_Layer
             services.AddScoped<IReplyService, ReplyService>();
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IProfilePictureService, ProfilePictureService>();
+            services.AddScoped<IUserService, UserService>();
 
             // Registering Identity Services
             services.AddIdentity<User, IdentityRole>(options =>

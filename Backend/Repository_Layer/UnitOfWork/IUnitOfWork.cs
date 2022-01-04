@@ -4,6 +4,7 @@ using Repository_Layer.DerivedRepositories.PostRepository;
 using Repository_Layer.DerivedRepositories.PostSummaryRepository;
 using Repository_Layer.DerivedRepositories.ProfilePictureRepository;
 using Repository_Layer.DerivedRepositories.ReplyRepository;
+using Repository_Layer.DerivedRepositories.UserRepository;
 using System.Threading.Tasks;
 
 namespace Repository_Layer.UnitOfWork
@@ -18,6 +19,7 @@ namespace Repository_Layer.UnitOfWork
         IReplyRepository ReplyRepository { get; }
         IImageRepository ImageRepository { get; }
         IProfilePictureRepository ProfilePictureRepository { get; }
+        IUserRepository UserRepository { get; }
         Task CompleteAsync();
     }
 }

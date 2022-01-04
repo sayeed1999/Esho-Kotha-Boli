@@ -1,5 +1,6 @@
 ﻿using API_Layer.Helpers;
 using Entity_Layer;
+using Entity_Layer.Dtos;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Service_Layer.ImageService;
@@ -18,19 +19,22 @@ namespace API_Layer.Controllers
     public class ImagesController : ControllerBase
     {
         public Util<Image> Util { get; }
+        public Util<ViewProfilePicture> vmDPUtil { get; }
         public UserManager<User> UserManager { get; }
         public IImageService ImageService { get; }
         public IProfilePictureService ProfilePictureService { get; }
         
         public ImagesController
         (
-            Util<Image> Util, 
+            Util<Image> Util,
+            Util<ViewProfilePicture> vmDPUtil,
             UserManager<User> UserManager, 
             IImageService ImageService, 
             IProfilePictureService ProfilePictureService
         )
         {
             this.Util = Util;
+            this.vmDPUtil = vmDPUtil;
             this.UserManager = UserManager;
             this.ImageService = ImageService;
             this.ProfilePictureService = ProfilePictureService;
@@ -66,6 +70,19 @@ namespace API_Layer.Controllers
 
             // then set the profile picture
             Response<ProfilePicture> response02 = await ProfilePictureService.SetProfilePictureAsync(image.UserId, response01.Data.Id);
+
+            // the pic is uploaded, now sent it to frontend to render!
+            if(response01.Data is Image && response02.Data is ProfilePicture)
+            {
+                Response<ViewProfilePicture> vmDPResponse = new();
+                vmDPResponse.Data = new()
+                {
+                    Id = response02.Data.Id,
+                    ByteArray = response01.Data.byteArray,
+                    DateCreated = response01.Data.DateCreated
+                };
+                return vmDPUtil.GetResult(vmDPResponse, "/images");
+            }
 
             return Util.GetResult(response01, "/images");
             // there are flaws in this code. here two things happening. uploading image, working on propic table, what if first one succeeds, second operation fails!

@@ -2,7 +2,8 @@
 
 <div class="row" style="display: flex; align-items: center;">
     <div class="col-4">
-        <mat-icon style="color: #999999; font-size: 160px;">person</mat-icon>
+        <img class="img-fluid img-thumbnail d-block" style="height: 100%; border-radius: 50%; width: 150px; height: 150px;" [src]="base64" alt="profile-picture">
+        <!-- <mat-icon *ngIf="!base64" style="color: #999999; font-size: 160px;">person</mat-icon> -->
         <button (click)="editProfilePictureClicked()" style="transform: translate(70px, -35px)" color="primary" mat-mini-fab>
             <mat-icon>edit</mat-icon>
         </button>
