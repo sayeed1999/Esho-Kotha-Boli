@@ -53,7 +53,6 @@ namespace API_Layer
 
             // Configure in-memory caching.
             // services.AddMemoryCache(); // no need anymore!!
-            services.AddSingleton<InMemoryCaching>();
 
             // Injecting the SQL Server ConnectionString.
             services.AddDbContext<ApplicationDbContext>(options =>

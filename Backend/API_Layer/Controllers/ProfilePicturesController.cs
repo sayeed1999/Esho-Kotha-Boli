@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-// using Microsoft.Extensions.Caching.Memory;
+
 
 namespace API_Layer.Controllers
 {
@@ -20,7 +20,6 @@ namespace API_Layer.Controllers
     public class ProfilePicturesController : ControllerBase
     {
         private readonly IMemoryCache cache;
-        // private InMemoryCaching InMemoryCaching { get; }
         public Util<ViewProfilePicture> vmUtil { get; }
         public Util<ProfilePicture> Util { get; }
         public Util<User> UserUtil { get; }
@@ -30,7 +29,6 @@ namespace API_Layer.Controllers
 
         public ProfilePicturesController(
             IMemoryCache cache,
-            // InMemoryCaching InMemoryCaching,
             Util<ViewProfilePicture> vmUtil,
             Util<ProfilePicture> Util, 
             Util<User> UserUtil,
@@ -40,7 +38,6 @@ namespace API_Layer.Controllers
             )
         {
             this.cache = cache;
-            // this.InMemoryCaching = InMemoryCaching;
             this.vmUtil = vmUtil;
             this.Util = Util;
             this.UserUtil = UserUtil;
