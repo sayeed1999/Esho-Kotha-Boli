@@ -29,6 +29,17 @@ namespace Service_Layer.ProfilePictureService
             return response;
         }
 
+        public async Task<Response<ProfilePicture>> GetProfilePictureByUsernameAsync(string username)
+        {
+            Response<ProfilePicture> response = new();
+            response.Data = await this.unitOfWork.ProfilePictureRepository.GetFirstOrDefaultAsync(
+                                                                            x => x.User.UserName == username,
+                                                                            src => src.Include(x => x.User),
+                                                                            src => src.Include(x => x.Image)
+                                                                        );
+            return response;
+        }
+
         public async Task<Response<ProfilePicture>> SetProfilePictureAsync(string userId, long imageId)
         {
             var response = new Response<ProfilePicture>();

@@ -56,7 +56,8 @@ namespace API_Layer.Controllers
                 temp2.DateCreated = reply.DateCreated;
                 temp2.Id = reply.Id;
                 temp2.UserId = reply.UserId;
-                temp2.UserName = reply.User.FirstName + ' ' + reply.User.LastName;
+                temp2.UserName = reply.User.UserName;
+                temp2.FullName = reply.User.FirstName + ' ' + reply.User.LastName;
 
                 Response<ViewReply> vrResponse = new();
                 vrResponse.Data = temp2;

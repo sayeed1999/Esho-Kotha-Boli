@@ -31,7 +31,8 @@ begin
 		[p].[Id] [Id]
 		,(select dbo.funcShortenBody(p.Body)) [Body]
 		,[p].[DateCreated] [DateCreated]
-		,[u].[FirstName] + ' ' + [u].[LastName] [UserName]
+		,[u].[UserName] [UserName]
+		,[u].[FirstName] + ' ' + [u].[LastName] [FullName]
 		,CAST(ISNULL(COUNT([c].[CommentId]), 0) as bigint) [CommentsCount]
 		,CAST(ISNULL(SUM([c].[RepliesCount]), 0) as bigint) [RepliesCount]
 
@@ -51,6 +52,7 @@ begin
 		[p].[Id]
 		,[p].[Body]
 		,[p].[DateCreated]
+		,[u].[UserName]
 		,[u].[FirstName]
 		,[u].[LastName]
 	order by
@@ -75,7 +77,8 @@ begin
 		[p].[Id] [Id]
 		,(select dbo.funcShortenBody(p.Body)) [Body]
 		,[p].[DateCreated] [DateCreated]
-		,[u].[FirstName] + ' ' + [u].[LastName] [UserName]
+		,[u].[UserName] [UserName]
+		,[u].[FirstName] + ' ' + [u].[LastName] [FullName]
 		,CAST(ISNULL(COUNT([c].[CommentId]), 0) as bigint) [CommentsCount]
 		,CAST(ISNULL(SUM([c].[RepliesCount]), 0) as bigint) [RepliesCount]
 
@@ -97,6 +100,7 @@ begin
 		[p].[Id]
 		,[p].[Body]
 		,[p].[DateCreated]
+		,[u].[UserName]
 		,[u].[FirstName]
 		,[u].[LastName]
 	order by

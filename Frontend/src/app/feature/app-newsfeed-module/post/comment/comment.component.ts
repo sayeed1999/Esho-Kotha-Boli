@@ -9,6 +9,7 @@ import { ViewComment } from 'src/app/core/models/viewComment';
 import { ViewReply } from 'src/app/core/models/viewReply';
 import { CommentService } from 'src/app/core/services/comment.service';
 import { PostService } from 'src/app/core/services/post.service';
+import { ProfilePictureService } from 'src/app/core/services/profile-picture.service';
 import { ReplyService } from 'src/app/core/services/reply.service';
 import { SweetAlertService } from 'src/app/core/services/sweet-alert.service';
 
@@ -24,6 +25,7 @@ export class CommentComponent implements OnInit {
   editMode = false;
   editedComment = '';
   renderingReply = false;
+  base64: string|null = null; // dp
 
   constructor(
     private postService: PostService,
@@ -31,9 +33,11 @@ export class CommentComponent implements OnInit {
     private replyService: ReplyService,
     private sb: MatSnackBar,
     private sl: SweetAlertService,
+    private dpService: ProfilePictureService,
   ) { }
 
   ngOnInit(): void {
+    this.getProfilePictureByUsername(this.comment.userName);
     this.questions = [
       new TextBox({
         key: 'body',
@@ -41,6 +45,14 @@ export class CommentComponent implements OnInit {
         placeholder: ''
       })
     ];
+  }
+
+  getProfilePictureByUsername(username: string) {
+    this.dpService.getProfilePictureByUsername(username).subscribe(
+      base64 => {
+        this.base64 = base64;
+      }
+    );
   }
 
   // when a reply is given on a comment

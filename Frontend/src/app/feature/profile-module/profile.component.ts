@@ -43,14 +43,8 @@ export class ProfileComponent implements OnInit, OnDestroy { // bug present! com
 
   fetchProfilePicture(): void {
     this.dpService.getProfilePictureByUsername(this.viewUser.userName).subscribe(
-      (res: ViewProfilePicture) => {
-        this.base64 = res.byteArray;
-        if(!!this.base64) {
-          this.base64 = 'data:image/jpg;base64,' + this.base64; // this.base64 is a String
-        }
-        else {
-          this.base64 = 'assets/user.jpg';
-        }    
+      (base64: string) => {
+        this.base64 = base64;
       }
     );
   }

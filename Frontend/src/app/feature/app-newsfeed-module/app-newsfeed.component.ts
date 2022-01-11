@@ -4,7 +4,7 @@ import { PostService } from '../../core/services/post.service';
 import { Post } from '../../core/models/Post';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PostSummary } from '../../core/models/postSummaryt';
+import { PostSummary } from '../../core/models/postSummary';
 import { ViewPost } from '../../core/models/viewPost';
 
 @Component({

@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Reply } from 'src/app/core/models/reply';
 import { ViewReply } from 'src/app/core/models/viewReply';
 import { PostService } from 'src/app/core/services/post.service';
+import { ProfilePictureService } from 'src/app/core/services/profile-picture.service';
 import { ReplyService } from 'src/app/core/services/reply.service';
 import { SweetAlertService } from 'src/app/core/services/sweet-alert.service';
 
@@ -17,15 +18,24 @@ export class ReplyComponent implements OnInit {
   @Output() deleteEvent = new EventEmitter<number>(); // emits deleted reply Id;
   editMode = false;
   editedReply = '';
+  base64!: string | null; // profile pic.
 
   constructor(
-    private postService: PostService,
     private replyService: ReplyService,
     private sb: MatSnackBar,
-    private sl: SweetAlertService,
+    private dpService: ProfilePictureService,
   ) { }
 
   ngOnInit(): void {
+    this.getProfilePictureByUsername(this.reply.userName);
+  }
+
+  getProfilePictureByUsername(username: string) {
+    this.dpService.getProfilePictureByUsername(username).subscribe(
+      base64 => {
+        this.base64 = base64;
+      }
+    );
   }
 
   // when a reply is deleted

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { PostSummary } from 'src/app/core/models/postSummaryt';
+import { PostSummary } from 'src/app/core/models/postSummary';
 import { Comment_ } from '../models/comment';
 import { Post } from '../models/Post';
 import { Reply } from '../models/reply';

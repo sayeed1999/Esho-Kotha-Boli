@@ -3,6 +3,7 @@ using Entity_Layer;
 using Entity_Layer.Dtos;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Service_Layer.ProfilePictureService;
 using Service_Layer.UserService;
 using System;
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+// using Microsoft.Extensions.Caching.Memory;
 
 namespace API_Layer.Controllers
 {
@@ -17,6 +19,8 @@ namespace API_Layer.Controllers
     [Route("profile-picture")]
     public class ProfilePicturesController : ControllerBase
     {
+        private readonly IMemoryCache cache;
+        // private InMemoryCaching InMemoryCaching { get; }
         public Util<ViewProfilePicture> vmUtil { get; }
         public Util<ProfilePicture> Util { get; }
         public Util<User> UserUtil { get; }
@@ -25,6 +29,8 @@ namespace API_Layer.Controllers
         public IUserService UserService { get; }
 
         public ProfilePicturesController(
+            IMemoryCache cache,
+            // InMemoryCaching InMemoryCaching,
             Util<ViewProfilePicture> vmUtil,
             Util<ProfilePicture> Util, 
             Util<User> UserUtil,
@@ -33,6 +39,8 @@ namespace API_Layer.Controllers
             IUserService UserService
             )
         {
+            this.cache = cache;
+            // this.InMemoryCaching = InMemoryCaching;
             this.vmUtil = vmUtil;
             this.Util = Util;
             this.UserUtil = UserUtil;
@@ -49,27 +57,45 @@ namespace API_Layer.Controllers
         [HttpGet("{username}")]
         public async Task<IActionResult> GetProfilePictureAsync(string username) // if null, return the profile picture of the logged in user!
         {
-            Response<User> userResponse = await this.UserService.GetUserAsync(username);
-            if(userResponse.Data is null)
-            {
-                return UserUtil.GetResult(userResponse);
-            }
+            var cacheKey = "profilePictureOf" + username;
+            Response<ViewProfilePicture> responseDP = new();
 
-            // from here, user is not null.
+            // check if cache entries exist
 
-            Response<ProfilePicture> response = await this.ProfilePictureService.GetProfilePictureAsync(userResponse.Data.Id);
-            if(response.Data is ProfilePicture && response.Data.Image is Image)
+            if (!cache.TryGetValue(cacheKey, out ViewProfilePicture viewProfilePicture))
             {
-                ViewProfilePicture vmDP = new()
+                // start calling the server
+
+                Response<ProfilePicture> response = await this.ProfilePictureService.GetProfilePictureByUsernameAsync(username);
+                if (response.Data is ProfilePicture && response.Data.Image is Image)
                 {
-                    Id = response.Data.Id,
-                    ByteArray = response.Data.Image.byteArray,
-                    DateCreated = response.Data.DateCreated
-                };
-                Response<ViewProfilePicture> responseDP = new() { Data = vmDP };
-                return vmUtil.GetResult(responseDP);
+                    ViewProfilePicture vmDP = new()
+                    {
+                        Id = response.Data.Id,
+                        ByteArray = response.Data.Image.byteArray,
+                        DateCreated = response.Data.DateCreated
+                    };
+                    responseDP.Data = vmDP;
+
+                    // setting up cache options
+                    MemoryCacheEntryOptions cacheExpiryOptions = new()
+                    {
+                        // AbsoluteExpiration = DateTime.Now.AddDays(1), // the cache will be deleted after full oneday!
+                        Priority = CacheItemPriority.High,
+                        SlidingExpiration = TimeSpan.FromHours(1), // will remain 1 hour on first pull
+                    };
+                    // setting cache entries
+                    cache.Set(cacheKey, vmDP, cacheExpiryOptions);
+
+                    // if it is a valid profile picture
+                    return vmUtil.GetResult(responseDP);
+                }
+                // if profile picture is somehow null or undefined
+                return Util.GetResult(response);
             }
-            return Util.GetResult(response);
+            // profile picture of the user found
+            responseDP.Data = viewProfilePicture;
+            return vmUtil.GetResult(responseDP);
         }
 
         #endregion

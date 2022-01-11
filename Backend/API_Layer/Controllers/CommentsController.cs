@@ -60,7 +60,8 @@ namespace API_Layer.Controllers
                 temp.PostId = _comment.PostId;
                 temp.Replies = new();
                 temp.UserId = _comment.UserId;
-                temp.UserName = _comment.User.FirstName + ' ' + _comment.User.LastName;
+                temp.UserName = _comment.User.UserName;
+                temp.FullName = _comment.User.FirstName + ' ' + _comment.User.LastName;
                 // setting viewReplies
                 foreach (Reply reply in comment.Replies)
                 {
@@ -70,7 +71,8 @@ namespace API_Layer.Controllers
                     temp2.DateCreated = reply.DateCreated;
                     temp2.Id = reply.Id;
                     temp2.UserId = reply.UserId;
-                    temp2.UserName = reply.User.FirstName + ' ' + reply.User.LastName;
+                    temp2.UserName = reply.User.UserName;
+                    temp2.FullName = reply.User.FirstName + ' ' + reply.User.LastName;
                     temp.Replies.Add(temp2);
                 }
                 Response<ViewComment> vcResponse = new();

@@ -10,6 +10,7 @@ import { ViewPost } from 'src/app/core/models/viewPost';
 import { SweetAlertService } from 'src/app/core/services/sweet-alert.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ViewComment } from 'src/app/core/models/viewComment';
+import { ProfilePictureService } from 'src/app/core/services/profile-picture.service';
 
 @Component({
   selector: 'post',
@@ -23,6 +24,7 @@ export class PostComponent implements OnInit {
   editMode = false;
   editedPost = '';
   renderingComment = false;
+  base64: string | null = null;  // profile picture
 
   constructor(
     private postService: PostService,
@@ -31,6 +33,7 @@ export class PostComponent implements OnInit {
     private sl: SweetAlertService,
     private route: ActivatedRoute,
     private router: Router,
+    private dpService: ProfilePictureService,
   ) { }
 
   ngOnInit(): void {
@@ -40,6 +43,7 @@ export class PostComponent implements OnInit {
 
     this.route.data.subscribe((data: any) => {
       this.post = data.routeResolver;
+      this.getProfilePictureByUsername(this.post.userName);
     })
 
     this.questions = [
@@ -49,6 +53,14 @@ export class PostComponent implements OnInit {
         placeholder: 'write a comment here'
       })
     ];
+  }
+
+  getProfilePictureByUsername(username: string) {
+    this.dpService.getProfilePictureByUsername(username).subscribe(
+      base64 => {
+        this.base64 = base64;
+      }
+    );
   }
 
   // when a new comment is added

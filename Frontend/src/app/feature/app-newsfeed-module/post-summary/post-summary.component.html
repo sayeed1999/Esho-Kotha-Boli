@@ -1,7 +1,8 @@
 <div class="example-post">
     <div style="display: flex; align-items: center;">
-        <mat-icon style="margin-right: 5px">computer</mat-icon>
-        <div style="font-weight: 500;"> {{ postSummary.userName }} </div>
+        <img class="img-fluid d-block mr-2 mb-2" style="height: 100%; border-radius: 50%; width: 40px; height: 40px;" [src]="base64" alt="profile-picture">
+        <!-- <mat-icon style="margin-right: 5px">computer</mat-icon> -->
+        <div style="font-weight: 500;"> {{ postSummary.fullName }} </div>
         <i class="link" routerLink="/newsfeed/post/{{postSummary.id}}" style="margin-left: auto;">View Post</i>
     </div>
     <div>

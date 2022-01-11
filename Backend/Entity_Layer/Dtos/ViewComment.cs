@@ -11,6 +11,7 @@ namespace Entity_Layer.Dtos
         public long Id { get; set; } // commentId
         public string UserId { get; set; }
         public string UserName { get; set; }
+        public string FullName { get; set; }
         public DateTime DateCreated { get; set; }
         public string Body { get; set; }
         public long PostId { get; set; }

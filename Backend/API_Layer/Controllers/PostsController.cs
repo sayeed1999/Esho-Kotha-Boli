@@ -49,7 +49,8 @@ namespace API_Layer.Controllers
                 viewPost.Comments = new();
                 viewPost.Id = response.Data.Id;
                 viewPost.UserId = response.Data.UserId;
-                viewPost.UserName = response.Data.User.FirstName + ' ' + response.Data.User.LastName;
+                viewPost.UserName = response.Data.User.UserName;
+                viewPost.FullName = response.Data.User.FirstName + ' ' + response.Data.User.LastName;
                 // setting viewComments
                 foreach(Comment comment in response.Data.Comments)
                 {
@@ -60,7 +61,8 @@ namespace API_Layer.Controllers
                     temp.PostId = comment.PostId;
                     temp.Replies = new();
                     temp.UserId = comment.UserId;
-                    temp.UserName = comment.User.FirstName + ' ' + comment.User.LastName;
+                    temp.UserName = comment.User.UserName;
+                    temp.FullName = comment.User.FirstName + ' ' + comment.User.LastName;
                     // setting viewReplies
                     foreach(Reply reply in comment.Replies)
                     {
@@ -70,7 +72,8 @@ namespace API_Layer.Controllers
                         temp2.DateCreated = reply.DateCreated;
                         temp2.Id = reply.Id;
                         temp2.UserId = reply.UserId;
-                        temp2.UserName = reply.User.FirstName + ' ' + reply.User.LastName;
+                        temp2.UserName = reply.User.UserName;
+                        temp2.FullName = reply.User.FirstName + ' ' + reply.User.LastName;
                         temp.Replies.Add(temp2);
                     }
                     viewPost.Comments.Add(temp);

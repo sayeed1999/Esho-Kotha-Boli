@@ -51,6 +51,10 @@ namespace API_Layer
             // Injecting AppSettings written in appsettings.json file.
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
+            // Configure in-memory caching.
+            // services.AddMemoryCache(); // no need anymore!!
+            services.AddSingleton<InMemoryCaching>();
+
             // Injecting the SQL Server ConnectionString.
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration["AppSettings:ConnectionString"].ToString()));
