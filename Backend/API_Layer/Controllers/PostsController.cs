@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using API_Layer.Helpers;
+using API_Layer.HubConfig;
 using Entity_Layer;
 using Entity_Layer.Dtos;
 using Microsoft.AspNetCore.Authorization;
@@ -19,13 +20,21 @@ namespace API_Layer.Controllers
     [Route("[controller]")]
     public class PostsController : ControllerBase
     {
+        private readonly IHubContext<NewsfeedHub> hubContext;
         public Util<Post> Util { get; }
         public Util<ViewPost> UtilViewPost { get; }
         public IPostService PostService { get; }
         public UserManager<User> UserManager { get; }
 
-        public PostsController(Util<Post> util, Util<ViewPost> utilViewPost, IPostService postService, UserManager<User> userManager)
+        public PostsController(
+            IHubContext<NewsfeedHub> hubContext,
+            Util<Post> util, 
+            Util<ViewPost> utilViewPost, 
+            IPostService postService,
+            UserManager<User> userManager
+        )
         {
+            this.hubContext = hubContext;
             Util = util;
             UtilViewPost = utilViewPost;
             PostService = postService;
@@ -91,6 +100,14 @@ namespace API_Layer.Controllers
         {
             post.UserId = (await UserManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email))).Id;
             Response<Post> response = await PostService.CreatePost(post);
+
+            // Transfer data via signalR to all of its clients
+            if (response.StatusCode == HttpStatusCode.Created)
+            {
+               var data = await PostService.GetSummaryByPostId(post.Id);
+                await hubContext.Clients.All.SendAsync("transferNewsfeedData", data.Data);
+            }
+
             return Util.GetResult(response, "/posts");
         }
 

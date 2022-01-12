@@ -33,6 +33,7 @@ using Repository_Layer.DerivedRepositories.ProfilePictureRepository;
 using Service_Layer.ProfilePictureService;
 using Repository_Layer.DerivedRepositories.UserRepository;
 using Service_Layer.UserService;
+using API_Layer.HubConfig;
 
 namespace API_Layer
 {
@@ -66,7 +67,6 @@ namespace API_Layer
                 .WithOrigins(Configuration["AppSettings:ClientURL"].ToString());
             }));
 
-            services.AddSignalR();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -93,6 +93,9 @@ namespace API_Layer
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
+
+            // Configure SignalR
+            services.AddSignalR();
 
             // Util for ControllerBase
             services.AddScoped(typeof(Util<>));
@@ -199,6 +202,8 @@ namespace API_Layer
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                // configure hub for signalR
+                endpoints.MapHub<NewsfeedHub>("/newsfeed");
             });
 
 

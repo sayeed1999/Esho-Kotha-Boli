@@ -8,7 +8,7 @@ import { Observable, of, Subject } from 'rxjs';
 export class RepositoryService {
 
   private all: any[] = [];
-  protected url: string = 'https://localhost:44345/';
+  protected url: string = 'https://localhost:5001/';
   protected endpoint: string = '';
   
   dataChanged = new Subject<boolean>();

@@ -1,11 +1,9 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PostService } from '../../core/services/post.service';
-import { Post } from '../../core/models/Post';
-import { Subscription } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { PostSummary } from '../../core/models/postSummary';
-import { ViewPost } from '../../core/models/viewPost';
+import { HttpClient } from '@angular/common/http';
+import { SignalRService } from 'src/app/core/services/signal-r.service';
+
 
 @Component({
   selector: 'app-newsfeed',
@@ -18,11 +16,23 @@ export class AppNewsfeedComponent implements OnInit {
 
   constructor(
     private postService: PostService,
+    public signalRSerice: SignalRService,
   ) { }
   
-
   ngOnInit(): void {
+    this.initializeSignalR();
     this.fetchPosts();
+
+    this.signalRSerice.newPostSummaryReceived.subscribe(
+      res => {
+        this.posts.unshift(res);
+      }
+    );
+  }
+  
+  initializeSignalR() {
+    this.signalRSerice.startConnection();
+    this.signalRSerice.dataListener();
   }
 
   fetchPosts() {
@@ -36,6 +46,6 @@ export class AppNewsfeedComponent implements OnInit {
     this.fetchPosts();
   }
 
-  newPostShared = () => this.fetchPosts();
+  // newPostShared = () => { this.fetchPosts(); }
 
 }

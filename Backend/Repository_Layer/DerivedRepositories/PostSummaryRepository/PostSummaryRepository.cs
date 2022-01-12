@@ -39,5 +39,14 @@ namespace Repository_Layer.DerivedRepositories.PostSummaryRepository
             return response;
         }
 
+        public async Task<Response<PostSummary>> GetSummaryByPostId(long id)
+        {
+            Response<PostSummary> response = new();
+            var param00 = new SqlParameter("@postId", id);
+            PostSummary postSummary = (await base.FromSql("execute dbo.spGetPostSummaryByPostId @postId", param00).ToListAsync())[0];
+            response.Data = postSummary;
+            return response;
+        }
+
     }
 }

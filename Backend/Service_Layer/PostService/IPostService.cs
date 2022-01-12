@@ -16,6 +16,7 @@ namespace Service_Layer.PostService
         // Read
         public Task<Response<IEnumerable<PostSummary>>> GetAllSummaryAsync(int page, int count);
         public Task<Response<IEnumerable<PostSummary>>> GetAllSummaryByUserAsync(string username, int page, int count);
+        public Task<Response<PostSummary>> GetSummaryByPostId(long id);
         Task<Response<IEnumerable<Post>>> GetPostsWithCommentsAndReplies(int page, int count);
         Task<Response<IEnumerable<Post>>> GetPosts();
         public Task<Response<Post>> GetPostWithCommentsAndReplies(long id);

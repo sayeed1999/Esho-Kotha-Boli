@@ -110,6 +110,53 @@ begin
 end
 go
 
+
+-- this sp will fetch a post summary by the postId
+create proc spGetPostSummaryByPostId (
+	@postId int = 0
+)
+as	
+begin
+	set nocount on
+	select top(1)
+		[p].[Id] [Id]
+		,(select dbo.funcShortenBody(p.Body)) [Body]
+		,[p].[DateCreated] [DateCreated]
+		,[u].[UserName] [UserName]
+		,[u].[FirstName] + ' ' + [u].[LastName] [FullName]
+		,CAST(ISNULL(COUNT([c].[CommentId]), 0) as bigint) [CommentsCount]
+		,CAST(ISNULL(SUM([c].[RepliesCount]), 0) as bigint) [RepliesCount]
+
+	from [dbo].[Posts] as p
+	inner join [dbo].[AspNetUsers] as u
+		on u.Id = p.UserId
+	outer apply (
+		select
+			t.Id [CommentId]
+			,isnull(count(r.Id), 0) [RepliesCount]
+		from [dbo].[Comments] t
+		left join [dbo].[Replies] r on t.Id = r.CommentId
+		where p.Id = t.PostId
+		group by t.Id
+	) c
+	where
+		[p].[Id] = @postId
+	group by
+		[p].[Id]
+		,[p].[Body]
+		,[p].[DateCreated]
+		,[u].[UserName]
+		,[u].[FirstName]
+		,[u].[LastName]
+end
+go
+
+
+select * from dbo.Posts
+exec spGetPostSummaryByPostId @postId = 128
+
+
+
 CREATE TRIGGER tr_AspNetUsers ON dbo.AspNetUsers
 AFTER INSERT
 AS

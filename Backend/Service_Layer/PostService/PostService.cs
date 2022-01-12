@@ -27,6 +27,11 @@ namespace Service_Layer.PostService
             return await this._unitOfWork.PostSummaryRepository.GetAllPostSummaryByUser(username, page, count);
         }
 
+        public async Task<Response<PostSummary>> GetSummaryByPostId(long id)
+        {
+            return await this._unitOfWork.PostSummaryRepository.GetSummaryByPostId(id);
+        }
+
         public async Task<Response<Post>> CreatePost(Post post)
         {
             var response = new Response<Post>();

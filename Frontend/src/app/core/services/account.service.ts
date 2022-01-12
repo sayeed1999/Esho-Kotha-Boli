@@ -17,7 +17,7 @@ export class AccountService {
   private authenticationState: 'authenticated'|'unauthenticated' = 'unauthenticated';
   private userName = 'guest user';
   authenticationStateChanged = new Subject<boolean>();
-  private url: string = 'https://localhost:44345/account';
+  private url: string = 'https://localhost:5001/account';
 
   constructor(
     private http: HttpClient,

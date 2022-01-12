@@ -9,20 +9,20 @@
     }
   },
   "profiles": {
-    "IIS Express": {
+    /*"IIS Express": {
       "commandName": "IISExpress",
-      "launchBrowser": true,
+      "launchBrowser": false, // i dont need to launch, i
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
-    },
+    },*/
     "API_Layer": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "launchBrowser": false, //i don't need to launch, i will simply hit the api from client-app!
+      //"launchUrl": "swagger",
+      "applicationUrl": "https://localhost:5001;", // here you can specify multiple endpoints as applicationUrl separating them with semi-colon
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

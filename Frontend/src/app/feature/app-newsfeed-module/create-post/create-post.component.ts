@@ -48,7 +48,7 @@ export class CreatePostComponent implements OnInit {
     }
     const post = Post.newPost(e.body);
     this.postService.add(post).subscribe(res => {
-      this.newPostCreated.emit();
+      // this.newPostCreated.emit();
       this.postService.resetCount(); // reset page count
       this.rerender();
       this.sb.open('Post shared successfully', 'Hurrah!');
