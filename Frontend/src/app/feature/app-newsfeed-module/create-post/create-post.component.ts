@@ -13,7 +13,7 @@ import { ProjectAMessageComponent } from 'src/app/shared/components/project-a-me
   styleUrls: ['./create-post.component.css']
 })
 export class CreatePostComponent implements OnInit {
-  @Output() newPostCreated = new EventEmitter<void>();
+  @Output() newPostCreated = new EventEmitter<number>();
   questions!: QuestionBase<string>[];
   rerendering = false; // to render the child component
   messageDialogActive = false;
@@ -47,8 +47,8 @@ export class CreatePostComponent implements OnInit {
       return;
     }
     const post = Post.newPost(e.body);
-    this.postService.add(post).subscribe(res => {
-      // this.newPostCreated.emit();
+    this.postService.add(post).subscribe((res: Post) => {
+      this.newPostCreated.emit(res.id);
       this.postService.resetCount(); // reset page count
       this.rerender();
       this.sb.open('Post shared successfully', 'Hurrah!');

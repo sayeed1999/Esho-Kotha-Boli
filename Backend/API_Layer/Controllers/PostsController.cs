@@ -100,14 +100,7 @@ namespace API_Layer.Controllers
         {
             post.UserId = (await UserManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email))).Id;
             Response<Post> response = await PostService.CreatePost(post);
-
-            // Transfer data via signalR to all of its clients
-            if (response.StatusCode == HttpStatusCode.Created)
-            {
-               var data = await PostService.GetSummaryByPostId(post.Id);
-                await hubContext.Clients.All.SendAsync("transferNewsfeedData", data.Data);
-            }
-
+            /// When a post is created here, the post is broadcasted to all other clients from Newsfeed hub!
             return Util.GetResult(response, "/posts");
         }
 

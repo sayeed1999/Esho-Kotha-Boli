@@ -1,7 +1,6 @@
 <div class="newsfeed-container">
 
-    <create-post></create-post>
-    <!-- <create-post (newPostCreated)="newPostShared()"></create-post> -->
+    <create-post (newPostCreated)="newPostShared($event)"></create-post>
 
     <div *ngFor="let post of posts">
         <mat-card class="m-3">

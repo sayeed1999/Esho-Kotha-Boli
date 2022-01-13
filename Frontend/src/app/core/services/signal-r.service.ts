@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import * as signalR from '@microsoft/signalr';
 import { Subject } from 'rxjs';
 import { PostSummary } from '../models/postSummary';
@@ -11,7 +12,9 @@ export class SignalRService {
   private data!: any;
   public newPostSummaryReceived = new Subject<PostSummary>();
 
-  constructor() { }
+  constructor(
+    private sb: MatSnackBar
+  ) { }
 
   public startConnection() {
     this.hubConnection = new signalR.HubConnectionBuilder()
@@ -25,11 +28,15 @@ export class SignalRService {
   }
 
   public dataListener = () => {
-    this.hubConnection.on('transferNewsfeedData', (data) => {
+    this.hubConnection.on('newPostFound', (data) => {
       this.data = data;
-      // console.log(data)
+      /// TODO: put a toaster here
       this.newPostSummaryReceived.next(data);
     });
+  }
+
+  public invokeMethod = (postId: number) => {
+    this.hubConnection.invoke("NewPostCreated", postId)
   }
 
 }

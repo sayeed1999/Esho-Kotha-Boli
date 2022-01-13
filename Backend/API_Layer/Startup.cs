@@ -52,9 +52,6 @@ namespace API_Layer
             // Injecting AppSettings written in appsettings.json file.
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
-            // Configure in-memory caching.
-            // services.AddMemoryCache(); // no need anymore!!
-
             // Injecting the SQL Server ConnectionString.
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration["AppSettings:ConnectionString"].ToString()));
@@ -162,7 +159,6 @@ namespace API_Layer
 
             // Register JwtHandler class
             services.AddScoped<JwtHandler>();
-
 
             // Global Authorize() filter starts...
             var policy = new AuthorizationPolicyBuilder()

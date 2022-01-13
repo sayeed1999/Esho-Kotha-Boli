@@ -26,7 +26,6 @@ export class LoggedInGuard implements CanActivate, CanActivateChild {
   get getResult() {
     if (this.acc.isAuthenticated()) {
       this.router.navigate(['newsfeed']);
-      this.sb.open('An authenticated user cannot navigate to user login/registration page.', 'Close');
       return false;
     }
     else {

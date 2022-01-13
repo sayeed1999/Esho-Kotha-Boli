@@ -46,6 +46,9 @@ export class AppNewsfeedComponent implements OnInit {
     this.fetchPosts();
   }
 
-  // newPostShared = () => { this.fetchPosts(); }
+  newPostShared = (postId: number) => {
+    this.fetchPosts();
+    this.signalRSerice.invokeMethod(postId);
+  }
 
 }

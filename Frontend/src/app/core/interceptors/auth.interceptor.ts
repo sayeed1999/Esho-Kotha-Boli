@@ -1,7 +1,5 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { Router } from "@angular/router";
 import { observable, Observable } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
 import { AccountService } from "../services/account.service";
@@ -12,8 +10,6 @@ import { AccountService } from "../services/account.service";
 export class AuthInterceptor implements HttpInterceptor {
     constructor(
         private acc: AccountService,
-        private router: Router,
-        private sb: MatSnackBar,
     ) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler):
