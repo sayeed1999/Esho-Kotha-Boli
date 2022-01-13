@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import * as signalR from '@microsoft/signalr';
 import { Subject } from 'rxjs';
 import { PostSummary } from '../models/postSummary';
+
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class SignalRService {
   public newPostSummaryReceived = new Subject<PostSummary>();
 
   constructor(
-    private sb: MatSnackBar
+    private toastr: ToastrService
   ) { }
 
   public startConnection() {
@@ -31,6 +32,7 @@ export class SignalRService {
     this.hubConnection.on('newPostFound', (data) => {
       this.data = data;
       /// TODO: put a toaster here
+      this.toastr.info("New post on top", "New Post");
       this.newPostSummaryReceived.next(data);
     });
   }

@@ -8,6 +8,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { AppShellComponent } from './components/app-shell/app-shell.component';
 import { LoaderComponent } from './components/loader/loader.component';
 
+import { ToastrModule } from 'ngx-toastr';
+
 export const interceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
@@ -23,6 +25,10 @@ export const interceptorProviders = [
     SharedModule,
     RouterModule,
     HttpClientModule,
+    ToastrModule.forRoot({
+      positionClass: 'top-left',
+      closeButton: false
+    })
   ],
   exports: [
     AppShellComponent,

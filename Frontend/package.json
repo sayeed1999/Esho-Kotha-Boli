@@ -10,7 +10,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~13.0.2",
+    "@angular/animations": "^13.0.3",
     "@angular/cdk": "^12.2.11",
     "@angular/common": "~13.0.2",
     "@angular/compiler": "~13.0.2",
@@ -22,6 +22,7 @@
     "@angular/router": "~13.0.2",
     "@aspnet/signalr": "^1.0.27",
     "@microsoft/signalr": "^5.0.13",
+    "ngx-toastr": "^14.2.1",
     "rxjs": "~6.6.0",
     "sweetalert": "^2.1.2",
     "tslib": "^2.3.0",
