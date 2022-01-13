@@ -11,13 +11,15 @@ import { SweetAlertService } from 'src/app/core/services/sweet-alert.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ViewComment } from 'src/app/core/models/viewComment';
 import { ProfilePictureService } from 'src/app/core/services/profile-picture.service';
+import { SignalRService } from 'src/app/core/services/signalr.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'post',
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
 })
-export class PostComponent implements OnInit {
+export class PostComponent implements OnInit, OnDestroy {
   post!: ViewPost;
   postId!: number;
   questions!: QuestionBase<string>[];
@@ -25,15 +27,16 @@ export class PostComponent implements OnInit {
   editedPost = '';
   renderingComment = false;
   base64: string | null = null;  // profile picture
+  subscription!: Subscription;
 
   constructor(
     private postService: PostService,
     private commentService: CommentService,
     private sb: MatSnackBar,
-    private sl: SweetAlertService,
     private route: ActivatedRoute,
     private router: Router,
     private dpService: ProfilePictureService,
+    private signalrService: SignalRService,
   ) { }
 
   ngOnInit(): void {
@@ -53,6 +56,13 @@ export class PostComponent implements OnInit {
         placeholder: 'write a comment here'
       })
     ];
+
+    this.signalrService.startConnection();
+    this.signalrService.dataListener("PostHasBeenUpdated", this.signalrService.aPostHasBeenUpdated);
+    
+    this.subscription = this.signalrService.aPostHasBeenUpdated.subscribe(res => {
+      this.post = res;
+    });
   }
 
   getProfilePictureByUsername(username: string) {
@@ -79,6 +89,9 @@ export class PostComponent implements OnInit {
   delete() {
     this.postService.delete(this.post.id).subscribe(
       res => {
+        // the method on the server is invoked so that it informs all other users that a post has been deleted.
+        this.signalrService.invokeMethod("PostHasBeenDeleted", this.post.id);
+
         this.router.navigate(['../../'], { relativeTo: this.route });
         this.sb.open('Post deleted successfully', 'Good!');
       }
@@ -102,7 +115,8 @@ export class PostComponent implements OnInit {
     let tempPost = { ...this.post, body: this.editedPost }
     this.postService.update(this.post.id, tempPost).subscribe(
       (res: any) => {
-        this.post.body = this.editedPost; // no need to call the api since it is a success call!
+        this.post.body = this.editedPost; // no need to call the api
+        this.signalrService.invokeMethod("postHasBeenUpdated", this.post);
         this.editMode = false;
         this.sb.open('Post updated', 'Okay');
       }
@@ -116,6 +130,11 @@ export class PostComponent implements OnInit {
 
   commentDeleted(id: number) {
     this.post.comments = this.post.comments.filter(x => x.id !== id);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+    this.signalrService.terminateHubConnection();
   }
 
 }

@@ -24,9 +24,9 @@ export class AccountService {
     private sweetalert: SweetAlertService,
     private router: Router,
   ) {
-    if(localStorage.getItem('token') !== null) {
+    if(sessionStorage.getItem('token') !== null) {
       this.authenticationState = 'authenticated';
-      this.userName = localStorage.getItem('userName') ?? '<bug>';
+      this.userName = sessionStorage.getItem('userName') ?? '<bug>';
     }
     // this method is to it checks token expiry and then user logged out if expired!!
   }
@@ -36,7 +36,7 @@ export class AccountService {
   }
 
   isTokenExpired(): boolean {
-    const token = localStorage.getItem('token') || '';
+    const token = sessionStorage.getItem('token') || '';
     const expiry = (JSON.parse(window.atob(token.split('.')[1]))).exp; // 'atob' stands for  'ASCII TO Binary'
     console.log((new Date()).getTime() / 1000, expiry);
     const isExpired = Math.floor( (new Date()).getTime() / 1000 ) >= expiry;
@@ -53,14 +53,14 @@ export class AccountService {
   }
 
   get getAuthToken(): string {
-    return localStorage.getItem('token') || '';
+    return sessionStorage.getItem('token') || '';
   }
 
   logoutWithoutAlert() {
     this.authenticationState = 'unauthenticated';
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     this.userName = 'guest-user';
-    localStorage.removeItem('userName');
+    sessionStorage.removeItem('userName');
     this.authenticationStateChanged.next(false);
   }
 
@@ -86,9 +86,9 @@ export class AccountService {
     ).pipe(
       tap((res: AuthResponse) => {
         this.authenticationState = 'authenticated';
-        localStorage.setItem('token', res.token);
+        sessionStorage.setItem('token', res.token);
         this.userName = res.userName;
-        localStorage.setItem('userName', res.userName);
+        sessionStorage.setItem('userName', res.userName);
         this.authenticationStateChanged.next(true);
       }
     ));

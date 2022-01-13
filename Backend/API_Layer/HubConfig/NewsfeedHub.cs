@@ -21,7 +21,17 @@ namespace API_Layer.HubConfig
         public async Task NewPostCreated(long postId)
         {
             Response<PostSummary> response = await postService.GetSummaryByPostId(postId);
-            await Clients.Others.SendAsync("newPostFound", response.Data);
+            await Clients.Others.SendAsync("newPostReceived", response.Data, "New post on top", "New Post!");
+        }
+
+        public async Task PostHasBeenUpdated(ViewPost data)
+        {
+            await Clients.Others.SendAsync("postHasBeenUpdated", data, "A post has been updated", "Post Update!");
+        }
+
+        public async Task PostHasBeenDeleted(long postId)
+        {
+            await Clients.Others.SendAsync("postHasBeenDeleted", postId, "A post has been deleted", "Post Delete!");
         }
     }
 }

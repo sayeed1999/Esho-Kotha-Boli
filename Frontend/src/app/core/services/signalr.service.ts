@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { PostSummary } from '../models/postSummary';
 
 import { ToastrService } from 'ngx-toastr';
+import { ViewPost } from '../models/viewPost';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,8 @@ export class SignalRService {
   private hubConnection!: signalR.HubConnection;
   private data!: any;
   public newPostSummaryReceived = new Subject<PostSummary>();
+  public aPostHasBeenDeleted = new Subject<number>();
+  public aPostHasBeenUpdated = new Subject<ViewPost>();
 
   constructor(
     private toastr: ToastrService
@@ -28,17 +31,20 @@ export class SignalRService {
       .catch(err => console.log('Error while starting connection'))  
   }
 
-  public dataListener = () => {
-    this.hubConnection.on('newPostFound', (data) => {
+  public dataListener = (method: string, callback: any) => {
+    this.hubConnection.on(method, (data: any, message: string, title: string) => {
       this.data = data;
-      /// TODO: put a toaster here
-      this.toastr.info("New post on top", "New Post");
-      this.newPostSummaryReceived.next(data);
+      this.toastr.info(message, title);
+      callback.next(data);
     });
   }
 
-  public invokeMethod = (postId: number) => {
-    this.hubConnection.invoke("NewPostCreated", postId)
+  public invokeMethod = (method: string, data: any) => {
+    this.hubConnection.invoke(method, data);
+  }
+
+  public terminateHubConnection() {
+    this.hubConnection.stop();
   }
 
 }
