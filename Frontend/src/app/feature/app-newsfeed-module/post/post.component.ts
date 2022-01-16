@@ -57,7 +57,7 @@ export class PostComponent implements OnInit, OnDestroy {
       })
     ];
 
-    this.signalrService.startConnection();
+    this.signalrService.startConnection("newsfeed");
     this.signalrService.dataListener("PostHasBeenUpdated", this.signalrService.aPostHasBeenUpdated);
     
     this.subscription = this.signalrService.aPostHasBeenUpdated.subscribe(res => {

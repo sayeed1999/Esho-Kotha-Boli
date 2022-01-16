@@ -24,5 +24,6 @@ namespace Data_Access_Layer
         public DbSet<Reply> Replies { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<ProfilePicture> ProfilePictures { get; set; }
+        public DbSet<Message> Messages { get; set; }
     }
 }

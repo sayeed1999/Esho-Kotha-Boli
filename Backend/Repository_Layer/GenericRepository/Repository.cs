@@ -255,8 +255,7 @@ namespace Repository_Layer.GenericRepository
                 query = orderBy(query);
             }
             // this is for fetching the next page. we don't need to skip any, because we are only expanding the first page by capacity.
-            // IEnumerable<T> result = await query.Where(predicate).Skip(count * (page - 1)).Take(count).ToListAsync();
-            IEnumerable<T> result = await query.Where(predicate).Take(count).ToListAsync();
+            IEnumerable<T> result = await query.Where(predicate).Skip(count * (page - 1)).Take(count).ToListAsync();
             return result;
         }
 

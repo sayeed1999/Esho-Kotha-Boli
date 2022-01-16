@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Data_Access_Layer;
 using Repository_Layer.DerivedRepositories.CommentRepository;
 using Repository_Layer.DerivedRepositories.ImageRepository;
+using Repository_Layer.DerivedRepositories.MessageRepository;
 using Repository_Layer.DerivedRepositories.PostRepository;
 using Repository_Layer.DerivedRepositories.PostSummaryRepository;
 using Repository_Layer.DerivedRepositories.ProfilePictureRepository;
@@ -23,6 +24,7 @@ namespace Repository_Layer.UnitOfWork
         public IReplyRepository ReplyRepository { get; private set; }
         public IImageRepository ImageRepository { get; private set; }
         public IProfilePictureRepository ProfilePictureRepository { get; private set; }
+        public IMessageRepository MessageRepository { get; set; }
         public IUserRepository UserRepository { get; private set; }
 
 
@@ -35,6 +37,7 @@ namespace Repository_Layer.UnitOfWork
             IReplyRepository replyRepository,
             IImageRepository imageRepository,
             IProfilePictureRepository profilePictureRepository,
+            IMessageRepository messageRepository,
             IUserRepository userRepository
         ) {
             _dbContext = dbContext;
@@ -44,6 +47,7 @@ namespace Repository_Layer.UnitOfWork
             ReplyRepository = replyRepository;
             ImageRepository = imageRepository;
             ProfilePictureRepository = profilePictureRepository;
+            MessageRepository = messageRepository;
             UserRepository = userRepository;
         }
 

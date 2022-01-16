@@ -42,7 +42,7 @@ export class AppNewsfeedComponent implements OnInit, OnDestroy {
   }
   
   initializeSignalR() {
-    this.signalRService.startConnection();
+    this.signalRService.startConnection("newsfeed");
     this.signalRService.dataListener("newPostReceived",
       this.signalRService.newPostSummaryReceived
     );

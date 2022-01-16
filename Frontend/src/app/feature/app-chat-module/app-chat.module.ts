@@ -1,13 +1,20 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ChatBoxComponent } from './components/chat-box/chat-box.component';
+import { MessengerComponent } from './components/messenger/messenger.component';
+import { PeopleBoxComponent } from './components/people-box/people-box.component';
+import { RoutingModule } from './routing.module';
 
 
 
 @NgModule({
   declarations: [
+    MessengerComponent,
+    PeopleBoxComponent,
+    ChatBoxComponent,
   ],
   imports: [
-    // here will be only one module that is the routing module for this module
+    RoutingModule,
     SharedModule
   ]
 })

@@ -7,8 +7,8 @@
       <span style="cursor: pointer;" routerLink="/newsfeed">Esho Kotha Boli</span>
       <span class="shift-to-right"></span>
       <h6 style="font-size: 16px; padding-right: 4px;"> <i> Hello, {{userName}} </i> </h6>
-      <button mat-icon-button>
-        <mat-icon>messenger</mat-icon>
+      <button *ngIf="authenticated" mat-icon-button routerLink="/messenger">
+        <mat-icon style="color: teal">messenger</mat-icon>
       </button>
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>menu</mat-icon>
@@ -27,9 +27,9 @@
           <router-outlet></router-outlet>
           <br><br>
         </div>
-        <div *ngIf="authenticated" class="d-none d-md-block col-md-3" style="height: 90vh; overflow-y:auto; border-left: solid 5px #888888;">
-          <!-- <app-chat></app-chat> --> here will be the messenger!
-        </div>
+        <!-- <div *ngIf="authenticated" class="d-none d-md-block col-md-3" style="height: 90vh; overflow-y:auto; border-left: solid 5px #888888;">
+          <app-chat></app-chat> here will be the messenger!
+        </div> -->
     </div>
   
   </div>

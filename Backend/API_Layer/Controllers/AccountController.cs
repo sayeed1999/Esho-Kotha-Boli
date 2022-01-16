@@ -43,6 +43,7 @@ namespace API_Layer.Controllers
 
             ViewUser viewUser = new()
             {
+                Id = user.Id,
                 UserName = user.UserName,
                 Email = user.Email,
                 FirstName = user.FirstName,

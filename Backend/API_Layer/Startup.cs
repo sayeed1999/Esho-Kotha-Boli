@@ -34,6 +34,8 @@ using Service_Layer.ProfilePictureService;
 using Repository_Layer.DerivedRepositories.UserRepository;
 using Service_Layer.UserService;
 using API_Layer.HubConfig;
+using Repository_Layer.DerivedRepositories.MessageRepository;
+using Service_Layer.MessageService;
 
 namespace API_Layer
 {
@@ -113,6 +115,7 @@ namespace API_Layer
             services.AddScoped<IReplyRepository, ReplyRepository>();
             services.AddScoped<IImageRepository, ImageRepository>();
             services.AddScoped<IProfilePictureRepository, ProfilePictureRepository>();
+            services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
             // Services
@@ -121,6 +124,7 @@ namespace API_Layer
             services.AddScoped<IReplyService, ReplyService>();
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IProfilePictureService, ProfilePictureService>();
+            services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<IUserService, UserService>();
 
             // Registering Identity Services
@@ -160,16 +164,12 @@ namespace API_Layer
             // Register JwtHandler class
             services.AddScoped<JwtHandler>();
 
-            // Global Authorize() filter starts...
-            var policy = new AuthorizationPolicyBuilder()
-                .RequireAuthenticatedUser()
-                .Build();
-
+            // Global Authorize() filter configuration
+            var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
             services.AddMvc(op =>
             {
                 op.Filters.Add(new AuthorizeFilter(policy));
             });
-            // Global Authorize() filter ends...
 
             // Register IHttpContextAccessor
             services.AddHttpContextAccessor();
@@ -198,8 +198,10 @@ namespace API_Layer
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                // configure hub for signalR
+
+                // configure hubs for signalR
                 endpoints.MapHub<NewsfeedHub>("/newsfeed");
+                endpoints.MapHub<MessagingHub>("/messaging");
             });
 
 

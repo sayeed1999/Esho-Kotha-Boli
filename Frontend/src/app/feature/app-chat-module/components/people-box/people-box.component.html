@@ -1,0 +1,5 @@
+<mat-selection-list [multiple]="false">
+    <mat-list-option (click)="selectUser(user)" *ngFor="let user of userList" [value]="user">
+      {{ user?.fullName }}
+    </mat-list-option>
+</mat-selection-list>

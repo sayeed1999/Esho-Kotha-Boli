@@ -33,13 +33,5 @@ namespace API_Layer.HubConfig
         {
             await Clients.Others.SendAsync("postHasBeenDeleted", postId, "A post has been deleted", "Post Delete!");
         }
-
-
-
-        public string GetConnectionId()
-        {
-            return Context.ConnectionId;
-        }
-
     }
 }

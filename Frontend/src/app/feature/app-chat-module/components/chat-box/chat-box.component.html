@@ -1,0 +1,7 @@
+Initializing chat with - {{ chatWith.fullName }}
+
+<div *ngFor="let message of messages">
+    <p> {{ message.body }} </p>
+</div>
+
+<dynamic-form *ngIf="!rendering" [questions]="questions" [buttonName]="'Send'" (result)="received($event)"></dynamic-form>
