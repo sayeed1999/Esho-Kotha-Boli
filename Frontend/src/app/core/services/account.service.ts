@@ -38,7 +38,7 @@ export class AccountService {
   isTokenExpired(): boolean {
     const token = sessionStorage.getItem('token') || '';
     const expiry = (JSON.parse(window.atob(token.split('.')[1]))).exp; // 'atob' stands for  'ASCII TO Binary'
-    console.log((new Date()).getTime() / 1000, expiry);
+    // console.log((new Date()).getTime() / 1000, expiry);
     const isExpired = Math.floor( (new Date()).getTime() / 1000 ) >= expiry;
     isExpired === true ? this.logoutWithoutAlert() : null;
     return isExpired;

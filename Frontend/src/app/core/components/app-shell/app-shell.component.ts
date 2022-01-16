@@ -14,7 +14,7 @@ export class AppShellComponent implements OnInit {
   isLoading: boolean = false;
   title = 'EshoKothaBoli';
   authenticated = false;
-  userName!: string;
+  userName = 'guest-user';
 
   constructor(
     private httpService: HttpService,

@@ -11,6 +11,7 @@ import { ViewPost } from '../models/viewPost';
 })
 export class SignalRService {
   private hubConnection!: signalR.HubConnection;
+  private connectionId: string = "";
   private data!: any;
   public newPostSummaryReceived = new Subject<PostSummary>();
   public aPostHasBeenDeleted = new Subject<number>();
@@ -20,22 +21,35 @@ export class SignalRService {
     private toastr: ToastrService
   ) { }
 
-  public startConnection() {
+  public startConnection = () => {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl("https://localhost:5001/newsfeed")
+      .withAutomaticReconnect()
       .build();
     
     this.hubConnection
       .start()
       .then(() => console.log('Connection started'))
-      .catch(err => console.log('Error while starting connection'))  
+      .then(() => this.getConnectionId())
+      .catch(err => console.log('Error while starting connection'));
+    
+    this.hubConnection.onreconnected(this.getConnectionId);
+  }
+
+  public getConnectionId = () => {
+    this.hubConnection.invoke('GetConnectionId')
+      .then(data => {
+        // every connection has a unique connectionId.
+        // even same user from different phones or laptops will have a new connectionId!
+        this.connectionId = data;
+      });
   }
 
   public dataListener = (method: string, callback: any) => {
     this.hubConnection.on(method, (data: any, message: string, title: string) => {
       this.data = data;
       this.toastr.info(message, title);
-      callback.next(data);
+      callback.next(data); // the callback is actually here a subject which is emitting via next() method for its receivers..
     });
   }
 
