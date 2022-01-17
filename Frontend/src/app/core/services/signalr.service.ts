@@ -15,7 +15,7 @@ import { AccountService } from './account.service';
 export class SignalRService {
   private hubConnection!: signalR.HubConnection;
   public currentUser!: ViewUser;
-  public connectionIdsOfMessageReceiver: string[] = [];
+  public connectionIdsOfMessageReceiver = null;
   public newPostSummaryReceived = new Subject<PostSummary>();
   public aPostHasBeenDeleted = new Subject<number>();
   public aPostHasBeenUpdated = new Subject<ViewPost>();
