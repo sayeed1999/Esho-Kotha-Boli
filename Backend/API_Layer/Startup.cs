@@ -96,6 +96,9 @@ namespace API_Layer
             // Configure SignalR
             services.AddSignalR();
 
+            // Configure HttpContextAccessor
+            //services.AddHttpContextAccessor();
+
             // Util for ControllerBase
             services.AddScoped(typeof(Util<>));
 

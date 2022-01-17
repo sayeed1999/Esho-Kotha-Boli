@@ -30,10 +30,10 @@ namespace Service_Layer.UserService
             return response;
         }
 
-        public async Task<Response<IEnumerable<UserForPeopleBoxVm>>> GetUsersForPeopleBox(string username)
+        public async Task<Response<IEnumerable<UserForPeopleBoxVm>>> GetUsersForPeopleBox(string userId)
         {
             Response<IEnumerable<UserForPeopleBoxVm>> response = new();
-            IEnumerable<User> users = await this.unitOfWork.UserRepository.GetWhereToListAsync(x => x.UserName != username);
+            IEnumerable<User> users = await this.unitOfWork.UserRepository.GetWhereToListAsync(x => x.Id != userId);
             response.Data = users.Select(x => new UserForPeopleBoxVm
             {
                 Id = x.Id,

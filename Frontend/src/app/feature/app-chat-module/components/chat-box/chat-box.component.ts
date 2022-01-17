@@ -15,7 +15,7 @@ import { ChatBoxService } from '../../services/chat-box/chat-box.service';
 })
 export class ChatBoxComponent implements OnInit, OnDestroy {
   chatWith: any = 'null'; // userid;
-  subscription!: Subscription;
+  subscriptions: Subscription[] = [];
   user!: ViewUser;
   messages: Message[] = [];
   questions!: QuestionBase<string>[];
@@ -28,12 +28,15 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.subscription = this.chatBoxService.chatWith.subscribe((user: any) => {
-      if(user) {
-        this.chatWith = user;
-        this.getMessages();
-      }
-    });
+    this.subscriptions.push(
+      this.chatBoxService.chatWith.subscribe((user: any) => {
+        if(user) {
+          this.chatWith = user;
+          this.signalrService.getConnectionIdsOfUser(this.chatWith.id);
+          this.getMessages();
+        }
+      })
+    );
 
     this.accountService.getCurrentUser.subscribe(user => {
       this.user = user;
@@ -43,6 +46,12 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
 
     this.signalrService.startConnection("messaging");
     this.signalrService.dataListener("messageSent", this.signalrService.messageReceived);
+
+    this.subscriptions.push(
+      this.signalrService.messageReceived.subscribe(res => {
+        this.messages.push(res);
+      })
+    );
   }
 
   initializeForm() {
@@ -60,8 +69,8 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
     const message = new Message(0, event.body, this.user.id, this.chatWith.id, new Date());
     this.chatBoxService.sendMessageAsync(message).subscribe(
       (res: Message) => {
-        this.signalrService.invokeMethod("messageSent", res, res.to);
-        this.messages.unshift(res);
+        this.signalrService.invokeMethod("MessageSent", res);
+        this.messages.push(res);
         this.rerender();
       },
       error => {
@@ -83,7 +92,7 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-      this.subscription.unsubscribe();
+      this.subscriptions.forEach(x => x.unsubscribe());
       this.signalrService.terminateHubConnection();
   }
 
