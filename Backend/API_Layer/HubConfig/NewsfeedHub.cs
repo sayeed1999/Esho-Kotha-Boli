@@ -12,10 +12,16 @@ namespace API_Layer.HubConfig
     public class NewsfeedHub : Hub
     {
         private readonly IPostService postService;
+        private readonly static ConnectionMapping<string> _connections = new();
 
         public NewsfeedHub(IPostService postService)
         {
             this.postService = postService;
+        }
+
+        public void CustomOnConnected(string userId)
+        {
+            _connections.Add(userId, Context.ConnectionId);
         }
 
         public async Task NewPostCreated(long postId)

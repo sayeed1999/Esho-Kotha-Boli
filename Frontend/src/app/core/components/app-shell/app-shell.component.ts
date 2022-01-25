@@ -22,23 +22,24 @@ export class AppShellComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-      // the first time the app loads, the token expiry is checked and signed out
-      if(localStorage.getItem('token') && this.acc.isTokenExpired()) this.acc.logoutWithoutAlert();
-
-    // we dont need to unsubscribe it, since it is on the root
-    // level, this component never gets destroyed.
     this.authenticated = this.acc.isAuthenticated();
     this.userName = this.acc.getUserName();
-    this.acc.authenticationStateChanged.subscribe(b => {
-      this.authenticated = this.acc.isAuthenticated();
-      this.userName = this.acc.getUserName();
-    });
 
+    // needed for the loader
     this.httpService.subject.subscribe(
       (res: boolean) => {
         this.isLoading = res;
       }
     )
+
+    this.acc.authenticationStateChanged.subscribe(b => {
+      console.log(b)
+      this.authenticated = this.acc.isAuthenticated();
+      this.userName = this.acc.getUserName();
+    });
+
+    // the first time the app loads, the token expiry is checked and signed out
+    if(localStorage.getItem('token') && this.acc.isTokenExpired()) this.acc.logoutWithoutAlert();
   }
 
   logout() { 
