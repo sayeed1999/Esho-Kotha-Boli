@@ -30,7 +30,19 @@ export class UpdateProfilePictureDialogComponent implements OnInit {
   }
 
   changed(event: any) {
-    console.log(event.target.value)
+    const reader = new FileReader();
+    
+    if(event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+    
+      reader.onload = () => {
+   
+        this.base64 = reader.result as string;
+        
+      };
+   
+    }
   }
 
   upload(): void {
