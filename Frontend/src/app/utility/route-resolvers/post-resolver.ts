@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
 import { empty, Observable } from "rxjs";
 import { catchError, take } from "rxjs/operators";
-import { PostService } from "src/app/core/services/post.service";
+import { PostService } from "src/app/feature/app-newsfeed-module/services/post.service";
 
 @Injectable({ providedIn: 'root' })
 export class PostResolver implements Resolve<any> {

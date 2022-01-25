@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { Injectable } from "@angular/core";
 import { observable, Observable } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
-import { AccountService } from "../services/account.service";
+import { AccountService } from "../../feature/account-module/services/account.service";
 
 @Injectable({
     providedIn: 'root'

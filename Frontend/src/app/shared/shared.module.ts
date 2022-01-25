@@ -7,8 +7,8 @@ import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.com
 import { DynamicFormQuestionComponent } from './components/dynamic-form/dynamic-form-question/dynamic-form-question.component';
 import { ProjectAContentComponent } from './components/project-a-content/project-a-content.component';
 import { ProjectAMessageComponent } from './components/project-a-message/project-a-message.component';
-import { PostSummaryComponent } from '../feature/app-newsfeed-module/post-summary/post-summary.component';
-import { CreatePostComponent } from '../feature/app-newsfeed-module/create-post/create-post.component';
+import { PostSummaryComponent } from '../feature/app-newsfeed-module/components/post-summary/post-summary.component';
+import { CreatePostComponent } from '../feature/app-newsfeed-module/components/create-post/create-post.component';
 import { RouterModule } from '@angular/router';
 
 @NgModule({

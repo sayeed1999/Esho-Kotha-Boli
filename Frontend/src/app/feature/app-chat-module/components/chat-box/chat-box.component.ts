@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Message } from 'src/app/core/models/message';
-import { QuestionBase } from 'src/app/core/models/question-base';
-import { TextArea } from 'src/app/core/models/question-textarea';
-import { ViewUser } from 'src/app/core/models/viewUser';
-import { AccountService } from 'src/app/core/services/account.service';
+import { AccountService } from 'src/app/feature/account-module/services/account.service';
 import { SignalRService } from 'src/app/core/services/signalr.service';
 import { ChatBoxService } from '../../services/chat-box/chat-box.service';
+import { ViewUser } from 'src/app/core/models/viewUser';
+import { QuestionBase } from 'src/app/shared/models/question-base';
+import { Message } from 'src/app/core/models/message';
+import { TextArea } from 'src/app/shared/models/question-textarea';
 
 @Component({
   selector: 'chat-box',

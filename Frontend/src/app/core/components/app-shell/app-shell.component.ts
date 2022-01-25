@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { AccountService } from '../../services/account.service';
+import { AccountService } from '../../../feature/account-module/services/account.service';
 import { HttpService } from '../../services/http.service';
 
 @Component({

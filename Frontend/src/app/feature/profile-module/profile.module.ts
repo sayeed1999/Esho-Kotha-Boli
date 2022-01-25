@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { ProfileComponent } from './profile.component';
+import { ProfileComponent } from './components/profile/profile.component';
 import { RoutingModule } from './routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { TimelinePostsComponent } from './timeline-posts/timeline-posts.component';
-import { UpdateProfilePictureDialogComponent } from './update-profile-picture-dialog/update-profile-picture.component';
+import { TimelinePostsComponent } from './components/timeline-posts/timeline-posts.component';
+import { UpdateProfilePictureDialogComponent } from './components/update-profile-picture-dialog/update-profile-picture.component';
 
 @NgModule({
   declarations: [

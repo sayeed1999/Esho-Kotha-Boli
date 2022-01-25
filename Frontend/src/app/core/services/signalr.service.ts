@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { Subject } from 'rxjs';
-import { PostSummary } from '../models/postSummary';
 
 import { ToastrService } from 'ngx-toastr';
-import { ViewPost } from '../models/viewPost';
+import { AccountService } from '../../feature/account-module/services/account.service';
+import { ViewPost } from 'src/app/feature/app-newsfeed-module/models/viewPost';
 import { Message } from '../models/message';
+import { PostSummary } from 'src/app/feature/app-newsfeed-module/models/postSummary';
 import { ViewUser } from '../models/viewUser';
-import { AccountService } from './account.service';
 
 @Injectable({
   providedIn: 'root'

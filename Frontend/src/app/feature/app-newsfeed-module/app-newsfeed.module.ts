@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { AppNewsfeedComponent } from './app-newsfeed.component';
-import { PostComponent } from './post/post.component';
-import { CommentComponent } from './post/comment/comment.component';
-import { ReplyComponent } from './post/comment/reply/reply.component';
+import { AppNewsfeedComponent } from './components/app-newsfeed/app-newsfeed.component';
 import { NewsfeedRoutingModule } from './routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { PostComponent } from './components/post/post.component';
+import { CommentComponent } from './components/post/comment/comment.component';
+import { ReplyComponent } from './components/post/comment/reply/reply.component';
 
 
 
