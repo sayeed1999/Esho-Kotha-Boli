@@ -8,13 +8,13 @@ export class FocusItemDirective {
   constructor(private el: ElementRef) { }
 
   @HostListener('mouseenter') onMouseEnter() {
-    this.el.nativeElement.style.transform = 'scale(1.25, 1.25)';
-    this.el.nativeElement.style.transition = '2s ease-in-out';
+    this.el.nativeElement.style.transform = 'scale(1.15, 1.15)';
+    this.el.nativeElement.style.transition = '0.8s ease-in-out';
   }
 
   @HostListener('mouseleave') onMouseLeave() {
     this.el.nativeElement.style.transform = 'scale(1.00, 1.00)';
-    this.el.nativeElement.style.transition = '2s ease-in-out';
+    this.el.nativeElement.style.transition = '0.8s ease-in-out';
   }
 
 }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NewlinePipe } from './custom-pipes/newline.pipe';
 import { FocusItemDirective } from './directives/focus-item.directive';
 import { RaiseButtonDirective } from './directives/raise-button.directive';
+import { AppHoverTextDirective } from './directives/hover-text.directive';
 
 
 
@@ -14,6 +15,7 @@ import { RaiseButtonDirective } from './directives/raise-button.directive';
     // directives
     FocusItemDirective,
     RaiseButtonDirective,
+    AppHoverTextDirective,
 
   ],
   imports: [
@@ -26,6 +28,7 @@ import { RaiseButtonDirective } from './directives/raise-button.directive';
     // directives
     FocusItemDirective,
     RaiseButtonDirective,    
+    AppHoverTextDirective,
   ]
 })
 export class UtilityModule { }

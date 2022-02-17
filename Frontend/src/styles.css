@@ -45,6 +45,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     font-size: 12px;
 }
 
+i {
+  color: #717171;
+  font-size: small;
+}
+
 em {
   color: #717171;
   font-size: xx-small;
